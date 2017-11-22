@@ -1,4 +1,17 @@
 import { AppRegistry } from 'react-native';
-import App from './App';
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import Application from './pages/Application';
+import store from './redux';
 
-AppRegistry.registerComponent('Checkstory', () => App);
+export default class Checkstory extends Component {
+    render() {
+        return (
+            <Provider store={store}>
+                <Application />
+            </Provider>
+        );
+    }
+}
+
+AppRegistry.registerComponent('Checkstory', () => Checkstory);
