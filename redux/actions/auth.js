@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT } from '../reducers/user';
+import { LOGIN, LOGOUT } from '../reducers/auth';
 
 export const login = (username, password) => {
     return {
