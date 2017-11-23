@@ -4,6 +4,9 @@ export const LOGIN_IN_PROGRESS = 'LOGIN_IN_PROGRESS';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
+export const SIGN_UP = 'SIGN_UP';
+export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
+export const SIGN_UP_FAIL = 'SIGN_UP_FAIL';
 
 export const login = (username, password) => {
     return {
@@ -19,8 +22,11 @@ export const logout = () => {
     }
 };
 
-export const signup = (username, email, password) => {
-    return (dispatch) => {
-
+export const signUp = (username, email, password) => {
+    return {
+        type: SIGN_UP,
+        username: username,
+        email: email,
+        password: password
     }
 };

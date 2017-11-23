@@ -1,5 +1,5 @@
 import { apiUrl } from '../../config/appConfig';
-import { LOGIN, LOGIN_FAIL, LOGIN_IN_PROGRESS, LOGIN_SUCCESS } from '../actions/auth';
+import { LOGIN, LOGIN_FAIL, LOGIN_IN_PROGRESS, LOGIN_SUCCESS, SIGN_UP, SIGN_UP_FAIL } from '../actions/auth';
 import {
     CREATE_STORY, CREATE_STORY_FAIL, CREATE_STORY_IN_PROGRESS, DELETE_STORY, DELETE_STORY_FAIL,
     DELETE_STORY_IN_PROGRESS,
@@ -57,6 +57,23 @@ export const apiMiddleware = store => next => action => {
                     next({
                         type: LOGIN_FAIL,
                         error
+                    })
+                });
+            break;
+        case SIGN_UP:
+            fetch(`${apiUrl}/api/users`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(action.user)
+            })
+                .then()
+                .catch(error => {
+                    console.log('error ' + JSON.stringify(error));
+                    next({
+                        type: SIGN_UP_FAIL, error
                     })
                 });
             break;
