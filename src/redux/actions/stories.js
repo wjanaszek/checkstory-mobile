@@ -5,12 +5,12 @@ export const LOAD_STORIES_SUCCESS = 'LOAD_STORIES_SUCCESS';
 export const LOAD_STORIES_FAIL = 'LOAD_STORIES_FAIL';
 
 export const LOAD_STORY = 'LOAD_STORY';
-export const CREATE_STORY = 'CREATE_STORY';
-export const UPDATE_STORY = 'UPDATE_STORY';
-export const DELETE_STORY = 'DELETE_STORY';
 export const LOAD_STORY_IN_PROGRESS = 'LOAD_STORY_IN_PROGRESS';
 export const LOAD_STORY_SUCCESS = 'LOAD_STORY_SUCCESS';
 export const LOAD_STORY_FAIL = 'LOAD_STORY_FAIL';
+export const CREATE_STORY = 'CREATE_STORY';
+export const UPDATE_STORY = 'UPDATE_STORY';
+export const DELETE_STORY = 'DELETE_STORY';
 
 export const getAllStories = (token) => {
     return {

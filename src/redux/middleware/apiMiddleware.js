@@ -1,6 +1,7 @@
-import { LOGIN, LOGIN_FAIL, LOGIN_IN_PROGRESS, LOGIN_SUCCESS } from '../reducers/auth';
 import { apiUrl, endpoints } from '../../config/appConfig';
-import { LOAD_STORIES, LOAD_STORIES_FAIL, LOAD_STORIES_IN_PROGRESS, LOAD_STORIES_SUCCESS } from '../reducers/stories';
+import { LOGIN, LOGIN_FAIL, LOGIN_IN_PROGRESS, LOGIN_SUCCESS } from '../actions/auth';
+import { LOAD_STORIES, LOAD_STORIES_FAIL, LOAD_STORIES_IN_PROGRESS, LOAD_STORIES_SUCCESS } from '../actions/stories';
+import { LOAD_PHOTOS, LOAD_PHOTOS_FAIL, LOAD_PHOTOS_IN_PROGRESS } from '../actions/photos';
 
 export const apiMiddleware = store => next => action => {
     // Pass all actions through by default
@@ -50,7 +51,7 @@ export const apiMiddleware = store => next => action => {
             break;
         case LOAD_STORIES:
             store.dispatch({ type: LOAD_STORIES_IN_PROGRESS });
-            fetch(`${apiUrl}/${endpoints.allStories}`, {
+            fetch(`${apiUrl}/api/stories`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
@@ -73,6 +74,26 @@ export const apiMiddleware = store => next => action => {
                         error
                     })
                 });
+            break;
+        case LOAD_PHOTOS:
+            store.dispatch({ type: LOAD_PHOTOS_IN_PROGRESS });
+            fetch(`${apiUrl}/api/stories/${action.storyId}/photos`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + action.token
+                }
+            })
+                .then(response => response.json())
+                .catch(error => {
+                    console.log('error ' + JSON.stringify(error));
+                    next({
+                        type: LOAD_PHOTOS_FAIL,
+                        error
+                    })
+                });
+            break;
         // Do nothing if the action does not interest us
         default:
             break;
