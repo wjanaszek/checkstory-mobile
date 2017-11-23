@@ -1,0 +1,16 @@
+export const apiUrl = 'http://10.0.2.2:8080';
+
+export const endpoints = {
+    // Stories endpoints
+    allStories: 'api/stories',     // GET
+    getOneStory: 'api/stories/:id',    // GET
+    createStory: 'api/stories',        // POST
+    updateStory: 'api/stories/:id',    // PUT
+    deleteStory: 'api/stories/:id',    // DELETE
+    // Photos endpoints
+    allPhotos: 'api/stories/:storyId/photos',  // GET
+    getOnePhoto: 'api/stories/:storyId/photos/:photoId',   // GET
+    createPhoto: 'api/stories/:storyId/photos',    // POST
+    updatePhoto: 'api/stories/:storyId/photos/:photoId',   // PUT
+    deletePhoto: 'api/stories/:storyId/photos/:photoId'    // DELETE
+};

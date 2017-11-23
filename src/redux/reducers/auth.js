@@ -5,17 +5,16 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
 
-const defaultState = {
+const initialState = {
     loading: false,
     isLoggedIn: false,
     username: '',
     token: ''
 };
 
-export default function reducer(state = defaultState, action) {
+export default function reducer(state = initialState, action) {
     switch (action.type) {
         case LOGIN_IN_PROGRESS: {
-            console.log('in progressssss');
             return { ...state, loading: true };
         }
         case LOGIN_SUCCESS: {

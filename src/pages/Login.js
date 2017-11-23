@@ -21,14 +21,7 @@ class Login extends Component {
         e.preventDefault();
     }
 
-    toggleRoute(e) {
-        let alt = (this.state.route === 'Login') ? 'SignUp' : 'Login';
-        this.setState({ route: alt });
-        e.preventDefault();
-    }
-
     render() {
-        let alt = (this.state.route === 'Login') ? 'SignUp' : 'Login';
         return (
             <ScrollView style={{padding: 20}}>
                 <Text style={{fontSize: 27}}>{this.state.route}</Text>
@@ -44,12 +37,14 @@ class Login extends Component {
                     placeholder='Password'
                     autoCapitalize='none'
                     autoCorrect={false}
+                    keyboardType='email-address'
                     secureTextEntry={true}
                     value={this.state.password}
                     onChangeText={(text) => this.setState({ password: text })}/>
                 <View style={{margin: 7}}/>
-                <Button onPress={(e) => this.userLogin(e)} title={this.state.route}/>
-                <Text style={{fontSize: 16, color: 'blue'}} onPress={(e) => this.toggleRoute(e)}>{alt}</Text>
+                <Button onPress={(e) => this.userLogin(e)} title='LOGIN'/>
+                <Text style={{fontSize: 16}}>If you don't have an account, you can sign up </Text>
+                <Text style={{fontSize: 16, color: 'blue'}} onPress={(e) => console.log('go to registration form')}>here</Text>
             </ScrollView>
         );
     }
@@ -63,11 +58,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onLogin: (username, password) => { {
-            console.log(md5(password));
-            dispatch(login(username, md5(password)));
-        } },
-        onSignUp: (username, email, password) => { dispatch(signup(username, email, password)); }
+        onLogin: (username, password) => dispatch(login(username, md5(password)))
     };
 };
 
