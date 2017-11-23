@@ -3,7 +3,8 @@ import { LOGIN, LOGOUT } from '../reducers/auth';
 export const login = (username, password) => {
     return {
         type: LOGIN,
-        username: username
+        username: username,
+        password: password
     }
 };
 

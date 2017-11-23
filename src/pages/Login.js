@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import { ScrollView, Text, TextInput, View, Button } from 'react-native';
 import { login, signup } from '../redux/actions/auth';
 
+// Md5 for first step password hashing before sending it to API
+let md5 = require('md5');
+
 class Login extends Component {
     constructor(props) {
         super(props);
@@ -14,7 +17,6 @@ class Login extends Component {
     }
 
     userLogin(e) {
-        // TODO add Md5 hash
         this.props.onLogin(this.state.username, this.state.password);
         e.preventDefault();
     }
@@ -61,7 +63,10 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onLogin: (username, password) => { dispatch(login(username, password)); },
+        onLogin: (username, password) => { {
+            console.log(md5(password));
+            dispatch(login(username, md5(password)));
+        } },
         onSignUp: (username, email, password) => { dispatch(signup(username, email, password)); }
     };
 };
