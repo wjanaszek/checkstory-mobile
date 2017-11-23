@@ -1,10 +1,5 @@
 import { Story } from '../../model/story';
-
-// export action names
-export const LOAD_STORIES = 'LOAD_STORIES';
-export const LOAD_STORIES_IN_PROGRESS = 'LOAD_STORIES_IN_PROGRESS';
-export const LOAD_STORIES_SUCCESS = 'LOAD_STORIES_SUCCESS';
-export const LOAD_STORIES_FAIL = 'LOAD_STORIES_FAIL';
+import { LOAD_STORIES_FAIL, LOAD_STORIES_IN_PROGRESS, LOAD_STORIES_SUCCESS } from '../actions/stories';
 
 const initialState = {
   stories: Story = [],
