@@ -7,8 +7,9 @@ import {
     LOAD_STORIES_SUCCESS
 } from '../actions/stories';
 
+// @TODO do story class/model
 const initialState = {
-  stories: Story = [],
+  stories: [],
   loading: false,
 };
 

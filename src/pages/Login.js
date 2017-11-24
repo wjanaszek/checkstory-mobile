@@ -43,8 +43,9 @@ class Login extends Component {
                     onChangeText={(text) => this.setState({ password: text })}/>
                 <View style={{margin: 7}}/>
                 <Button onPress={(e) => this.userLogin(e)} title='LOGIN'/>
-                <Text style={{fontSize: 16}}>If you don't have an account, you can sign up </Text>
-                <Text style={{fontSize: 16, color: 'blue'}} onPress={(e) => console.log('go to registration form')}>here</Text>
+                <Text style={{fontSize: 16}}>If you don't have an account, you can sign up
+                    <Text style={{fontSize: 16, color: 'blue'}} onPress={(e) => console.log('go to registration form')}> here</Text>
+                </Text>
             </ScrollView>
         );
     }

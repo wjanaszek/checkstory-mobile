@@ -11,9 +11,9 @@ import {
 } from '../actions/photos';
 
 const initialState = {
-    story: Story = null,
-    photos: Photo = [],
-    selectedPhoto: Photo = null,
+    story: null,
+    photos: [],
+    selectedPhoto: null,
     loading: false
 };
 
@@ -56,7 +56,6 @@ export default function reducer(state = initialState, action) {
             photos.forEach((photo) => {
                 if (photo.id === action.photoId) {
                     photo = action.photo;
-                    break;
                 }
             });
             return { ...state, photos: photos, selectedPhoto: null, loading: false };

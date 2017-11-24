@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import auth from './auth';
 import stories from './stories';
-import photos from './photos';
+import story from './story';
 
 const rootReducer = combineReducers({
     auth,
     stories,
-    photos
+    story
 });
 
 export default rootReducer;
