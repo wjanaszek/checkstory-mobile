@@ -39,19 +39,20 @@ export const apiMiddleware = store => next => action => {
                 .then(response => {
                     const authorization = response.headers.get('Authorization');
                     if (authorization !== null) {
+                        console.log('authorization ' + authorization.slice(7));
                         next({
-                            type: LOGIN_SUCCESS,
-                            username: action.username,
-                            token: authorization.slice(7)
-                        });
-                        next({
+                                type: LOGIN_SUCCESS,
+                                username: action.username,
+                                token: authorization.slice(7)
+                            });
+                        store.dispatch({
                             type: LOAD_STORIES,
                             token: authorization.slice(7)
-                        })
+                        });
                     } else {
                         next({
                             type: LOGIN_FAIL,
-                            response
+                            error: 'Login or password incorrect'
                         })
                     }
                 })
@@ -59,7 +60,7 @@ export const apiMiddleware = store => next => action => {
                     console.log('error ' + JSON.stringify(error));
                     next({
                         type: LOGIN_FAIL,
-                        error
+                        error: 'Login or password incorrect'
                     })
                 });
             break;
@@ -85,6 +86,7 @@ export const apiMiddleware = store => next => action => {
          * STORIES
          */
         case LOAD_STORIES:
+            console.log('loading stories...');
             store.dispatch({ type: LOAD_STORIES_IN_PROGRESS });
             fetch(`${apiUrl}/api/stories`, {
                 method: 'GET',
@@ -94,7 +96,6 @@ export const apiMiddleware = store => next => action => {
                     'Authorization': 'Bearer ' + action.token
                 }
             })
-                .then(response => response.json())
                 .then(data => {
                    console.log('getStories result ' + JSON.stringify(data));
                    next({

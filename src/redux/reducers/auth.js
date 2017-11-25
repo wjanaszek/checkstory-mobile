@@ -4,7 +4,8 @@ const initialState = {
     loading: false,
     isLoggedIn: false,
     username: '',
-    token: ''
+    token: '',
+    error: null
 };
 
 export default function reducer(state = initialState, action) {
@@ -13,10 +14,10 @@ export default function reducer(state = initialState, action) {
             return { ...state, loading: true };
         }
         case LOGIN_SUCCESS: {
-            return { ...state, loading: false, username: action.username, token: action.token, isLoggedIn: true };
+            return { ...state, loading: false, username: action.username, token: action.token, isLoggedIn: true, error: null };
         }
         case LOGIN_FAIL: {
-            return { ...state, loading: false };
+            return { ...state, loading: false, error: action.error };
         }
         case LOGOUT: {
             return { ...state, isLoggedIn: false, username: '', token: '' };

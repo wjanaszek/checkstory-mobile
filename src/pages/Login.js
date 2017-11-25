@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ScrollView, Text, TextInput, View, Button } from 'react-native';
-import { login, signup } from '../redux/actions/auth';
+import { ScrollView, Text, TextInput, View, Button, TouchableOpacity } from 'react-native';
+import { login, signUp } from '../redux/actions/auth';
 
 // Md5 for first step password hashing before sending it to API
 let md5 = require('md5');
@@ -37,12 +37,16 @@ class Login extends Component {
                     placeholder='Password'
                     autoCapitalize='none'
                     autoCorrect={false}
-                    keyboardType='email-address'
                     secureTextEntry={true}
                     value={this.state.password}
                     onChangeText={(text) => this.setState({ password: text })}/>
                 <View style={{margin: 7}}/>
-                <Button onPress={(e) => this.userLogin(e)} title='LOGIN'/>
+                {!this.props.loading ?
+                    (<Button onPress={(e) => this.userLogin(e)} title='LOGIN'/>) :
+                    (<TouchableOpacity disabled={true}>
+                        <Text>Logging in...</Text>
+                    </TouchableOpacity>)}
+                {this.props.error ? (<Text style={{color: 'red'}}>{this.props.error}</Text>) : null}
                 <Text style={{fontSize: 16}}>If you don't have an account, you can sign up
                     <Text style={{fontSize: 16, color: 'blue'}} onPress={(e) => console.log('go to registration form')}> here</Text>
                 </Text>
@@ -53,7 +57,9 @@ class Login extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        isLoggedIn: state.auth.isLoggedIn
+        isLoggedIn: state.auth.isLoggedIn,
+        loading: state.auth.loading,
+        error: state.auth.error
     };
 };
 

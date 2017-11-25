@@ -26,6 +26,7 @@ export default function reducer(state = initialState, action) {
             return { ...state, loading: false };
         }
         case LOAD_STORIES_SUCCESS: {
+            console.log('data ' + JSON.stringify(action.stories));
             return { ...state, stories: action.stories, loading: false };
         }
         case CREATE_STORY_SUCCESS: {
