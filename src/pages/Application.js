@@ -1,15 +1,14 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import {
     StyleSheet,
     Text,
-    View,
-    TouchableHighlight
-} from 'react-native'
+    View
+} from 'react-native';
 import { connect } from 'react-redux';
-import { NativeRouter, Route, Link, Redirect, withRouter } from 'react-router-native'
+import { NativeRouter, Route, Link, Redirect, withRouter } from 'react-router-native';
 import StoryList from './StoryList';
 import StoryDetail from './StoryDetail';
-import Singup from './Signup';
+import Signup from './Signup';
 import Login from './Login';
 
 const App = () => (
@@ -17,22 +16,18 @@ const App = () => (
         <View style={styles.container}>
             <View>
                 <Link
-                    to='/login'
-                    style={styles.navItem}
-                    underlayColor='#f0f4f7'>
+                    to='/login'>
                     <Text>Log in</Text>
                 </Link>
                 <Text> or </Text>
                 <Link
-                    to='/signup'
-                    style={styles.navItem}
-                    underlayColor='#f0f4f7'>
+                    to='/signup'>
                     <Text>Register</Text>
                 </Link>
             </View>
 
             <Route path='/login' component={Login}/>
-            <Route path='/signup' component={Singup}/>
+            <Route path='/signup' component={Signup}/>
             <PrivateRoute path='/dashboard' component={Dashboard}/>
         </View>
     </NativeRouter>
@@ -44,31 +39,6 @@ const Dashboard = ({ match }) => (
         <Route path={match.url + '/story-detail/:id'} component={StoryDetail}/>
     </View>
 );
-
-// const fakeAuth = {
-//     isAuthenticated: false,
-//     authenticate(cb) {
-//         this.isAuthenticated = true
-//         setTimeout(cb, 100) // fake async
-//     },
-//     signout(cb) {
-//         this.isAuthenticated = false
-//         setTimeout(cb, 100)
-//     }
-// }
-
-// const AuthButton = withRouter(({ history }) => (
-//     fakeAuth.isAuthenticated ? (
-//         <View>
-//             <Text>Welcome!</Text>
-//             <TouchableHighlight style={styles.btn} underlayColor='#f0f4f7' onPress={() => {
-//                 fakeAuth.signout(() => history.push('/'))
-//             }}><Text>Sign out</Text></TouchableHighlight>
-//         </View>
-//     ) : (
-//         <Text>You are not logged in.</Text>
-//     )
-// ));
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={props => (
@@ -82,42 +52,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
         )
     )}/>
 );
-
-// const Public = () => <Text style={styles.header}>Public</Text>
-// const Protected = () => <Text style={styles.header}>Protected</Text>
-
-// class Login extends Component {
-//     state = {
-//         redirectToReferrer: false
-//     }
-//
-//     login = () => {
-//         fakeAuth.authenticate(() => {
-//             this.setState({ redirectToReferrer: true })
-//         })
-//     }
-//
-//     render() {
-//         const { from } = this.props.location.state || { from: { pathname: '/' } }
-//         const { redirectToReferrer } = this.state
-//
-//         if (redirectToReferrer) {
-//             return (
-//                 <Redirect to={from}/>
-//             )
-//         }
-//
-//         return (
-//             <View>
-//                 <Text>You must log in to view the page at {from.pathname}</Text>
-//
-//                 <TouchableHighlight style={styles.btn} underlayColor='#f0f4f7' onPress={this.login}>
-//                     <Text>Log in</Text>
-//                 </TouchableHighlight>
-//             </View>
-//         )
-//     }
-// }
 
 const styles = StyleSheet.create({
     container: {
