@@ -1,48 +1,18 @@
-// import { connect } from 'react-redux';
-// import React, { Component } from 'react';
-// import { StackNavigator } from 'react-navigation';
-// import Secured from './Secured';
-// import Login from './Login';
-// import Signup from './Signup';
-//
-// class Application extends Component {
-//     render() {
-//         if (this.props.isLoggedIn) {
-//             return <Secured />;
-//         } else {
-//             return <Login />;
-//         }
-//     }
-// }
-//
-// const App = StackNavigator({
-//     Login: { screen: Login },
-//     SignUp: { screen: Signup }
-// });
-//
-// const mapStateToProps = (state, ownProps) => {
-//     return {
-//         isLoggedIn: state.auth.isLoggedIn
-//     };
-// };
-//
-// export default connect (mapStateToProps) (Application);
-
 import React, { Component } from 'react'
 import {
     StyleSheet,
     Text,
     View,
-    AppRegistry,
     TouchableHighlight
 } from 'react-native'
-
+import { connect } from 'react-redux';
 import { NativeRouter, Route, Link, Redirect, withRouter } from 'react-router-native'
+import StoryList from './StoryList';
+import StoryDetail from './StoryDetail';
 
-const AuthExample = () => (
+const App = () => (
     <NativeRouter>
         <View style={styles.container}>
-            <AuthButton/>
             <View style={styles.nav}>
                 <Link
                     to="/public"
@@ -60,10 +30,17 @@ const AuthExample = () => (
 
             <Route path="/public" component={Public}/>
             <Route path="/login" component={Login}/>
-            <PrivateRoute path="/protected" component={Protected}/>
+            <PrivateRoute path='dashboard' component={Dashboard}/>
         </View>
     </NativeRouter>
-)
+);
+
+const Dashboard = ({ match }) => (
+    <View>
+        <Route path={match.url + '/story-list'} component={StoryList}/>
+        <Route path={match.url + '/story-detail/:id'} component={StoryDetail}/>
+    </View>
+);
 
 const fakeAuth = {
     isAuthenticated: false,
@@ -88,11 +65,11 @@ const AuthButton = withRouter(({ history }) => (
     ) : (
         <Text>You are not logged in.</Text>
     )
-))
+));
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={props => (
-        fakeAuth.isAuthenticated ? (
+        props.isLoggedIn ? (
             <Component {...props}/>
         ) : (
             <Redirect to={{
@@ -101,10 +78,10 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
             }}/>
         )
     )}/>
-)
+);
 
-const Public = () => <Text style={styles.header}>Public</Text>
-const Protected = () => <Text style={styles.header}>Protected</Text>
+// const Public = () => <Text style={styles.header}>Public</Text>
+// const Protected = () => <Text style={styles.header}>Protected</Text>
 
 class Login extends Component {
     state = {
@@ -164,6 +141,14 @@ const styles = StyleSheet.create({
         padding: 10,
         marginTop: 10,
     }
-})
+});
 
-export default AuthExample
+const mapStateToProps = (state, ownProps) => {
+    return {
+        isLoggedIn: state.auth.isLoggedIn,
+        loading: state.auth.loading,
+        error: state.auth.error
+    };
+};
+
+export default connect(mapStateToProps) (App);

@@ -7,10 +7,6 @@ import { login, signUp } from '../redux/actions/auth';
 let md5 = require('md5');
 
 class Login extends Component {
-    static navigationOptions = {
-        title: 'Login',
-    };
-
     constructor(props) {
         super(props);
         this.state = {
@@ -20,13 +16,17 @@ class Login extends Component {
         }
     }
 
+    state = {
+        redirectToReferrer: false
+    };
+
     userLogin(e) {
         this.props.onLogin(this.state.username, this.state.password);
         e.preventDefault();
     }
 
     render() {
-        const { navigate } = this.props.navigation;
+        const { from } = this.props.location.state || { from: { pathname: '/' } };
         return (
             <ScrollView style={{padding: 20}}>
                 <Text style={{fontSize: 27}}>{this.state.route}</Text>

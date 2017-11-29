@@ -11,8 +11,8 @@ class Singup extends Component {
         const { navigate } = this.props.navigation;
         return (
             <Text>Register form</Text>
-            <Button title="LOGIN" onPress={() =>
-                navigate('Login')}/>
+            // <Button title="LOGIN" onPress={() =>
+            //     navigate('Login')}/>
         )
     }
 }
