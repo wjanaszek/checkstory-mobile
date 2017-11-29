@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 
 class StoryDetail extends Component {
     render() {

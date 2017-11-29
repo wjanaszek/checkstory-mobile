@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ScrollView, Text, TextInput, View, Button, TouchableOpacity } from 'react-native';
-import { login, signUp } from '../redux/actions/auth';
+import { login } from '../redux/actions/auth';
+import { Link } from 'react-router-native';
 
 // Md5 for first step password hashing before sending it to API
 let md5 = require('md5');
@@ -29,6 +30,7 @@ class Login extends Component {
         const { from } = this.props.location.state || { from: { pathname: '/' } };
         return (
             <ScrollView style={{padding: 20}}>
+                { from.pathname ? (<Text>You have to log in first, to see {from.pathname}</Text>) : null}
                 <Text style={{fontSize: 27}}>{this.state.route}</Text>
                 <TextInput
                     placeholder='Username'
@@ -53,7 +55,9 @@ class Login extends Component {
                     </TouchableOpacity>)}
                 {this.props.error ? (<Text style={{color: 'red'}}>{this.props.error}</Text>) : null}
                 <Text style={{fontSize: 16}}>If you don't have an account, you can sign up
-                    <Text style={{fontSize: 16, color: 'blue'}} onPress={(e) => console.log('go to registration form')}> here</Text>
+                    <Link to='/signup'>
+                        <Text>here</Text>
+                    </Link>
                 </Text>
             </ScrollView>
         );
