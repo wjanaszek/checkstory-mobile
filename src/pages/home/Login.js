@@ -11,7 +11,6 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            route: 'Login',
             username: '',
             password: ''
         }
@@ -33,14 +32,16 @@ class Login extends Component {
                     autoFocus={true}
                     keyboardType='email-address'
                     value={this.state.username}
-                    onChangeText={(text) => this.setState({ username: text })} />
+                    onChangeText={(text) => this.setState({ username: text })}
+                />
                 <TextInput
                     placeholder='Password'
                     autoCapitalize='none'
                     autoCorrect={false}
                     secureTextEntry={true}
                     value={this.state.password}
-                    onChangeText={(text) => this.setState({ password: text })}/>
+                    onChangeText={(text) => this.setState({ password: text })}
+                />
                 <View style={{margin: 7}}/>
                 {!this.props.loading ?
                     (<Button onPress={(e) => this.userLogin(e)} title='LOGIN'/>) :

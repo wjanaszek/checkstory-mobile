@@ -8,6 +8,7 @@ import Login from './home/Login';
 import Home from './home/Home';
 import StoryAdd from './story/StoryAdd';
 import StoryEdit from './story/StoryEdit';
+import MoreVertButton from './custom-buttons/MoreVertButton';
 
 const App = () => (
     <Router>
@@ -32,6 +33,7 @@ const App = () => (
                 key='storyList'
                 component={StoryList}
                 title='Story list'
+                renderRightButton={MoreVertButton}
             />
             <Scene
                 key='storyDetail'
