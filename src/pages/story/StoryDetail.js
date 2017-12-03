@@ -6,7 +6,7 @@ class StoryDetail extends Component {
     render() {
         return (
             <View>
-                <Text>StoryDetail</Text>
+                <Text>StoryDetail {this.props.id}</Text>
             </View>
         )
     }

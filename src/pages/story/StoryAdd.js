@@ -5,7 +5,7 @@ class StoryAdd extends Component {
     render() {
         return(
             <View>
-                <Text>StoryEdit</Text>
+                <Text>StoryAdd</Text>
             </View>
         )
     }
