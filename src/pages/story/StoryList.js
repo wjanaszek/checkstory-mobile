@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SectionList, Text, View, Button, FlatList } from 'react-native';
+import { Text, View, Button, FlatList } from 'react-native';
 import { getAllStories } from '../../redux/actions/stories';
-import { List, ListItem, SearchBar } from 'react-native-elements';
+import { List, ListItem } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 
 class StoryList extends Component {
@@ -26,8 +26,7 @@ class StoryList extends Component {
                                 />
                             )}
                         />
-                    </List>
-                    )}
+                    </List>)}
                 <Button onPress={() => Actions.storyAdd()} title='Add story'/>
             </View>
         )
