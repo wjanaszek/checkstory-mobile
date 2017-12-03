@@ -1,11 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Router, Scene } from 'react-native-router-flux';
-import StoryList from './StoryList';
-import StoryDetail from './StoryDetail';
-import Signup from './Signup';
-import Login from './Login';
-import Home from './Home';
+import StoryList from './story/StoryList';
+import StoryDetail from './story/StoryDetail';
+import Signup from './home/Signup';
+import Login from './home/Login';
+import Home from './home/Home';
+import StoryAdd from './story/StoryAdd';
+import StoryEdit from './story/StoryEdit';
 
 const App = () => (
     <Router>
@@ -35,6 +37,16 @@ const App = () => (
                 key='storyDetail'
                 component={StoryDetail}
                 title='Story detail'
+            />
+            <Scene
+                key='storyAdd'
+                component={StoryAdd}
+                title='Add story'
+            />
+            <Scene
+                key='storyEdit'
+                component={StoryEdit}
+                title='Edit story'
             />
         </Scene>
     </Router>

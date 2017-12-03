@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ScrollView, Text, TextInput, View, Button, TouchableOpacity } from 'react-native';
-import { login } from '../redux/actions/auth';
+import { login } from '../../redux/actions/auth';
 import { Actions } from 'react-native-router-flux';
 
 // Md5 for first step password hashing before sending it to API

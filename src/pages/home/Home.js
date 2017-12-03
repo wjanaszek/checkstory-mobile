@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        isLoggedIn: state.auth.isLoggedIn,
+        isLoggedIn: state.auth.isLoggedIn,       // TODO uncheck this to state.auth.isLoggedIn
         loading: state.auth.loading,
         error: state.auth.error
     };

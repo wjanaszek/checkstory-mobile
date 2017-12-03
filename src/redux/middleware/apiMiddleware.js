@@ -86,7 +86,6 @@ export const apiMiddleware = store => next => action => {
          * STORIES
          */
         case LOAD_STORIES:
-            console.log('loading stories...');
             store.dispatch({ type: LOAD_STORIES_IN_PROGRESS });
             fetch(`${apiUrl}/api/stories`, {
                 method: 'GET',
@@ -96,11 +95,18 @@ export const apiMiddleware = store => next => action => {
                     'Authorization': 'Bearer ' + action.token
                 }
             })
+                .then(response => response.json())
                 .then(data => {
-                   console.log('getStories result ' + JSON.stringify(data));
+                   const stories = data.map(item => {
+                       return {
+                           id: item.id,
+                           title: item.title,
+                           createDate: item.createDate
+                       }
+                   });
                    next({
                        type: LOAD_STORIES_SUCCESS,
-                       stories: ''
+                       stories: stories
                    })
                 })
                 .catch(error => {
@@ -121,7 +127,10 @@ export const apiMiddleware = store => next => action => {
                     'Authorization': 'Bearer ' + action.token
                 }
             })
-                .then()
+                .then(response => response.json())
+                .then(data => {
+                    console.log('load story result ' + JSON.stringify(data.content))
+                })
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));
                     next({
