@@ -52,11 +52,10 @@ export const createStory = (token, story) => {
     }
 };
 
-export const updateStory = (token, storyId, story) => {
+export const updateStory = (token, story) => {
     return {
         type: UPDATE_STORY,
         token: token,
-        storyId: storyId,
         story: story
     }
 };

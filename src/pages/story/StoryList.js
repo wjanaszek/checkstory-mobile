@@ -22,7 +22,7 @@ class StoryList extends Component {
                                 <ListItem
                                     title={`${item.title}`}
                                     subtitle={item.createDate}
-                                    onPress={() => Actions.storyDetail({id: item.id})}
+                                    onPress={() => Actions.storyDetail({story: item})}
                                 />
                             )}
                         />
