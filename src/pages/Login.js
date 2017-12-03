@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ScrollView, Text, TextInput, View, Button, TouchableOpacity } from 'react-native';
 import { login } from '../redux/actions/auth';
-import { Link, Redirect } from 'react-router-native';
+import { Actions } from 'react-native-router-flux';
 
 // Md5 for first step password hashing before sending it to API
 let md5 = require('md5');
@@ -13,22 +13,19 @@ class Login extends Component {
         this.state = {
             route: 'Login',
             username: '',
-            password: '',
-            redirectToReferrer: false
+            password: ''
         }
     }
 
     userLogin(e) {
         this.props.onLogin(this.state.username, this.state.password);
         e.preventDefault();
+        Actions.home();
     }
 
     render() {
-        const { from } = this.props.location.state || { from: { pathname: '/' } };
         return (
             <ScrollView style={{padding: 20}}>
-                {/*{ from.pathname ? (<Text>You have to log in first, to see {from.pathname}</Text>) : null }*/}
-                {/*<Text style={{fontSize: 27}}>{this.state.route}</Text>*/}
                 <TextInput
                     placeholder='Username'
                     autoCapitalize='none'
@@ -51,12 +48,10 @@ class Login extends Component {
                         <Text>Logging in...</Text>
                     </TouchableOpacity>)}
                 {this.props.error ? (<Text style={{color: 'red'}}>{this.props.error}</Text>) : null}
-                <Text style={{fontSize: 16}}>If you don't have an account, you can sign up</Text>
-                <Link to='/signup'>
-                    <Text>here</Text>
-                </Link>
-
-                {this.props.isLoggedIn ? (<Redirect to='/dashboard/story-list'/>) : null}
+                <Text style={{fontSize: 16}}>
+                    If you don't have an account, you can sign up
+                    <Text style={{color: 'blue'}}onPress={() => Actions.register()}> here</Text>
+                </Text>
             </ScrollView>
         );
     }
