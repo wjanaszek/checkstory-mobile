@@ -15,5 +15,6 @@ export default class Story {
         this.latitude = latitude;
         this.longitude = longitude;
         this.createDate = createDate;
+        this.photos = [];
     }
 };

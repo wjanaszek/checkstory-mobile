@@ -7,7 +7,7 @@ class StoryEdit extends Component {
     render() {
         return(
             <View>
-                <Text>StoryEdit</Text>
+                <Text>StoryEdit {this.props.story.id}, {this.props.story.title}</Text>
             </View>
         )
     }

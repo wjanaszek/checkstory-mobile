@@ -3,6 +3,7 @@ import { Button, ScrollView, Text, TextInput, TouchableOpacity, View } from 'rea
 import { connect } from 'react-redux';
 import { createStory } from '../../redux/actions/stories';
 import Story from '../../model/story';
+import DatePicker from 'react-native-datepicker';
 
 class StoryAdd extends Component {
     constructor(props) {
@@ -17,7 +18,9 @@ class StoryAdd extends Component {
     }
 
     addStory() {
-        this.props.onStoryAdd();
+        console.log(JSON.stringify(this.state));
+        console.log('token: ' + this.props.token);
+        this.props.onStoryAdd(this.props.token, this.state.title, this.state.notes, this.state.longitude, this.state.latitude, this.state.createDate);
     }
 
     render() {
@@ -38,6 +41,8 @@ class StoryAdd extends Component {
                     autoCorrect={true}
                     autoFocus={false}
                     keyboardType='email-address'
+                    multiline={true}
+                    numberOfLines={4}
                     value={this.state.notes}
                     onChangeText={(text) => this.setState({ notes: text })}
                 />
@@ -59,14 +64,25 @@ class StoryAdd extends Component {
                     value={this.state.latitude}
                     onChangeText={(text) => this.setState({ latitude: text })}
                 />
-                <TextInput
-                    placeholder='Create date'
-                    autoCapitalize='none'
-                    autoCorrect={true}
-                    autoFocus={false}
-                    keyboardType='email-address'
-                    value={this.state.createDate}
-                    onChangeText={(text) => this.setState({ createDate: text })}
+                <DatePicker
+                    date={this.state.createDate}
+                    mode='date'
+                    placeholder='Select create date'
+                    format='YYYY-MM-DD'
+                    confirmBtnText='Confirm'
+                    cancelBtnText='Cancel'
+                    customStyles={{
+                        dateIcon: {
+                            position: 'absolute',
+                            left: 0,
+                            top: 4,
+                            marginLeft: 0
+                        },
+                        dateInput: {
+                            marginLeft: 36
+                        }
+                    }}
+                    onDateChange={(date) => {this.setState({createDate: date})}}
                 />
                 {!this.props.loading ?
                     (<Button onPress={() => this.addStory()} title='ADD STORY'/>) :

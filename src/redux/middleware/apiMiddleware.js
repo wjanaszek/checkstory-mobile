@@ -4,7 +4,7 @@ import {
     SIGN_UP_IN_PROGRESS
 } from '../actions/auth';
 import {
-    CREATE_STORY, CREATE_STORY_FAIL, CREATE_STORY_IN_PROGRESS, DELETE_STORY, DELETE_STORY_FAIL,
+    CREATE_STORY, CREATE_STORY_FAIL, CREATE_STORY_IN_PROGRESS, CREATE_STORY_SUCCESS, DELETE_STORY, DELETE_STORY_FAIL,
     DELETE_STORY_IN_PROGRESS,
     LOAD_STORIES, LOAD_STORIES_FAIL, LOAD_STORIES_IN_PROGRESS, LOAD_STORIES_SUCCESS,
     LOAD_STORY, LOAD_STORY_FAIL, LOAD_STORY_IN_PROGRESS, UPDATE_STORY, UPDATE_STORY_FAIL, UPDATE_STORY_IN_PROGRESS
@@ -101,6 +101,9 @@ export const apiMiddleware = store => next => action => {
                        return {
                            id: item.id,
                            title: item.title,
+                           notes: item.notes,
+                           longitude: item.longitude,
+                           latitude: item.latitude,
                            createDate: item.createDate
                        }
                    });
@@ -150,7 +153,14 @@ export const apiMiddleware = store => next => action => {
                 },
                 body: JSON.stringify(action.story)
             })
-                .then()
+                .then(response => response.json())
+                .then(data => {
+                    const story = data;
+                    next({
+                        type: CREATE_STORY_SUCCESS,
+                        story: story
+                    })
+                })
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));
                     next({

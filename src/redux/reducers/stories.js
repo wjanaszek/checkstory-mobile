@@ -10,6 +10,7 @@ import {
 // @TODO do story class/model
 const initialState = {
   stories: [],
+  story: null,
   loading: false,
 };
 
