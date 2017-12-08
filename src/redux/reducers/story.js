@@ -9,6 +9,7 @@ import {
     LOAD_PHOTO_FAIL, LOAD_PHOTO_IN_PROGRESS, LOAD_PHOTO_SUCCESS, LOAD_PHOTOS_FAIL, LOAD_PHOTOS_IN_PROGRESS,
     LOAD_PHOTOS_SUCCESS, UPDATE_PHOTO_FAIL, UPDATE_PHOTO_IN_PROGRESS, UPDATE_PHOTO_SUCCESS
 } from '../actions/photos';
+import { Actions } from 'react-native-router-flux';
 
 const initialState = {
     story: null,
@@ -67,6 +68,7 @@ export default function reducer(state = initialState, action) {
             return { ...state, photos: photos, selectedPhoto: null, loading: false };
         }
         case UPDATE_STORY_SUCCESS: {
+            Actions.reset('storyList');
             return { ...state, story: action.story, loading: false };
         }
         default:

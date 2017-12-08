@@ -7,7 +7,9 @@ import {
     CREATE_STORY, CREATE_STORY_FAIL, CREATE_STORY_IN_PROGRESS, CREATE_STORY_SUCCESS, DELETE_STORY, DELETE_STORY_FAIL,
     DELETE_STORY_IN_PROGRESS, DELETE_STORY_SUCCESS,
     LOAD_STORIES, LOAD_STORIES_FAIL, LOAD_STORIES_IN_PROGRESS, LOAD_STORIES_SUCCESS,
-    LOAD_STORY, LOAD_STORY_FAIL, LOAD_STORY_IN_PROGRESS, UPDATE_STORY, UPDATE_STORY_FAIL, UPDATE_STORY_IN_PROGRESS
+    LOAD_STORY, LOAD_STORY_FAIL, LOAD_STORY_IN_PROGRESS, UPDATE_STORY, UPDATE_STORY_FAIL, UPDATE_STORY_IN_PROGRESS,
+    UPDATE_STORY_IN_STORIES_SUCCESS,
+    UPDATE_STORY_SUCCESS
 } from '../actions/stories';
 import {
     CREATE_PHOTO, CREATE_PHOTO_FAIL, CREATE_PHOTO_IN_PROGRESS, DELETE_PHOTO, DELETE_PHOTO_FAIL,
@@ -179,7 +181,18 @@ export const apiMiddleware = store => next => action => {
                 },
                 body: JSON.stringify(action.story)
             })
-                .then()
+                .then(response => response.json())
+                .then(data => {
+                    const story = data;
+                    next({
+                        type: UPDATE_STORY_SUCCESS,
+                        story: story
+                    });
+                    store.dispatch({
+                        type: UPDATE_STORY_IN_STORIES_SUCCESS,
+                        story: story
+                    })
+                })
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));
                     next({

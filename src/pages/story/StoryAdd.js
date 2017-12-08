@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Button, ScrollView, Text, TextInput, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { createStory } from '../../redux/actions/stories';
 import Story from '../../model/story';
@@ -18,8 +18,6 @@ class StoryAdd extends Component {
     }
 
     addStory() {
-        console.log(JSON.stringify(this.state));
-        console.log('token: ' + this.props.token);
         this.props.onStoryAdd(this.props.token, this.state.title, this.state.notes, this.state.longitude, this.state.latitude, this.state.createDate);
     }
 
@@ -82,7 +80,7 @@ class StoryAdd extends Component {
                             marginLeft: 36
                         }
                     }}
-                    onDateChange={(date) => {this.setState({createDate: date})}}
+                    onDateChange={(date) => {this.setState({ createDate: date })}}
                 />
                 {!this.props.loading ?
                     (<Button onPress={() => this.addStory()} title='ADD STORY'/>) :

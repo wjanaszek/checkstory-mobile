@@ -5,7 +5,7 @@ import {
     CREATE_STORY_IN_PROGRESS, CREATE_STORY_SUCCESS, DELETE_STORY_FAIL, DELETE_STORY_IN_PROGRESS, DELETE_STORY_SUCCESS,
     LOAD_STORIES_FAIL,
     LOAD_STORIES_IN_PROGRESS,
-    LOAD_STORIES_SUCCESS
+    LOAD_STORIES_SUCCESS, UPDATE_STORY_IN_STORIES_SUCCESS
 } from '../actions/stories';
 
 // @TODO do story class/model
@@ -44,6 +44,14 @@ export default function reducer(state = initialState, action) {
             Actions.storyList();
             return { ...state, stories: stories, loading: false };
         }
+        case UPDATE_STORY_IN_STORIES_SUCCESS: {
+            const stories = [...state.stories];
+            const index = stories.findIndex((story) => story.id === action.story.id);
+            stories[index] = action.story;
+            Actions.storyDetail({story: action.story});
+            return { ...state, stories: stories, loading: false };
+        }
+
         default:
             return state;
     }

@@ -22,6 +22,7 @@ export const UPDATE_STORY = 'UPDATE_STORY';
 export const UPDATE_STORY_IN_PROGRESS = 'UPDATE_STORY_IN_PROGRESS';
 export const UPDATE_STORY_SUCCESS = 'UPDATE_STORY_SUCCESS';
 export const UPDATE_STORY_FAIL = 'UPDATE_STORY_FAIL';
+export const UPDATE_STORY_IN_STORIES_SUCCESS = 'UPDATE_STORY_IN_STORIES_SUCCESS';
 
 // delete story
 export const DELETE_STORY = 'DELETE_STORY';
@@ -52,11 +53,12 @@ export const createStory = (token, story) => {
     }
 };
 
-export const updateStory = (token, story) => {
+export const updateStory = (token, story, storyId) => {
     return {
         type: UPDATE_STORY,
         token: token,
-        story: story
+        story: story,
+        storyId: storyId
     }
 };
 
