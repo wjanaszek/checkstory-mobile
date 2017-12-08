@@ -1,4 +1,5 @@
 import { Story } from '../../model/story';
+import { Actions } from 'react-native-router-flux';
 import {
     CREATE_STORY_FAIL,
     CREATE_STORY_IN_PROGRESS, CREATE_STORY_SUCCESS, DELETE_STORY_FAIL, DELETE_STORY_IN_PROGRESS, DELETE_STORY_SUCCESS,
@@ -11,6 +12,7 @@ import {
 const initialState = {
   stories: [],
   story: null,
+  storyId: null,
   loading: false,
 };
 
@@ -32,12 +34,14 @@ export default function reducer(state = initialState, action) {
         case CREATE_STORY_SUCCESS: {
             const stories = [...state.stories];
             stories.push(action.story);
+            Actions.storyList();
             return { ...state, stories: stories, loading: false };
         }
         case DELETE_STORY_SUCCESS: {
             const stories = [...state.stories];
             const index = stories.findIndex((story) => story.id === action.storyId);
             stories.splice(index, 1);
+            Actions.storyList();
             return { ...state, stories: stories, loading: false };
         }
         default:

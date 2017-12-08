@@ -27,8 +27,14 @@ class StoryDetail extends Component {
     render() {
         return (
             <ScrollView style={{padding: 20}}>
-                <Button onPress={() => Actions.storyEdit({ story: this.state })} title='EDIT' />
-                <Button onPress={() => Actions.popup({ data: 'Are you sure?' })} title='DELETE' />
+                <Button title='EDIT' onPress={() => Actions.storyEdit({ story: this.state })} />
+                <Button title='DELETE' onPress={() => Actions.popup({
+                    title: 'Delete story',
+                    message: 'Are you sure you want delete this story?',
+                    noOptionMsg: 'NO',
+                    yesOptionMsg: 'YES',
+                    storyId: this.state.id
+                })} />
                 <TouchableOpacity disabled={true}>
                     <Text style={styles.labelStyle}>Title</Text>
                     <Text>{this.state.title}</Text>
@@ -42,7 +48,7 @@ class StoryDetail extends Component {
                     <Text>{this.state.createDate}</Text>
                 </TouchableOpacity>
                 {!this.props.loading ?
-                    (<Button onPress={() => this.addPhoto()} title='ADD PHOTOS'/>) :
+                    (<Button title='ADD PHOTOS' onPress={() => this.addPhoto()} />) :
                     (<TouchableOpacity disabled={true}>
                         <Text>Adding photo...</Text>
                     </TouchableOpacity>)}

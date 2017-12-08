@@ -5,7 +5,7 @@ import {
 } from '../actions/auth';
 import {
     CREATE_STORY, CREATE_STORY_FAIL, CREATE_STORY_IN_PROGRESS, CREATE_STORY_SUCCESS, DELETE_STORY, DELETE_STORY_FAIL,
-    DELETE_STORY_IN_PROGRESS,
+    DELETE_STORY_IN_PROGRESS, DELETE_STORY_SUCCESS,
     LOAD_STORIES, LOAD_STORIES_FAIL, LOAD_STORIES_IN_PROGRESS, LOAD_STORIES_SUCCESS,
     LOAD_STORY, LOAD_STORY_FAIL, LOAD_STORY_IN_PROGRESS, UPDATE_STORY, UPDATE_STORY_FAIL, UPDATE_STORY_IN_PROGRESS
 } from '../actions/stories';
@@ -197,7 +197,13 @@ export const apiMiddleware = store => next => action => {
                     'Authorization': 'Bearer ' + action.token
                 }
             })
-                .then()
+                .then(response => response.json())
+                .then(data => {
+                    next({
+                        type: DELETE_STORY_SUCCESS,
+                        storyId: action.storyId
+                    })
+                })
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));
                     next({
