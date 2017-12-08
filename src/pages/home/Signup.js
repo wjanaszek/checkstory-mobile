@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Button, ScrollView, Text, TextInput, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { signUp } from '../../redux/actions/auth';
 
@@ -18,7 +18,7 @@ class Signup extends Component {
     }
 
     signUp() {
-        this.props.onSignUp(this.props.username, this.props.email, this.props.password);
+        this.props.onSignUp(this.state.username, this.state.email, this.state.password);
     }
 
     render() {
@@ -56,7 +56,7 @@ class Signup extends Component {
                     autoCorrect={false}
                     secureTextEntry={true}
                     value={this.state.repeatedPassword}
-                    onChangeText={(text) => this.setState({ repatedPassword: text })}
+                    onChangeText={(text) => this.setState({ repeatedPassword: text })}
                 />
                 {!this.props.loading ?
                     (<Button onPress={() => this.signUp()} title='REGISTER'/>) :

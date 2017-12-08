@@ -26,8 +26,10 @@ export const logout = () => {
 export const signUp = (username, email, password) => {
     return {
         type: SIGN_UP,
-        username: username,
-        email: email,
-        password: password
+        user: {
+            login: username,
+            email: email,
+            password: password
+        }
     }
 };

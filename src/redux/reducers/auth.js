@@ -1,4 +1,4 @@
-import { LOGIN_FAIL, LOGIN_IN_PROGRESS, LOGIN_SUCCESS, LOGOUT } from '../actions/auth';
+import { LOGIN_FAIL, LOGIN_IN_PROGRESS, LOGIN_SUCCESS, LOGOUT, SIGN_UP_SUCCESS } from '../actions/auth';
 import { Actions } from 'react-native-router-flux';
 
 const initialState = {
@@ -23,6 +23,10 @@ export default function reducer(state = initialState, action) {
         }
         case LOGOUT: {
             return { ...state, isLoggedIn: false, username: '', token: '' };
+        }
+        case SIGN_UP_SUCCESS: {
+            // Actions.reset('welcome');
+            return state;
         }
         default:
             return state;

@@ -1,7 +1,7 @@
 import { apiUrl } from '../../config/appConfig';
 import {
     LOGIN, LOGIN_FAIL, LOGIN_IN_PROGRESS, LOGIN_SUCCESS, SIGN_UP, SIGN_UP_FAIL,
-    SIGN_UP_IN_PROGRESS
+    SIGN_UP_IN_PROGRESS, SIGN_UP_SUCCESS
 } from '../actions/auth';
 import {
     CREATE_STORY, CREATE_STORY_FAIL, CREATE_STORY_IN_PROGRESS, CREATE_STORY_SUCCESS, DELETE_STORY, DELETE_STORY_FAIL,
@@ -76,7 +76,12 @@ export const apiMiddleware = store => next => action => {
                 },
                 body: JSON.stringify(action.user)
             })
-                .then()
+                .then(response => response.json())
+                .then(data => {
+                    next({
+                        type: SIGN_UP_SUCCESS
+                    })
+                })
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));
                     next({

@@ -10,6 +10,7 @@ import StoryAdd from './story/StoryAdd';
 import StoryEdit from './story/StoryEdit';
 import MoreVertButton from './custom-buttons/MoreVertButton';
 import PopupModal from './modal/PopupModal';
+import Welcome from './home/Welcome';
 
 const App = () => (
     <Router>
@@ -29,6 +30,11 @@ const App = () => (
                 key='register'
                 component={Signup}
                 title='Sign up'
+            />
+            <Scene
+                key='welcome'
+                component={Welcome}
+                title='Welcome to Checkstory'
             />
             <Scene
                 key='storyList'
