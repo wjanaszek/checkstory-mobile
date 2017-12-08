@@ -24,7 +24,7 @@ class StoryDetail extends Component {
     render() {
         return (
             <ScrollView style={{padding: 20}}>
-                <View style={{flexDirection: 'row', spacing: 3}}>
+                <View style={styles.rowButtons}>
                     <Button title='EDIT' onPress={() => Actions.storyEdit({ story: this.state })} />
                     <Button title='DELETE' onPress={() => Actions.popup({
                         title: 'Delete story',

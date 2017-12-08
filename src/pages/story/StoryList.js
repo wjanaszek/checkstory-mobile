@@ -18,6 +18,7 @@ class StoryList extends Component {
                     (<List>
                         <FlatList
                             data={this.props.stories}
+                            keyExtractor={item => item.id}
                             renderItem={({ item }) => (
                                 <ListItem
                                     title={`${item.title}`}

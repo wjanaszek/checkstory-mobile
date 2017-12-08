@@ -30,7 +30,7 @@ class PopupModal extends Component {
                 <View flex={1} style={styles.popup}>
                     <Text>{this.props.title}</Text>
                     <Text>{this.props.message}</Text>
-                    <View style={{flexDirection: 'row', spacing: 3}}>
+                    <View style={styles.rowButtons}>
                         {this.props.title === 'Delete story' ? (<Button title={this.props.yesOptionMsg} onPress={() => this.deleteStory()} />) : null }
                         {this.props.title === 'Logout' ? (<Button title={this.props.yesOptionMsg} onPress={() => this.logout()} />) : null }
                         <Button title={this.props.noOptionMsg} onPress={Actions.pop} />
