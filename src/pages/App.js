@@ -9,7 +9,7 @@ import Home from './home/Home';
 import StoryAdd from './story/StoryAdd';
 import StoryEdit from './story/StoryEdit';
 import MoreVertButton from './custom-buttons/MoreVertButton';
-import Popup from './Popup';
+import PopupModal from './modal/PopupModal';
 
 const App = () => (
     <Router>
@@ -52,8 +52,9 @@ const App = () => (
                 title='Edit story'
             />
             <Scene
+                hideNavBar
                 key='popup'
-                component={Popup}
+                component={PopupModal}
             />
         </Scene>
     </Router>
