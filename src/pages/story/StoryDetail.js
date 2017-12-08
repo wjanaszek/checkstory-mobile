@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, TouchableOpacity, ScrollView, Text, StyleSheet } from 'react-native';
+import { deleteStory } from '../../redux/actions/stories';
+import { createPhoto } from '../../redux/actions/photos';
+import { Actions } from 'react-native-router-flux';
 
 class StoryDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: this.props.story.id,
             title: this.props.story.title,
             notes: this.props.story.notes,
             longitude: this.props.story.longitude,
@@ -14,12 +18,17 @@ class StoryDetail extends Component {
         }
     }
 
+    deleteStory() {
+    }
+
     addPhoto() {
     }
 
     render() {
         return (
             <ScrollView style={{padding: 20}}>
+                <Button onPress={() => Actions.storyEdit({ story: this.state })} title='EDIT' />
+                <Button onPress={() => this.deleteStory()} title='DELETE' />
                 <TouchableOpacity disabled={true}>
                     <Text style={styles.labelStyle}>Title</Text>
                     <Text>{this.state.title}</Text>
@@ -49,7 +58,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginTop: 7
     }
-})
+});
 
 const mapStateToProps = (state, ownProps) => {
     return {
@@ -58,4 +67,11 @@ const mapStateToProps = (state, ownProps) => {
     };
 };
 
-export default connect (mapStateToProps) (StoryDetail);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onStoryDelete: (token, storyId) => dispatch(deleteStory(token, storyId)),
+        onPhotoAdd: (token, storyId, photo) => dispatch(createPhoto(token, storyId, photo))
+    }
+};
+
+export default connect (mapStateToProps, mapDispatchToProps) (StoryDetail);

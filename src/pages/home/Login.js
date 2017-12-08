@@ -51,7 +51,7 @@ class Login extends Component {
                 {this.props.error ? (<Text style={{color: 'red'}}>{this.props.error}</Text>) : null}
                 <Text style={{fontSize: 16}}>
                     If you don't have an account, you can sign up
-                    <Text style={{color: 'blue'}}onPress={() => Actions.register()}> here</Text>
+                    <Text style={{color: 'blue'}} onPress={() => Actions.register()}> here</Text>
                 </Text>
             </ScrollView>
         );
