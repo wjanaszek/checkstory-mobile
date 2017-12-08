@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, TouchableOpacity, ScrollView, Text, StyleSheet } from 'react-native';
+import { Button, TouchableOpacity, ScrollView, Text, StyleSheet, View } from 'react-native';
 import { deleteStory } from '../../redux/actions/stories';
 import { createPhoto } from '../../redux/actions/photos';
 import { Actions } from 'react-native-router-flux';
@@ -24,14 +24,16 @@ class StoryDetail extends Component {
     render() {
         return (
             <ScrollView style={{padding: 20}}>
-                <Button title='EDIT' onPress={() => Actions.storyEdit({ story: this.state })} />
-                <Button title='DELETE' onPress={() => Actions.popup({
-                    title: 'Delete story',
-                    message: 'Are you sure you want delete this story?',
-                    noOptionMsg: 'NO',
-                    yesOptionMsg: 'YES',
-                    storyId: this.state.id
-                })} />
+                <View style={{flexDirection: 'row', spacing: 3}}>
+                    <Button title='EDIT' onPress={() => Actions.storyEdit({ story: this.state })} />
+                    <Button title='DELETE' onPress={() => Actions.popup({
+                        title: 'Delete story',
+                        message: 'Are you sure you want delete this story?',
+                        noOptionMsg: 'NO',
+                        yesOptionMsg: 'YES',
+                        storyId: this.state.id
+                    })} />
+                </View>
                 <TouchableOpacity disabled={true}>
                     <Text style={styles.labelStyle}>Title</Text>
                     <Text>{this.state.title}</Text>

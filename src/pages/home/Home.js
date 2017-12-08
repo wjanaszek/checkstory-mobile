@@ -16,7 +16,7 @@ class Home extends Component {
         return(
             <View>
                 <Text>Home</Text>
-                <View>
+                <View style={{flexDirection: 'row', spacing: 3}}>
                     <Button style={styles.button} title='Log in' onPress={() => Actions.login()}/>
                     <Button style={styles.button} title='Sign up' onPress={() => Actions.register()}/>
                 </View>

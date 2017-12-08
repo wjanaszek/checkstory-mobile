@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, ScrollView, Text, TextInput, TouchableOpacity } from 'react-native';
+import { Button, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import { deleteStory, updateStory } from '../../redux/actions/stories';
 import { Actions } from 'react-native-router-flux';
@@ -85,12 +85,14 @@ class StoryEdit extends Component {
                     }}
                     onDateChange={(date) => {this.setState({ createDate: date })}}
                 />
-                <Button title='CANCEL' onPress={() => Actions.pop()} />
-                {!this.props.loading ?
-                    (<Button title='SAVE' onPress={() => this.updateStory()} />) :
-                    (<TouchableOpacity disabled={true}>
-                        <Text>Updating story...</Text>
-                    </TouchableOpacity>)}
+                <View style={{flexDirection: 'row', spacing: 3}}>
+                    <Button title='CANCEL' onPress={() => Actions.pop()} />
+                    {!this.props.loading ?
+                        (<Button title='SAVE' onPress={() => this.updateStory()} />) :
+                        (<TouchableOpacity disabled={true}>
+                            <Text>Updating story...</Text>
+                        </TouchableOpacity>)}
+                </View>
                 {this.props.error ? (<Text style={{color: 'red'}}>{this.props.error}</Text>) : null}
             </ScrollView>
         )
