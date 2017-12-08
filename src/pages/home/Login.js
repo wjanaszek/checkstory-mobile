@@ -19,7 +19,6 @@ class Login extends Component {
     userLogin(e) {
         this.props.onLogin(this.state.username, this.state.password);
         e.preventDefault();
-        Actions.home();
     }
 
     render() {

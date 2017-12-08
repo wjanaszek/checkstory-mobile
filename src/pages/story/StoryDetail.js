@@ -18,9 +18,6 @@ class StoryDetail extends Component {
         }
     }
 
-    deleteStory() {
-    }
-
     addPhoto() {
     }
 
@@ -75,7 +72,6 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onStoryDelete: (token, storyId) => dispatch(deleteStory(token, storyId)),
         onPhotoAdd: (token, storyId, photo) => dispatch(createPhoto(token, storyId, photo))
     }
 };

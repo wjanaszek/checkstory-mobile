@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import Modal from './BaseModal';
 import { deleteStory } from '../../redux/actions/stories';
+import { logout } from '../../redux/actions/auth';
 
 class PopupModal extends Component {
     constructor(props) {
@@ -19,6 +20,10 @@ class PopupModal extends Component {
         this.props.onStoryDelete(this.props.token, this.props.storyId);
     }
 
+    logout() {
+        this.props.onLogout();
+    }
+
     render() {
         return (
             <Modal hideClose>
@@ -27,6 +32,7 @@ class PopupModal extends Component {
                     <Text>{this.props.message}</Text>
                     <Button title={this.props.noOptionMsg} onPress={Actions.pop} />
                     {this.props.title === 'Delete story' ? (<Button title={this.props.yesOptionMsg} onPress={() => this.deleteStory()} />) : null }
+                    {this.props.title === 'Logout' ? (<Button title={this.props.yesOptionMsg} onPress={() => this.logout()} />) : null }
                 </View>
             </Modal>)
     }
@@ -50,7 +56,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onStoryDelete: (token, storyId) => dispatch(deleteStory(token, storyId))
+        onStoryDelete: (token, storyId) => dispatch(deleteStory(token, storyId)),
+        onLogout: () => dispatch(logout())
     }
 };
 

@@ -1,4 +1,5 @@
 import { LOGIN_FAIL, LOGIN_IN_PROGRESS, LOGIN_SUCCESS, LOGOUT } from '../actions/auth';
+import { Actions } from 'react-native-router-flux';
 
 const initialState = {
     loading: false,
@@ -14,6 +15,7 @@ export default function reducer(state = initialState, action) {
             return { ...state, loading: true };
         }
         case LOGIN_SUCCESS: {
+            Actions.reset('storyList');
             return { ...state, loading: false, username: action.username, token: action.token, isLoggedIn: true, error: null };
         }
         case LOGIN_FAIL: {
