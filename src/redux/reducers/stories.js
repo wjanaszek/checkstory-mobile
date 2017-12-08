@@ -48,7 +48,7 @@ export default function reducer(state = initialState, action) {
             const stories = [...state.stories];
             const index = stories.findIndex((story) => story.id === action.story.id);
             stories[index] = action.story;
-            Actions.storyDetail({story: action.story});
+            Actions.replace('storyDetail', {story: action.story});
             return { ...state, stories: stories, loading: false };
         }
 

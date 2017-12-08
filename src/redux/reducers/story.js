@@ -68,7 +68,8 @@ export default function reducer(state = initialState, action) {
             return { ...state, photos: photos, selectedPhoto: null, loading: false };
         }
         case UPDATE_STORY_SUCCESS: {
-            Actions.reset('storyList');
+            // Actions.reset('storyList');
+            Actions.pop();
             return { ...state, story: action.story, loading: false };
         }
         default:
