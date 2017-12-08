@@ -28,7 +28,7 @@ class StoryDetail extends Component {
         return (
             <ScrollView style={{padding: 20}}>
                 <Button onPress={() => Actions.storyEdit({ story: this.state })} title='EDIT' />
-                <Button onPress={() => this.deleteStory()} title='DELETE' />
+                <Button onPress={() => Actions.popup({ data: 'Are you sure?' })} title='DELETE' />
                 <TouchableOpacity disabled={true}>
                     <Text style={styles.labelStyle}>Title</Text>
                     <Text>{this.state.title}</Text>

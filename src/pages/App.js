@@ -9,6 +9,7 @@ import Home from './home/Home';
 import StoryAdd from './story/StoryAdd';
 import StoryEdit from './story/StoryEdit';
 import MoreVertButton from './custom-buttons/MoreVertButton';
+import Popup from './Popup';
 
 const App = () => (
     <Router>
@@ -49,6 +50,10 @@ const App = () => (
                 key='storyEdit'
                 component={StoryEdit}
                 title='Edit story'
+            />
+            <Scene
+                key='popup'
+                component={Popup}
             />
         </Scene>
     </Router>
