@@ -4,6 +4,7 @@ import { Text, View, Button, FlatList } from 'react-native';
 import { getAllStories } from '../../redux/actions/stories';
 import { List, ListItem } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
+import { getAllPhotos } from '../../redux/actions/photos';
 
 class StoryList extends Component {
     loadStories() {
@@ -23,7 +24,10 @@ class StoryList extends Component {
                                 <ListItem
                                     title={`${item.title}`}
                                     subtitle={item.createDate}
-                                    onPress={() => Actions.storyDetail({story: item})}
+                                    onPress={() => {
+                                        Actions.storyDetail({story: item});
+                                        this.props.onStoryPreview(this.props.token, item.id);
+                                    }}
                                 />
                             )}
                         />
@@ -45,7 +49,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onStoriesLoad: (token) => dispatch(getAllStories(token))
+        onStoriesLoad: (token) => dispatch(getAllStories(token)),
+        onStoryPreview: (token, storyId) => dispatch(getAllPhotos(token, storyId))
     };
 };
 

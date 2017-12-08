@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, TouchableOpacity, ScrollView, Text, StyleSheet, View } from 'react-native';
-import { deleteStory } from '../../redux/actions/stories';
+import { Button, TouchableOpacity, ScrollView, Text, StyleSheet, View, FlatList, Image } from 'react-native';
 import { createPhoto } from '../../redux/actions/photos';
 import { Actions } from 'react-native-router-flux';
+import { List, ListItem } from 'react-native-elements';
+import PhotoListItem from './PhotoListItem';
 
 class StoryDetail extends Component {
     constructor(props) {
@@ -25,14 +26,14 @@ class StoryDetail extends Component {
         return (
             <ScrollView style={{padding: 20}}>
                 <View style={styles.rowButtons}>
-                    <Button title='EDIT' onPress={() => Actions.storyEdit({ story: this.state })} />
+                    <Button title='EDIT' onPress={() => Actions.storyEdit({ story: this.state })} style={{width: '50%'}}/>
                     <Button title='DELETE' onPress={() => Actions.popup({
                         title: 'Delete story',
                         message: 'Are you sure you want delete this story?',
                         noOptionMsg: 'NO',
                         yesOptionMsg: 'YES',
                         storyId: this.state.id
-                    })} />
+                    })} style={{width: '50%'}}/>
                 </View>
                 <TouchableOpacity disabled={true}>
                     <Text style={styles.labelStyle}>Title</Text>
@@ -47,11 +48,25 @@ class StoryDetail extends Component {
                     <Text>{this.state.createDate}</Text>
                 </TouchableOpacity>
                 {!this.props.loading ?
-                    (<Button title='ADD PHOTOS' onPress={() => this.addPhoto()} />) :
+                    (<Button title='ADD PHOTOS' onPress={() => this.addPhoto()} style={{marginTop: 10}}/>) :
                     (<TouchableOpacity disabled={true}>
                         <Text>Adding photo...</Text>
                     </TouchableOpacity>)}
-                {this.props.error ? (<Text style={{color: 'red'}}>{this.props.error}</Text>) : null}
+                {this.props.loadingPhotos ?
+                    (<Text>Loading photos...</Text>) :
+                    (<List>
+                        <FlatList
+                            data={this.props.photos}
+                            keyExtractor={item => item.id}
+                            renderItem={({ item }) => (
+                                <PhotoListItem
+                                    imageType={item.imageType}
+                                    content={item.content}
+                                    createDate={item.createDate}
+                                />
+                            )}
+                        />
+                    </List>)}
             </ScrollView>
         )
     }
@@ -68,7 +83,9 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state, ownProps) => {
     return {
         error: state.auth.error,
-        loading: state.stories.loading
+        loading: state.stories.loading,
+        loadingPhotos: state.story.loading,
+        photos: state.story.photos
     };
 };
 

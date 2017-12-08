@@ -85,7 +85,7 @@ class StoryEdit extends Component {
                     }}
                     onDateChange={(date) => {this.setState({ createDate: date })}}
                 />
-                <View style={{flexDirection: 'row', spacing: 3}}>
+                <View style={{flexDirection: 'row'}}>
                     <Button title='CANCEL' onPress={() => Actions.pop()} />
                     {!this.props.loading ?
                         (<Button title='SAVE' onPress={() => this.updateStory()} />) :

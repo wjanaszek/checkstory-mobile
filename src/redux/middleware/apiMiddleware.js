@@ -16,7 +16,7 @@ import {
     DELETE_PHOTO_IN_PROGRESS,
     LOAD_PHOTO,
     LOAD_PHOTO_FAIL, LOAD_PHOTO_IN_PROGRESS, LOAD_PHOTOS, LOAD_PHOTOS_FAIL,
-    LOAD_PHOTOS_IN_PROGRESS, UPDATE_PHOTO, UPDATE_PHOTO_FAIL, UPDATE_PHOTO_IN_PROGRESS
+    LOAD_PHOTOS_IN_PROGRESS, LOAD_PHOTOS_SUCCESS, UPDATE_PHOTO, UPDATE_PHOTO_FAIL, UPDATE_PHOTO_IN_PROGRESS
 } from '../actions/photos';
 
 export const apiMiddleware = store => next => action => {
@@ -243,6 +243,23 @@ export const apiMiddleware = store => next => action => {
                 }
             })
                 .then(response => response.json())
+                .then(data => {
+                    const photos = data['photos'];
+                    photos.map(item => {
+                        return {
+                            id: item.photoNumber,
+                            ownerId: item.owner_id,
+                            originalPhoto: item.originalPhoto,
+                            storyNumber: item.storyNumber,
+                            imageType: item.imageType,
+                            content: item.content
+                        }
+                    });
+                    next({
+                        type: LOAD_PHOTOS_SUCCESS,
+                        photos: photos
+                    });
+                })
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));
                     next({
