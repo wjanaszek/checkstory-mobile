@@ -34,14 +34,14 @@ export default function reducer(state = initialState, action) {
         case CREATE_STORY_SUCCESS: {
             const stories = [...state.stories];
             stories.push(action.story);
-            Actions.storyList();
+            Actions.reset('storyList');
             return { ...state, stories: stories, loading: false };
         }
         case DELETE_STORY_SUCCESS: {
             const stories = [...state.stories];
             const index = stories.findIndex((story) => story.id === action.storyId);
             stories.splice(index, 1);
-            Actions.storyList();
+            Actions.reset('storyList');
             return { ...state, stories: stories, loading: false };
         }
         case UPDATE_STORY_IN_STORIES_SUCCESS: {
