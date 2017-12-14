@@ -97,7 +97,6 @@ class StoryDetail extends Component {
                                     keyExtractor={item.id}
                                     photoId={item.id}
                                     storyId={this.state.id}
-                                    edit = {this.props.onPhotoEdit.bind(this)}
                                 />
                             )}
                         />

@@ -12,11 +12,12 @@ import {
     UPDATE_STORY_SUCCESS
 } from '../actions/stories';
 import {
-    CREATE_PHOTO, CREATE_PHOTO_FAIL, CREATE_PHOTO_IN_PROGRESS, DELETE_PHOTO, DELETE_PHOTO_FAIL,
+    CREATE_PHOTO, CREATE_PHOTO_FAIL, CREATE_PHOTO_IN_PROGRESS, CREATE_PHOTO_SUCCESS, DELETE_PHOTO, DELETE_PHOTO_FAIL,
     DELETE_PHOTO_IN_PROGRESS, DELETE_PHOTO_SUCCESS,
     LOAD_PHOTO,
     LOAD_PHOTO_FAIL, LOAD_PHOTO_IN_PROGRESS, LOAD_PHOTOS, LOAD_PHOTOS_FAIL,
-    LOAD_PHOTOS_IN_PROGRESS, LOAD_PHOTOS_SUCCESS, UPDATE_PHOTO, UPDATE_PHOTO_FAIL, UPDATE_PHOTO_IN_PROGRESS
+    LOAD_PHOTOS_IN_PROGRESS, LOAD_PHOTOS_SUCCESS, UPDATE_PHOTO, UPDATE_PHOTO_FAIL, UPDATE_PHOTO_IN_PROGRESS,
+    UPDATE_PHOTO_SUCCESS
 } from '../actions/photos';
 
 export const apiMiddleware = store => next => action => {
@@ -308,7 +309,7 @@ export const apiMiddleware = store => next => action => {
                     const photo = data;
                     photo.id = photo.photoNumber;
                     next({
-                        type: CREATE_STORY_SUCCESS,
+                        type: CREATE_PHOTO_SUCCESS,
                         photo: photo
                     })
                 })
@@ -330,7 +331,30 @@ export const apiMiddleware = store => next => action => {
                 },
                 body: JSON.stringify(action.photo)
             })
-                .then()
+                .then(response => response.json())
+                .then(data => {
+                    fetch(`${apiUrl}/api/stories/${action.storyId}/photos/${action.photoId}`, {
+                        method: 'GET',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + action.token
+                        }
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            next({
+                                type: UPDATE_PHOTO_SUCCESS,
+                                photoId: action.photoId,
+                                photo: data
+                            });
+                        })
+                        .catch(error => {
+                            next({
+                                type: UPDATE_PHOTO_FAIL, error
+                            })
+                        })
+                })
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));
                     next({

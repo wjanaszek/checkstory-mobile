@@ -1,10 +1,28 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Image, Text, View } from 'react-native';
-import { deletePhoto, updatePhoto } from '../../redux/actions/photos';
+import { updatePhoto } from '../../redux/actions/photos';
 import { Actions } from 'react-native-router-flux';
+import Photo from '../../model/Photo';
+
+const ImagePicker = require('react-native-image-picker');
+
+const options = {
+    title: 'Select new photo',
+    storageOptions: {
+        skipBackup: true,
+        path: 'images'
+    }
+};
 
 class PhotoListItem extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            photo: null
+        }
+    }
+
     deletePhoto() {
         Actions.popup({
             title: 'Delete photo',
@@ -14,6 +32,28 @@ class PhotoListItem extends Component {
             storyId: this.props.storyId,
             photoId: this.props.photoId
         })
+    }
+
+    editPhoto() {
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
+
+            if (response.didCancel || response.error) {
+                console.log('Error or cancel');
+            }
+            else {
+                let source = { uri: response.uri };
+                console.log(JSON.stringify(source));
+
+                // You can also display the image using data:
+                // let source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+                this.setState({
+                    photo: new Photo(response.type.split('/')[1], response.data)
+                });
+                this.props.onPhotoEdit(this.props.token, this.props.storyId, this.props.photoId, this.state.photo);
+            }
+        });
     }
 
     render() {
@@ -29,7 +69,7 @@ class PhotoListItem extends Component {
                     <Text style={{flex: 1, fontSize: 16, textAlign: 'left'}}>{this.props.createDate}</Text>
                     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'transparent', flexDirection: 'row'}}>
                         <Button title='DELETE' onPress={() => this.deletePhoto()} />
-                        <Button title='EDIT' onPress={() => this.props.edit(this.props.id)} />
+                        <Button title='EDIT' onPress={() => this.editPhoto()} />
                         <Text>Checkbox to compare</Text>
                     </View>
                 </View>
@@ -48,7 +88,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onPhotoEdit: (token, storyId, photo) => dispatch(updatePhoto(token, storyId, photo.id, photo))
+        onPhotoEdit: (token, storyId, photoId, photo) => dispatch(updatePhoto(token, storyId, photoId, photo))
     }
 };
 

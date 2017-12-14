@@ -55,11 +55,12 @@ export default function reducer(state = initialState, action) {
         }
         case UPDATE_PHOTO_SUCCESS: {
             const photos = [...state.photos];
-            photos.forEach((photo) => {
-                if (photo.id === action.photoId) {
-                    photo = action.photo;
+            for (let i = 0; i < photos.length; i++) {
+                if (photos[i].id === action.photoId) {
+                    photos[i] = action.photo;
+                    break;
                 }
-            });
+            }
             return { ...state, photos: photos, selectedPhoto: null, loading: false };
         }
         case DELETE_PHOTO_SUCCESS: {
