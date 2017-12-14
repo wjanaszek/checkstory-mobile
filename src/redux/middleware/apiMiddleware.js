@@ -261,15 +261,6 @@ export const apiMiddleware = store => next => action => {
                             content: item.content
                         }
                     });
-                    // photos.map(item => {
-                    //     id = item.photoNumber;
-                    //     ownerId = item.owner_id;
-                    //     originalPhoto = item.originalPhoto;
-                    //     storyNumber = item.storyNumber;
-                    //     imageType = item.imageType;
-                    //     content = item.content;
-                    // });
-                    console.log('photos ' + JSON.stringify(photos));
                     next({
                         type: LOAD_PHOTOS_SUCCESS,
                         photos: photos
