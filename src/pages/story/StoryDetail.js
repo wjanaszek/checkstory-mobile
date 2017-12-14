@@ -3,8 +3,18 @@ import { connect } from 'react-redux';
 import { Button, TouchableOpacity, ScrollView, Text, StyleSheet, View, FlatList, Image } from 'react-native';
 import { createPhoto } from '../../redux/actions/photos';
 import { Actions } from 'react-native-router-flux';
-import { List, ListItem } from 'react-native-elements';
+import { List } from 'react-native-elements';
 import PhotoListItem from './PhotoListItem';
+
+const ImagePicker = require('react-native-image-picker');
+
+const options = {
+    title: 'Select photo',
+    storageOptions: {
+        skipBackup: true,
+        path: 'images'
+    }
+};
 
 class StoryDetail extends Component {
     constructor(props) {
@@ -15,11 +25,35 @@ class StoryDetail extends Component {
             notes: this.props.story.notes,
             longitude: this.props.story.longitude,
             latitude: this.props.story.latitude,
-            createDate: this.props.story.createDate
+            createDate: this.props.story.createDate,
+            photo: null
         }
     }
 
     addPhoto() {
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
+
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            }
+            else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            }
+            else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            }
+            else {
+                let source = { uri: response.uri };
+
+                // You can also display the image using data:
+                // let source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+                this.setState({
+                    photo: source
+                });
+            }
+        });
     }
 
     render() {
@@ -48,7 +82,7 @@ class StoryDetail extends Component {
                     <Text>{this.state.createDate}</Text>
                 </TouchableOpacity>
                 {!this.props.loading ?
-                    (<Button title='ADD PHOTOS' onPress={() => this.addPhoto()} style={{marginTop: 10}}/>) :
+                    (<Button title='ADD PHOTO' onPress={() => this.addPhoto()} style={{marginTop: 10}}/>) :
                     (<TouchableOpacity disabled={true}>
                         <Text>Adding photo...</Text>
                     </TouchableOpacity>)}
