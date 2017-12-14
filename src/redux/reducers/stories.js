@@ -1,4 +1,4 @@
-import { Story } from '../../model/story';
+import { Story } from '../../model/Story';
 import { Actions } from 'react-native-router-flux';
 import {
     CREATE_STORY_FAIL,

@@ -13,7 +13,7 @@ import {
 } from '../actions/stories';
 import {
     CREATE_PHOTO, CREATE_PHOTO_FAIL, CREATE_PHOTO_IN_PROGRESS, DELETE_PHOTO, DELETE_PHOTO_FAIL,
-    DELETE_PHOTO_IN_PROGRESS,
+    DELETE_PHOTO_IN_PROGRESS, DELETE_PHOTO_SUCCESS,
     LOAD_PHOTO,
     LOAD_PHOTO_FAIL, LOAD_PHOTO_IN_PROGRESS, LOAD_PHOTOS, LOAD_PHOTOS_FAIL,
     LOAD_PHOTOS_IN_PROGRESS, LOAD_PHOTOS_SUCCESS, UPDATE_PHOTO, UPDATE_PHOTO_FAIL, UPDATE_PHOTO_IN_PROGRESS
@@ -297,7 +297,14 @@ export const apiMiddleware = store => next => action => {
                 },
                 body: JSON.stringify(action.photo)
             })
-                .then()
+                .then(response => response.json())
+                .then(data => {
+                    const photo = data;
+                    next({
+                        type: CREATE_STORY_SUCCESS,
+                        photo: photo
+                    })
+                })
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));
                     next({
@@ -334,7 +341,12 @@ export const apiMiddleware = store => next => action => {
                     'Authorization': 'Bearer ' + action.token
                 }
             })
-                .then()
+                .then(data => {
+                    next({
+                        type: DELETE_PHOTO_SUCCESS,
+                        photoId: action.photoId
+                    })
+                })
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));
                     next({

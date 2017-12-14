@@ -14,8 +14,8 @@ class PhotoListItem extends Component {
                     <Text style={{fontWeight: 'bold', fontSize: 18, textAlign: 'left'}}>Date</Text>
                     <Text style={{flex: 1, fontSize: 16, textAlign: 'left'}}>{this.props.createDate}</Text>
                     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'transparent', flexDirection: 'row'}}>
-                        <Button title='DELETE' onPress={() => console.log('delete photo')} />
-                        <Button title='EDIT' onPress={() => console.log('edit photo')} />
+                        <Button title='DELETE' onPress={() => this.props.delete(this.props.id)} />
+                        <Button title='EDIT' onPress={() => this.props.edit(this.props.id)} />
                         <Text>Checkbox to compare</Text>
                     </View>
                 </View>

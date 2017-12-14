@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, ScrollView, Text, TextInput, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { createStory } from '../../redux/actions/stories';
-import Story from '../../model/story';
+import Story from '../../model/Story';
 import DatePicker from 'react-native-datepicker';
 
 class StoryAdd extends Component {

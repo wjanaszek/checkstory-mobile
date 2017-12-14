@@ -2,7 +2,7 @@ import {
     LOAD_STORY_FAIL, LOAD_STORY_IN_PROGRESS, LOAD_STORY_SUCCESS, UPDATE_STORY_FAIL,
     UPDATE_STORY_IN_PROGRESS, UPDATE_STORY_SUCCESS
 } from '../actions/stories';
-import { Story } from '../../model/story';
+import { Story } from '../../model/Story';
 import {
     CREATE_PHOTO_FAIL,
     CREATE_PHOTO_IN_PROGRESS, CREATE_PHOTO_SUCCESS, DELETE_PHOTO_FAIL, DELETE_PHOTO_IN_PROGRESS, DELETE_PHOTO_SUCCESS,

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, TouchableOpacity, ScrollView, Text, StyleSheet, View, FlatList, Image } from 'react-native';
-import { createPhoto } from '../../redux/actions/photos';
+import { createPhoto, deletePhoto, updatePhoto } from '../../redux/actions/photos';
 import { Actions } from 'react-native-router-flux';
 import { List } from 'react-native-elements';
 import PhotoListItem from './PhotoListItem';
+import Photo from '../../model/Photo';
 
 const ImagePicker = require('react-native-image-picker');
 
@@ -34,24 +35,20 @@ class StoryDetail extends Component {
         ImagePicker.showImagePicker(options, (response) => {
             console.log('Response = ', response);
 
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            }
-            else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            }
-            else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
+            if (response.didCancel || response.error) {
+                console.log('Error or cancel');
             }
             else {
                 let source = { uri: response.uri };
+                console.log(JSON.stringify(source));
 
                 // You can also display the image using data:
                 // let source = { uri: 'data:image/jpeg;base64,' + response.data };
 
                 this.setState({
-                    photo: source
+                    photo: new Photo(response.type.split('/')[1], response.data)
                 });
+                this.props.onPhotoAdd(this.props.token, this.state.id, this.state.photo);
             }
         });
     }
@@ -97,6 +94,8 @@ class StoryDetail extends Component {
                                     imageType={item.imageType}
                                     content={item.content}
                                     createDate={item.createDate}
+                                    delete = {this.props.onPhotoDelete.bind(this)}
+                                    edit = {this.props.onPhotoEdit.bind(this)}
                                 />
                             )}
                         />
@@ -119,13 +118,16 @@ const mapStateToProps = (state, ownProps) => {
         error: state.auth.error,
         loading: state.stories.loading,
         loadingPhotos: state.story.loading,
-        photos: state.story.photos
+        photos: state.story.photos,
+        token: state.auth.token
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onPhotoAdd: (token, storyId, photo) => dispatch(createPhoto(token, storyId, photo))
+        onPhotoAdd: (token, storyId, photo) => dispatch(createPhoto(token, storyId, photo)),
+        onPhotoDelete: (token, storyId, photoId) => dispatch(deletePhoto(token, storyId, photoId)),
+        onPhotoEdit: (token, storyId, photo) => dispatch(updatePhoto(token, storyId, photo.id, photo))
     }
 };
 
