@@ -36,6 +36,7 @@ export default function reducer(state = initialState, action) {
         case UPDATE_PHOTO_FAIL:
         case DELETE_PHOTO_FAIL:
         case UPDATE_STORY_FAIL: {
+            Actions.pop();
             return { ...state, loading: false };
         }
         case LOAD_STORY_SUCCESS: {
@@ -65,6 +66,7 @@ export default function reducer(state = initialState, action) {
             const photos = [...state.photos];
             const index = photos.findIndex((photo) => photo.id === action.photoId);
             photos.splice(index, 1);
+            Actions.pop();
             return { ...state, photos: photos, selectedPhoto: null, loading: false };
         }
         case UPDATE_STORY_SUCCESS: {

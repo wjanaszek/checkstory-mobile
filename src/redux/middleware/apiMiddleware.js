@@ -244,8 +244,14 @@ export const apiMiddleware = store => next => action => {
             })
                 .then(response => response.json())
                 .then(data => {
-                    const photos = data['photos'];
-                    photos.map(item => {
+                    let photos = null;
+                    // @TODO check why was data['photos']
+                    // if (data['photos'].length) {
+                    //     photos = data['photos'];
+                    // } else {
+                    //     photos = data;
+                    // }
+                    photos = data.photos.map(item => {
                         return {
                             id: item.photoNumber,
                             ownerId: item.owner_id,
@@ -255,6 +261,15 @@ export const apiMiddleware = store => next => action => {
                             content: item.content
                         }
                     });
+                    // photos.map(item => {
+                    //     id = item.photoNumber;
+                    //     ownerId = item.owner_id;
+                    //     originalPhoto = item.originalPhoto;
+                    //     storyNumber = item.storyNumber;
+                    //     imageType = item.imageType;
+                    //     content = item.content;
+                    // });
+                    console.log('photos ' + JSON.stringify(photos));
                     next({
                         type: LOAD_PHOTOS_SUCCESS,
                         photos: photos
@@ -300,6 +315,7 @@ export const apiMiddleware = store => next => action => {
                 .then(response => response.json())
                 .then(data => {
                     const photo = data;
+                    photo.id = photo.photoNumber;
                     next({
                         type: CREATE_STORY_SUCCESS,
                         photo: photo

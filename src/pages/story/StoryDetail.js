@@ -6,6 +6,7 @@ import { Actions } from 'react-native-router-flux';
 import { List } from 'react-native-elements';
 import PhotoListItem from './PhotoListItem';
 import Photo from '../../model/Photo';
+import { deleteStory } from '../../redux/actions/stories';
 
 const ImagePicker = require('react-native-image-picker');
 
@@ -63,7 +64,7 @@ class StoryDetail extends Component {
                         message: 'Are you sure you want delete this story?',
                         noOptionMsg: 'NO',
                         yesOptionMsg: 'YES',
-                        storyId: this.state.id
+                        storyId: this.state.id,
                     })} style={{width: '50%'}}/>
                 </View>
                 <TouchableOpacity disabled={true}>
@@ -88,13 +89,14 @@ class StoryDetail extends Component {
                     (<List>
                         <FlatList
                             data={this.props.photos}
-                            keyExtractor={item => item.id}
                             renderItem={({ item }) => (
                                 <PhotoListItem
                                     imageType={item.imageType}
                                     content={item.content}
                                     createDate={item.createDate}
-                                    delete = {this.props.onPhotoDelete.bind(this)}
+                                    keyExtractor={item.id}
+                                    photoId={item.id}
+                                    storyId={this.state.id}
                                     edit = {this.props.onPhotoEdit.bind(this)}
                                 />
                             )}
@@ -125,6 +127,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        onStoryDelete: (token, storyId) => dispatch(deleteStory(token, storyId)),
         onPhotoAdd: (token, storyId, photo) => dispatch(createPhoto(token, storyId, photo)),
         onPhotoDelete: (token, storyId, photoId) => dispatch(deletePhoto(token, storyId, photoId)),
         onPhotoEdit: (token, storyId, photo) => dispatch(updatePhoto(token, storyId, photo.id, photo))

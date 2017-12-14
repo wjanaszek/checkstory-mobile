@@ -10,10 +10,16 @@ import { Actions } from 'react-native-router-flux';
 import Modal from './BaseModal';
 import { deleteStory } from '../../redux/actions/stories';
 import { logout } from '../../redux/actions/auth';
+import { deletePhoto } from '../../redux/actions/photos';
+
 
 class PopupModal extends Component {
     constructor(props) {
         super(props);
+    }
+
+    deletePhoto() {
+        this.props.onPhotoDelete(this.props.token, this.props.storyId, this.props.photoId);
     }
 
     deleteStory() {
@@ -32,6 +38,7 @@ class PopupModal extends Component {
                     <Text>{this.props.message}</Text>
                     <View style={styles.rowButtons}>
                         {this.props.title === 'Delete story' ? (<Button title={this.props.yesOptionMsg} onPress={() => this.deleteStory()} />) : null }
+                        {this.props.title === 'Delete photo' ? (<Button title={this.props.yesOptionMsg} onPress={() => this.deletePhoto()} />) : null }
                         {this.props.title === 'Logout' ? (<Button title={this.props.yesOptionMsg} onPress={() => this.logout()} />) : null }
                         <Button title={this.props.noOptionMsg} onPress={Actions.pop} />
                     </View>
@@ -58,6 +65,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        onPhotoDelete: (token, storyId, photoId) => dispatch(deletePhoto(token, storyId, photoId)),
         onStoryDelete: (token, storyId) => dispatch(deleteStory(token, storyId)),
         onLogout: () => dispatch(logout())
     }

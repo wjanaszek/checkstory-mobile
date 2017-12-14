@@ -20,7 +20,6 @@ class StoryEdit extends Component {
     }
 
     updateStory() {
-        console.log(JSON.stringify(this.state));
         this.props.onStoryEdit(this.props.token, this.state, this.state.id);
     }
 
