@@ -12,11 +12,16 @@ class Login extends Component {
         super(props);
         this.state = {
             username: '',
-            password: ''
+            usernameError: false,
+            password: '',
+            passwordError: false
         }
     }
 
     userLogin(e) {
+        if (this.state.usernameError || this.state.passwordError) {
+            return;
+        }
         this.props.onLogin(this.state.username, this.state.password);
         e.preventDefault();
     }
@@ -32,7 +37,15 @@ class Login extends Component {
                     keyboardType='email-address'
                     value={this.state.username}
                     onChangeText={(text) => this.setState({ username: text })}
+                    onEndEditing={() => {
+                        if (!this.state.username) {
+                            this.setState({ usernameError: true });
+                        } else {
+                            this.setState({ usernameError: false });
+                        }
+                    }}
                 />
+                {this.state.usernameError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
                 <TextInput
                     placeholder='Password'
                     autoCapitalize='none'
@@ -40,7 +53,15 @@ class Login extends Component {
                     secureTextEntry={true}
                     value={this.state.password}
                     onChangeText={(text) => this.setState({ password: text })}
+                    onEndEditing={() => {
+                        if (!this.state.password) {
+                            this.setState({ passwordError: true });
+                        } else {
+                            this.setState({ passwordError: false });
+                        }
+                    }}
                 />
+                {this.state.passwordError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
                 <View style={{margin: 7}}/>
                 {!this.props.loading ?
                     (<Button onPress={(e) => this.userLogin(e)} title='LOGIN'/>) :
