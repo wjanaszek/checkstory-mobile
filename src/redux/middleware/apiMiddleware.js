@@ -19,6 +19,8 @@ import {
     LOAD_PHOTOS_IN_PROGRESS, LOAD_PHOTOS_SUCCESS, UPDATE_PHOTO, UPDATE_PHOTO_FAIL, UPDATE_PHOTO_IN_PROGRESS,
     UPDATE_PHOTO_SUCCESS
 } from '../actions/photos';
+import { Actions } from 'react-native-router-flux';
+
 
 export const apiMiddleware = store => next => action => {
     // Pass all actions through by default
@@ -61,6 +63,7 @@ export const apiMiddleware = store => next => action => {
                 })
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));
+                    errorPopup();
                     next({
                         type: LOGIN_FAIL,
                         error: 'Login or password incorrect'
@@ -85,6 +88,7 @@ export const apiMiddleware = store => next => action => {
                 })
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));
+                    errorPopup();
                     next({
                         type: SIGN_UP_FAIL, error
                     })
@@ -122,6 +126,7 @@ export const apiMiddleware = store => next => action => {
                 })
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));
+                    errorPopup();
                     next({
                         type: LOAD_STORIES_FAIL,
                         error
@@ -144,6 +149,7 @@ export const apiMiddleware = store => next => action => {
                 })
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));
+                    errorPopup();
                     next({
                         type: LOAD_STORY_FAIL,
                         error
@@ -171,6 +177,7 @@ export const apiMiddleware = store => next => action => {
                 })
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));
+                    errorPopup();
                     next({
                         type: CREATE_STORY_FAIL, error
                     })
@@ -201,6 +208,7 @@ export const apiMiddleware = store => next => action => {
                 })
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));
+                    errorPopup();
                     next({
                         type: UPDATE_STORY_FAIL, error
                     })
@@ -225,6 +233,7 @@ export const apiMiddleware = store => next => action => {
                 })
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));
+                    errorPopup();
                     next({
                         type: DELETE_STORY_FAIL, error
                     })
@@ -269,6 +278,7 @@ export const apiMiddleware = store => next => action => {
                 })
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));
+                    errorPopup();
                     next({
                         type: LOAD_PHOTOS_FAIL,
                         error
@@ -288,6 +298,7 @@ export const apiMiddleware = store => next => action => {
                 .then()
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));
+                    errorPopup();
                     next({
                         type: LOAD_PHOTO_FAIL, error
                     })
@@ -315,6 +326,7 @@ export const apiMiddleware = store => next => action => {
                 })
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));
+                    errorPopup();
                     next({
                         type: CREATE_PHOTO_FAIL, error
                     })
@@ -350,6 +362,7 @@ export const apiMiddleware = store => next => action => {
                             });
                         })
                         .catch(error => {
+                            errorPopup();
                             next({
                                 type: UPDATE_PHOTO_FAIL, error
                             })
@@ -357,6 +370,7 @@ export const apiMiddleware = store => next => action => {
                 })
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));
+                    errorPopup();
                     next({
                         type: UPDATE_PHOTO_FAIL, error
                     })
@@ -380,6 +394,7 @@ export const apiMiddleware = store => next => action => {
                 })
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));
+                    errorPopup();
                     next({
                         type: DELETE_PHOTO_FAIL, error
                     })
@@ -390,3 +405,11 @@ export const apiMiddleware = store => next => action => {
             break;
     }
 };
+
+function errorPopup() {
+    Actions.popup({
+        title: 'Error',
+        message: 'Some error occured',
+        yesOptionMsg: 'YES'
+    });
+}

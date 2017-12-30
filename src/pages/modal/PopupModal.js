@@ -39,8 +39,9 @@ class PopupModal extends Component {
                     <View style={styles.rowButtons}>
                         {this.props.title === 'Delete story' ? (<Button title={this.props.yesOptionMsg} onPress={() => this.deleteStory()} />) : null }
                         {this.props.title === 'Delete photo' ? (<Button title={this.props.yesOptionMsg} onPress={() => this.deletePhoto()} />) : null }
+                        {this.props.title === 'Error' ? (<Button title={this.props.yesOptionMsg} onPress={() => Actions.pop()} />) : null }
                         {this.props.title === 'Logout' ? (<Button title={this.props.yesOptionMsg} onPress={() => this.logout()} />) : null }
-                        <Button title={this.props.noOptionMsg} onPress={Actions.pop} />
+                        {this.props.title !== 'Error' ? (<Button title={this.props.noOptionMsg} onPress={() => Actions.pop()} />) : null }
                     </View>
                 </View>
             </Modal>)

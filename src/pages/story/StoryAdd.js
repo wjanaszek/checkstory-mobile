@@ -10,14 +10,19 @@ class StoryAdd extends Component {
         super(props);
         this.state = {
             title: '',
+            titleError: false,
             notes: '',
             longitude: '',
+            longitudeError: false,
             latitude: '',
-            createDate: ''
+            latitudeError: false,
+            createDate: '',
+            createDateError: false
         }
     }
 
     addStory() {
+        if (this.state.titleError || this.state.longitudeError || this.state.latitudeError || this.state.createDateError) return;
         this.props.onStoryAdd(this.props.token, this.state.title, this.state.notes, this.state.longitude, this.state.latitude, this.state.createDate);
     }
 
@@ -32,7 +37,16 @@ class StoryAdd extends Component {
                     keyboardType='email-address'
                     value={this.state.title}
                     onChangeText={(text) => this.setState({ title: text })}
+                    onEndEditing={() => {
+                        if (!this.state.title || !this.state.title.isNumber) {
+                            this.state.titleError = true;
+                        } else {
+                            this.state.titleError = false;
+                        }
+                        console.log('title error ' + this.state.titleError);
+                    }}
                 />
+                {this.state.titleError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
                 <TextInput
                     placeholder='Notes'
                     autoCapitalize='none'
@@ -52,7 +66,15 @@ class StoryAdd extends Component {
                     keyboardType='email-address'
                     value={this.state.longitude}
                     onChangeText={(text) => this.setState({ longitude: text })}
+                    onEndEditing={() => {
+                        if (!this.state.longitude || !this.state.longitude.isNumber) {
+                            this.state.longitudeError = true;
+                        } else {
+                            this.state.longitudeError = false;
+                        }
+                    }}
                 />
+                {this.state.longitudeError ? (<Text style={{color: 'red'}}>This field is required and has to be a number</Text>) : null }
                 <TextInput
                     placeholder='Latitude'
                     autoCapitalize='none'
@@ -61,7 +83,15 @@ class StoryAdd extends Component {
                     keyboardType='email-address'
                     value={this.state.latitude}
                     onChangeText={(text) => this.setState({ latitude: text })}
+                    onEndEditing={() => {
+                        if (!this.state.latitude || !this.state.latitude.isNumber) {
+                            this.state.latitudeError = true;
+                        } else {
+                            this.state.latitudeError = false;
+                        }
+                    }}
                 />
+                {this.state.latitudeError ? (<Text style={{color: 'red'}}>This field is required and has to be a number</Text>) : null }
                 <DatePicker
                     date={this.state.createDate}
                     mode='date'
@@ -81,7 +111,15 @@ class StoryAdd extends Component {
                         }
                     }}
                     onDateChange={(date) => {this.setState({ createDate: date })}}
+                    onCloseModal={() => {
+                        if (!this.state.createDate) {
+                            this.state.createDateError = true;
+                        } else {
+                            this.state.createDateError = false;
+                        }
+                    }}
                 />
+                {this.state.createDateError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
                 {!this.props.loading ?
                     (<Button onPress={() => this.addStory()} title='ADD STORY'/>) :
                     (<TouchableOpacity disabled={true}>
