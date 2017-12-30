@@ -45,7 +45,7 @@ class StoryAdd extends Component {
                         }
                     }}
                 />
-                {this.state.titleError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
+                { this.state.titleError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
                 <TextInput
                     placeholder='Notes'
                     autoCapitalize='none'
@@ -73,7 +73,7 @@ class StoryAdd extends Component {
                         }
                     }}
                 />
-                {this.state.longitudeError ? (<Text style={{color: 'red'}}>This field is required and has to be a number</Text>) : null }
+                { this.state.longitudeError ? (<Text style={{color: 'red'}}>This field is required and has to be a number</Text>) : null }
                 <TextInput
                     placeholder='Latitude'
                     autoCapitalize='none'
@@ -90,7 +90,7 @@ class StoryAdd extends Component {
                         }
                     }}
                 />
-                {this.state.latitudeError ? (<Text style={{color: 'red'}}>This field is required and has to be a number</Text>) : null }
+                { this.state.latitudeError ? (<Text style={{color: 'red'}}>This field is required and has to be a number</Text>) : null }
                 <View style={{marginTop: 10, marginBottom: 10}}>
                     <DatePicker
                         date={this.state.createDate}
@@ -120,13 +120,13 @@ class StoryAdd extends Component {
                         }}
                     />
                 </View>
-                {this.state.createDateError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
-                {!this.props.loading ?
+                { this.state.createDateError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
+                { !this.props.loading ?
                     (<Button onPress={() => this.addStory()} title='ADD STORY'/>) :
                     (<TouchableOpacity disabled={true}>
                         <Text>Adding story...</Text>
                     </TouchableOpacity>)}
-                {this.props.error ? (<Text style={{color: 'red'}}>{this.props.error}</Text>) : null}
+                { this.props.error ? (<Text style={{color: 'red'}}>{this.props.error}</Text>) : null }
             </ScrollView>
         )
     }

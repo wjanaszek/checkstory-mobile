@@ -46,7 +46,7 @@ class StoryEdit extends Component {
                         }
                     }}
                 />
-                {this.state.titleError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
+                { this.state.titleError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
                 <TextInput
                     placeholder='Notes'
                     autoCapitalize='none'
@@ -74,7 +74,7 @@ class StoryEdit extends Component {
                         }
                     }}
                 />
-                {this.state.longitudeError ? (<Text style={{color: 'red'}}>This field is required and has to be a number</Text>) : null }
+                { this.state.longitudeError ? (<Text style={{color: 'red'}}>This field is required and has to be a number</Text>) : null }
                 <TextInput
                     placeholder='Latitude'
                     autoCapitalize='none'
@@ -91,7 +91,7 @@ class StoryEdit extends Component {
                         }
                     }}
                 />
-                {this.state.latitudeError ? (<Text style={{color: 'red'}}>This field is required and has to be a number</Text>) : null }
+                { this.state.latitudeError ? (<Text style={{color: 'red'}}>This field is required and has to be a number</Text>) : null }
                 <DatePicker
                     date={this.state.createDate}
                     mode='date'
@@ -119,7 +119,7 @@ class StoryEdit extends Component {
                         }
                     }}
                 />
-                {this.state.createDateError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
+                { this.state.createDateError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
                 <View style={{flexDirection: 'row'}}>
                     <Button title='CANCEL' onPress={() => Actions.pop()} />
                     {!this.props.loading ?
@@ -128,7 +128,7 @@ class StoryEdit extends Component {
                             <Text>Updating story...</Text>
                         </TouchableOpacity>)}
                 </View>
-                {this.props.error ? (<Text style={{color: 'red'}}>{this.props.error}</Text>) : null}
+                { this.props.error ? (<Text style={{color: 'red'}}>{this.props.error}</Text>) : null }
             </ScrollView>
         )
     }

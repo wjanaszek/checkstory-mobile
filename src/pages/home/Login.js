@@ -45,7 +45,7 @@ class Login extends Component {
                         }
                     }}
                 />
-                {this.state.usernameError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
+                { this.state.usernameError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
                 <TextInput
                     placeholder='Password'
                     autoCapitalize='none'
@@ -61,14 +61,14 @@ class Login extends Component {
                         }
                     }}
                 />
-                {this.state.passwordError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
+                { this.state.passwordError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
                 <View style={{margin: 7}}/>
                 {!this.props.loading ?
                     (<Button onPress={(e) => this.userLogin(e)} title='LOGIN'/>) :
                     (<TouchableOpacity disabled={true}>
                         <Text>Logging in...</Text>
                     </TouchableOpacity>)}
-                {this.props.error ? (<Text style={{color: 'red'}}>{this.props.error}</Text>) : null}
+                { this.props.error ? (<Text style={{color: 'red'}}>{this.props.error}</Text>) : null }
                 <Text style={{fontSize: 16}}>
                     If you don't have an account, you can sign up
                     <Text style={{color: 'blue'}} onPress={() => Actions.register()}> here</Text>

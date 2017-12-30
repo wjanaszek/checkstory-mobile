@@ -115,7 +115,7 @@ class Signup extends Component {
                         }
                     }}
                 />
-                {this.state.passwordError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
+                { this.state.passwordError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
                 <TextInput
                     placeholder='Repeat password'
                     autoCapitalize='none'
@@ -131,13 +131,13 @@ class Signup extends Component {
                         }
                     }}
                 />
-                {this.state.repeatedPasswordError ? (<Text style={{color: 'red'}}>This field is required and has to match with password field</Text>) : null }
-                {!this.props.loading ?
+                { this.state.repeatedPasswordError ? (<Text style={{color: 'red'}}>This field is required and has to match with password field</Text>) : null }
+                { !this.props.loading ?
                     (<Button onPress={() => this.signUp()} title='REGISTER'/>) :
                     (<TouchableOpacity disabled={true}>
                         <Text>Registering...</Text>
                     </TouchableOpacity>)}
-                {this.props.error ? (<Text style={{color: 'red'}}>{this.props.error}</Text>) : null}
+                { this.props.error ? (<Text style={{color: 'red'}}>{this.props.error}</Text>) : null }
             </ScrollView>
         )
     }
