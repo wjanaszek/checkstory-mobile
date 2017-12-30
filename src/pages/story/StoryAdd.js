@@ -39,11 +39,10 @@ class StoryAdd extends Component {
                     onChangeText={(text) => this.setState({ title: text })}
                     onEndEditing={() => {
                         if (!this.state.title || !this.state.title.isNumber) {
-                            this.state.titleError = true;
+                            this.setState({ titleError: true });
                         } else {
-                            this.state.titleError = false;
+                            this.setState({ titleError: false });
                         }
-                        console.log('title error ' + this.state.titleError);
                     }}
                 />
                 {this.state.titleError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
@@ -68,9 +67,9 @@ class StoryAdd extends Component {
                     onChangeText={(text) => this.setState({ longitude: text })}
                     onEndEditing={() => {
                         if (!this.state.longitude || !this.state.longitude.isNumber) {
-                            this.state.longitudeError = true;
+                            this.setState({ longitudeError: true });
                         } else {
-                            this.state.longitudeError = false;
+                            this.setState({ longitudeError: false });
                         }
                     }}
                 />
@@ -85,9 +84,9 @@ class StoryAdd extends Component {
                     onChangeText={(text) => this.setState({ latitude: text })}
                     onEndEditing={() => {
                         if (!this.state.latitude || !this.state.latitude.isNumber) {
-                            this.state.latitudeError = true;
+                            this.setState({ latitudeError: true });
                         } else {
-                            this.state.latitudeError = false;
+                            this.setState({ latitudeError: false });
                         }
                     }}
                 />
@@ -113,9 +112,9 @@ class StoryAdd extends Component {
                     onDateChange={(date) => {this.setState({ createDate: date })}}
                     onCloseModal={() => {
                         if (!this.state.createDate) {
-                            this.state.createDateError = true;
+                            this.setState({ createDateError: true });
                         } else {
-                            this.state.createDateError = false;
+                            this.setState({ createDateError: false });
                         }
                     }}
                 />

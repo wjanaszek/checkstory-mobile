@@ -11,13 +11,20 @@ class Signup extends Component {
         super(props);
         this.state = {
             username: '',
+            usernameError: false,
             email: '',
+            emailError: false,
             password: '',
-            repeatedPassword: ''
+            passwordError: false,
+            repeatedPassword: '',
+            repeatedPasswordError: false,
         }
     }
 
     signUp() {
+        if (this.state.usernameError || this.state.emailError || this.state.passwordError || this.state.repeatedPasswordError) {
+            return;
+        }
         this.props.onSignUp(this.state.username, this.state.email, this.state.password);
     }
 
@@ -32,7 +39,15 @@ class Signup extends Component {
                     keyboardType='email-address'
                     value={this.state.username}
                     onChangeText={(text) => this.setState({ username: text })}
+                    onEndEditing={() => {
+                        if (!this.state.username) {
+                            this.setState({ usernameError: true });
+                        } else {
+                            this.setState({ usernameError: false });
+                        }
+                    }}
                 />
+                {this.state.usernameError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
                 <TextInput
                     placeholder='Email'
                     autoCapitalize='none'
@@ -41,7 +56,15 @@ class Signup extends Component {
                     keyboardType='email-address'
                     value={this.state.email}
                     onChangeText={(text) => this.setState({ email: text })}
+                    onEndEditing={() => {
+                        if (!this.state.email) {
+                            this.setState({ emailError: true });
+                        } else {
+                            this.setState({ emailError: false });
+                        }
+                    }}
                 />
+                {this.state.emailError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
                 <TextInput
                     placeholder='Password'
                     autoCapitalize='none'
@@ -49,7 +72,15 @@ class Signup extends Component {
                     secureTextEntry={true}
                     value={this.state.password}
                     onChangeText={(text) => this.setState({ password: text })}
+                    onEndEditing={() => {
+                        if (!this.state.password) {
+                            this.setState({ passwordError: true });
+                        } else {
+                            this.setState({ passwordError: false });
+                        }
+                    }}
                 />
+                {this.state.passwordError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
                 <TextInput
                     placeholder='Repeat password'
                     autoCapitalize='none'
@@ -57,7 +88,15 @@ class Signup extends Component {
                     secureTextEntry={true}
                     value={this.state.repeatedPassword}
                     onChangeText={(text) => this.setState({ repeatedPassword: text })}
+                    onEndEditing={() => {
+                        if (!(this.state.repeatedPassword || this.state.password) || this.state.password !== this.state.repeatedPassword) {
+                            this.setState({ repeatedPasswordError: true });
+                        } else {
+                            this.setState({ repeatedPasswordError: false });
+                        }
+                    }}
                 />
+                {this.state.repeatedPasswordError ? (<Text style={{color: 'red'}}>This field is required and has to match with password field</Text>) : null }
                 {!this.props.loading ?
                     (<Button onPress={() => this.signUp()} title='REGISTER'/>) :
                     (<TouchableOpacity disabled={true}>
