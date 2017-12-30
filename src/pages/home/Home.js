@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native';
+import { Button } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 
@@ -14,11 +15,19 @@ class Home extends Component {
 
     render() {
         return(
-            <View>
-                <Text>Home</Text>
+            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={{fontWeight: 'bold', fontSize: 20, marginBottom: 30}}>Welcome to CheckstoryApp!</Text>
                 <View style={styles.rowButtons}>
-                    <Button style={styles.button} title='Log in' onPress={() => Actions.login()}/>
-                    <Button style={styles.button} title='Sign up' onPress={() => Actions.register()}/>
+                    <Button
+                            style={{width: '100%'}}
+                            icon={{name: 'explore'}}
+                            title='Log in'
+                            onPress={() => Actions.login()}/>
+                    <Button
+                            style={{width: '100%'}}
+                            icon={{name: 'create'}}
+                            title='Sign up'
+                            onPress={() => Actions.register()}/>
                 </View>
             </View>
         )

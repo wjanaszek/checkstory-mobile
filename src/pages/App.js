@@ -15,6 +15,7 @@ const App = () => (
     <Router>
         <Scene key='root'>
             <Scene
+                hideNavBar
                 key='home'
                 component={Home}
                 title='Home'
