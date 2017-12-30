@@ -33,16 +33,34 @@ class PopupModal extends Component {
     render() {
         return (
             <Modal hideClose>
-                <View flex={1} style={styles.popup}>
-                    <Text>{this.props.title}</Text>
+                <View style={styles.popup}>
+                    <Text style={{fontWeight: 'bold', fontSize: 20}}>{this.props.title}</Text>
                     <Text>{this.props.message}</Text>
-                    <View style={styles.rowButtons}>
-                        { this.props.title === 'Delete story' ? (<Button title={this.props.yesOptionMsg} onPress={() => this.deleteStory()} />) : null }
-                        { this.props.title === 'Delete photo' ? (<Button title={this.props.yesOptionMsg} onPress={() => this.deletePhoto()} />) : null }
-                        { this.props.title === 'Error' ? (<Button title={this.props.yesOptionMsg} onPress={() => Actions.pop()} />) : null }
-                        { this.props.title === 'Signup success' ? (<Button title={this.props.yesOptionMsg} onPress={() => Actions.reset('home')}/>) : null }
-                        { this.props.title === 'Logout' ? (<Button title={this.props.yesOptionMsg} onPress={() => this.logout()} />) : null }
-                        { this.props.title !== 'Error' && this.props.title !== 'Signup success' ? (<Button title={this.props.noOptionMsg} onPress={() => Actions.pop()} />) : null }
+                    <View style={{flexDirection: 'row'}}>
+                        { this.props.title === 'Delete story' ? (
+                            <View style={styles.marginButtons}>
+                                <Button title={this.props.yesOptionMsg} onPress={() => this.deleteStory()} />
+                            </View>) : null }
+                        { this.props.title === 'Delete photo' ? (
+                            <View style={styles.marginButtons}>
+                                <Button title={this.props.yesOptionMsg} onPress={() => this.deletePhoto()} />
+                            </View>) : null }
+                        { this.props.title === 'Error' ? (
+                            <View style={styles.marginButtons}>
+                                <Button title={this.props.yesOptionMsg} onPress={() => Actions.pop()} />
+                            </View>) : null }
+                        { this.props.title === 'Signup success' ? (
+                            <View style={styles.marginButtons}>
+                                <Button title={this.props.yesOptionMsg} onPress={() => Actions.reset('home')}/>
+                            </View>) : null }
+                        { this.props.title === 'Logout' ? (
+                            <View style={styles.marginButtons}>
+                                <Button title={this.props.yesOptionMsg} onPress={() => this.logout()} />
+                            </View>) : null }
+                        { this.props.title !== 'Error' && this.props.title !== 'Signup success' ? (
+                            <View style={styles.marginButtons}>
+                                <Button title={this.props.noOptionMsg} onPress={() => Actions.pop()} />
+                            </View>) : null }
                     </View>
                 </View>
             </Modal>)
@@ -51,9 +69,15 @@ class PopupModal extends Component {
 
 const styles = StyleSheet.create({
     popup: {
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         marginHorizontal: 20
+    },
+    marginButtons: {
+        marginRight: 10,
+        marginLeft: 10,
+        marginTop: 5
     }
 });
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, ScrollView, Text, TextInput, TouchableOpacity } from 'react-native';
+import { Button, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import { createStory } from '../../redux/actions/stories';
 import Story from '../../model/Story';
@@ -91,33 +91,35 @@ class StoryAdd extends Component {
                     }}
                 />
                 {this.state.latitudeError ? (<Text style={{color: 'red'}}>This field is required and has to be a number</Text>) : null }
-                <DatePicker
-                    date={this.state.createDate}
-                    mode='date'
-                    placeholder='Select create date'
-                    format='YYYY-MM-DD'
-                    confirmBtnText='Confirm'
-                    cancelBtnText='Cancel'
-                    customStyles={{
-                        dateIcon: {
-                            position: 'absolute',
-                            left: 0,
-                            top: 4,
-                            marginLeft: 0
-                        },
-                        dateInput: {
-                            marginLeft: 36
-                        }
-                    }}
-                    onDateChange={(date) => {this.setState({ createDate: date })}}
-                    onCloseModal={() => {
-                        if (!this.state.createDate) {
-                            this.setState({ createDateError: true });
-                        } else {
-                            this.setState({ createDateError: false });
-                        }
-                    }}
-                />
+                <View style={{marginTop: 10, marginBottom: 10}}>
+                    <DatePicker
+                        date={this.state.createDate}
+                        mode='date'
+                        placeholder='Select create date'
+                        format='YYYY-MM-DD'
+                        confirmBtnText='Confirm'
+                        cancelBtnText='Cancel'
+                        customStyles={{
+                            dateIcon: {
+                                position: 'absolute',
+                                left: 0,
+                                top: 4,
+                                marginLeft: 0
+                            },
+                            dateInput: {
+                                marginLeft: 36
+                            }
+                        }}
+                        onDateChange={(date) => {this.setState({ createDate: date })}}
+                        onCloseModal={() => {
+                            if (!this.state.createDate) {
+                                this.setState({ createDateError: true });
+                            } else {
+                                this.setState({ createDateError: false });
+                            }
+                        }}
+                    />
+                </View>
                 {this.state.createDateError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
                 {!this.props.loading ?
                     (<Button onPress={() => this.addStory()} title='ADD STORY'/>) :

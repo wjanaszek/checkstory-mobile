@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Image, Text, View } from 'react-native';
+import { Button, CheckBox, Image, Text, View } from 'react-native';
 import { updatePhoto } from '../../redux/actions/photos';
 import { Actions } from 'react-native-router-flux';
 import Photo from '../../model/Photo';
+// import { CheckBox } from 'react-native-elements';
 
 const ImagePicker = require('react-native-image-picker');
 
@@ -19,14 +20,15 @@ class PhotoListItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            photo: null
+            photo: null,
+            checked: false
         }
     }
 
     deletePhoto() {
         Actions.popup({
             title: 'Delete photo',
-            message: 'Are you sure you want delete this story?',
+            message: 'Are you sure you want delete this photo?',
             noOptionMsg: 'NO',
             yesOptionMsg: 'YES',
             storyId: this.props.storyId,
@@ -68,9 +70,20 @@ class PhotoListItem extends Component {
                     <Text style={{fontWeight: 'bold', fontSize: 18, textAlign: 'left'}}>Date</Text>
                     <Text style={{flex: 1, fontSize: 16, textAlign: 'left'}}>{this.props.createDate}</Text>
                     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'transparent', flexDirection: 'row'}}>
-                        <Button title='DELETE' onPress={() => this.deletePhoto()} />
-                        <Button title='EDIT' onPress={() => this.editPhoto()} />
-                        <Text>Checkbox to compare</Text>
+                        <View style={{marginRight: 15}}>
+                            <Button title='DELETE' onPress={() => this.deletePhoto()} />
+                        </View>
+                        <View>
+                            <Button title='EDIT' onPress={() => this.editPhoto()} />
+                        </View>
+                        <View style={{marginLeft: 10}}>
+                            <CheckBox
+                                value={this.state.checked}
+                                onValueChange={() => this.setState({ checked: !this.state.checked})}/>
+                        </View>
+                        <View style={{marginLeft: 3}}>
+                            <Text>Compare</Text>
+                        </View>
                     </View>
                 </View>
             </View>
