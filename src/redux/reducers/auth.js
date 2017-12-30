@@ -25,7 +25,11 @@ export default function reducer(state = initialState, action) {
             return { ...state, isLoggedIn: false, username: '', token: '' };
         }
         case SIGN_UP_SUCCESS: {
-            // Actions.reset('welcome');
+            Actions.popup({
+                title: 'Signup success',
+                message: 'You sure you\'ve been successfully registred to checkstory!',
+                yesOptionMsg: 'OK'
+            });
             return state;
         }
         default:
