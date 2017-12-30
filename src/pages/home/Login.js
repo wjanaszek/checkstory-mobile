@@ -18,8 +18,16 @@ class Login extends Component {
         }
     }
 
+    formValid() {
+        if (!this.state.username || !this.state.password) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     userLogin(e) {
-        if (this.state.usernameError || this.state.passwordError) {
+        if (!this.formValid()) {
             return;
         }
         this.props.onLogin(this.state.username, this.state.password);

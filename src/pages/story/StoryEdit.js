@@ -23,7 +23,18 @@ class StoryEdit extends Component {
         }
     }
 
+    formValid() {
+        if (!this.state.title || !this.state.longitude || !this.state.latitude || !this.state.createDate) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     updateStory() {
+        if (!this.formValid()) {
+            return;
+        }
         this.props.onStoryEdit(this.props.token, this.state, this.state.id);
     }
 

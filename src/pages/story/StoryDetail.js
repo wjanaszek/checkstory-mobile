@@ -96,12 +96,12 @@ class StoryDetail extends Component {
                     (<List>
                         <FlatList
                             data={this.props.photos}
+                            keyExtractor={item => item.id}
                             renderItem={({ item }) => (
                                 <PhotoListItem
                                     imageType={item.imageType}
                                     content={item.content}
                                     createDate={item.createDate}
-                                    keyExtractor={item.id}
                                     photoId={item.id}
                                     storyId={this.state.id}
                                 />

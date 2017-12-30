@@ -22,8 +22,18 @@ class StoryAdd extends Component {
     }
 
     addStory() {
-        if (this.state.titleError || this.state.longitudeError || this.state.latitudeError || this.state.createDateError) return;
+        if (!this.formValid()) {
+            return;
+        }
         this.props.onStoryAdd(this.props.token, this.state.title, this.state.notes, this.state.longitude, this.state.latitude, this.state.createDate);
+    }
+
+    formValid() {
+        if (!this.state.title || !this.state.longitude || !this.state.latitude || !this.state.createDate) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     render() {

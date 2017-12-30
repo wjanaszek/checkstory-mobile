@@ -67,8 +67,14 @@ class PhotoListItem extends Component {
                         source={{uri: `data:image/${this.props.imageType};base64,${this.props.content}`}} />
                 </View>
                 <View style={{marginLeft: 5}}>
-                    <Text style={{fontWeight: 'bold', fontSize: 18, textAlign: 'left'}}>Date</Text>
-                    <Text style={{flex: 1, fontSize: 16, textAlign: 'left'}}>{this.props.createDate}</Text>
+                    <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
+                        <View>
+                            <Text style={{fontWeight: 'bold', fontSize: 18, textAlign: 'left'}}>Create date</Text>
+                        </View>
+                        <View style={{marginLeft: 10}}>
+                            <Text style={{fontSize: 16, textAlign: 'left'}}>{this.props.createDate}</Text>
+                        </View>
+                    </View>
                     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'transparent', flexDirection: 'row'}}>
                         <View style={{marginRight: 15}}>
                             <Button title='DELETE' onPress={() => this.deletePhoto()} />

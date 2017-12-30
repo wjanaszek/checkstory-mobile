@@ -268,7 +268,8 @@ export const apiMiddleware = store => next => action => {
                             originalPhoto: item.originalPhoto,
                             storyNumber: item.storyNumber,
                             imageType: item.imageType,
-                            content: item.content
+                            content: item.content,
+                            createDate: item.createDate.split(' ')[0]
                         }
                     });
                     next({

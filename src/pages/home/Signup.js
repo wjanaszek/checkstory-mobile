@@ -24,8 +24,16 @@ class Signup extends Component {
         }
     }
 
+    formValid() {
+        if (!this.state.username || this.state.usernameApiError || !this.state.email || this.state.emailApiError || !this.state.password || !this.state.repeatedPassword) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     signUp() {
-        if (this.state.usernameError || this.state.usernameApiError || this.state.emailError || this.state.emailApiError || this.state.passwordError || this.state.repeatedPasswordError) {
+        if (!this.formValid()) {
             return;
         }
         this.props.onSignUp(this.state.username, this.state.email, this.state.password);
