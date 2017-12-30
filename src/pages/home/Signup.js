@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, ScrollView, Text, TextInput, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { signUp } from '../../redux/actions/auth';
+import { apiUrl } from '../../config/appConfig';
 
 // Md5 for first step password hashing before sending it to API
 let md5 = require('md5');
@@ -12,8 +13,10 @@ class Signup extends Component {
         this.state = {
             username: '',
             usernameError: false,
+            usernameApiError: false,
             email: '',
             emailError: false,
+            emailApiError: false,
             password: '',
             passwordError: false,
             repeatedPassword: '',
@@ -22,7 +25,7 @@ class Signup extends Component {
     }
 
     signUp() {
-        if (this.state.usernameError || this.state.emailError || this.state.passwordError || this.state.repeatedPasswordError) {
+        if (this.state.usernameError || this.state.usernameApiError || this.state.emailError || this.state.emailApiError || this.state.passwordError || this.state.repeatedPasswordError) {
             return;
         }
         this.props.onSignUp(this.state.username, this.state.email, this.state.password);
@@ -44,10 +47,26 @@ class Signup extends Component {
                             this.setState({ usernameError: true });
                         } else {
                             this.setState({ usernameError: false });
+                            fetch(`${apiUrl}/api/users/checkLogin`, {
+                                method: 'POST',
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                }, body: this.state.username
+                            })
+                                .then(response => response.json())
+                                .then(available => {
+                                    if (!available) {
+                                        this.setState({ usernameApiError: true });
+                                    } else {
+                                        this.setState({ usernameApiError: false });
+                                    }
+                                });
                         }
                     }}
                 />
-                {this.state.usernameError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
+                { this.state.usernameError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
+                { this.state.usernameApiError ? (<Text style={{color: 'red'}}>This username is already in use</Text>) : null }
                 <TextInput
                     placeholder='Email'
                     autoCapitalize='none'
@@ -61,10 +80,26 @@ class Signup extends Component {
                             this.setState({ emailError: true });
                         } else {
                             this.setState({ emailError: false });
-                        }
-                    }}
+                            fetch(`${apiUrl}/api/users/checkEmail`, {
+                                method: 'POST',
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                }, body: this.state.email
+                            })
+                                .then(response => response.json())
+                                .then(available => {
+                                    if (!available) {
+                                        this.setState({ emailApiError: true });
+                                    } else {
+                                        this.setState({ emailApiError: false });
+                                    }
+                                });
+                        }}
+                    }
                 />
-                {this.state.emailError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
+                { this.state.emailError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
+                { this.state.emailApiError ? (<Text style={{color: 'red'}}>This email is already in use</Text>) : null }
                 <TextInput
                     placeholder='Password'
                     autoCapitalize='none'
