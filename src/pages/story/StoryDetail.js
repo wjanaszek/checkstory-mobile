@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, TouchableOpacity, ScrollView, Text, StyleSheet, View, FlatList, Image } from 'react-native';
+import { Button, TouchableOpacity, ScrollView, Text, StyleSheet, View, FlatList } from 'react-native';
 import { createPhoto, deletePhoto, updatePhoto } from '../../redux/actions/photos';
 import { Actions } from 'react-native-router-flux';
 import { Divider, List } from 'react-native-elements';
@@ -57,7 +57,7 @@ class StoryDetail extends Component {
 
     render() {
         return (
-            <ScrollView style={{padding: 10}}>
+            <ScrollView style={{padding: 10, marginBottom: 15}}>
                 <TouchableOpacity disabled={true}>
                     <Text style={styles.labelStyle}>Title</Text>
                     <Text>{this.state.title}</Text>

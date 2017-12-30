@@ -63,7 +63,7 @@ class PhotoListItem extends Component {
             <View style={{borderBottomWidth: 1, borderColor: 'black', marginTop: 5}}>
                 <View>
                     <Image
-                        style={{width: 300, height: 150, resizeMode: Image.resizeMode.contain, borderRadius: 5, marginBottom: 5}}
+                        style={{width: 300, height: 130, resizeMode: Image.resizeMode.contain, borderRadius: 5, marginBottom: 5}}
                         source={{uri: `data:image/${this.props.imageType};base64,${this.props.content}`}} />
                 </View>
                 <View style={{marginLeft: 5}}>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Button, ScrollView, Text, TextInput, TouchableOpacity, StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
 import { deleteStory, updateStory } from '../../redux/actions/stories';
 import { Actions } from 'react-native-router-flux';
@@ -30,6 +30,7 @@ class StoryEdit extends Component {
     render() {
         return(
             <ScrollView style={{padding: 20}}>
+                <Text style={styles.labelStyle}>Title</Text>
                 <TextInput
                     placeholder='Title'
                     autoCapitalize='none'
@@ -47,6 +48,7 @@ class StoryEdit extends Component {
                     }}
                 />
                 { this.state.titleError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
+                <Text style={styles.labelStyle}>Notes</Text>
                 <TextInput
                     placeholder='Notes'
                     autoCapitalize='none'
@@ -58,6 +60,7 @@ class StoryEdit extends Component {
                     value={this.state.notes}
                     onChangeText={(text) => this.setState({ notes: text })}
                 />
+                <Text style={styles.labelStyle}>Longitude</Text>
                 <TextInput
                     placeholder='Longitude'
                     autoCapitalize='none'
@@ -75,6 +78,7 @@ class StoryEdit extends Component {
                     }}
                 />
                 { this.state.longitudeError ? (<Text style={{color: 'red'}}>This field is required and has to be a number</Text>) : null }
+                <Text style={styles.labelStyle}>Latitude</Text>
                 <TextInput
                     placeholder='Latitude'
                     autoCapitalize='none'
@@ -92,6 +96,7 @@ class StoryEdit extends Component {
                     }}
                 />
                 { this.state.latitudeError ? (<Text style={{color: 'red'}}>This field is required and has to be a number</Text>) : null }
+                <Text style={styles.labelStyle}>Create date</Text>
                 <DatePicker
                     date={this.state.createDate}
                     mode='date'
@@ -120,13 +125,19 @@ class StoryEdit extends Component {
                     }}
                 />
                 { this.state.createDateError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
-                <View style={{flexDirection: 'row'}}>
-                    <Button title='CANCEL' onPress={() => Actions.pop()} />
+                <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
+                    <View style={{marginRight: 20, marginTop: 10}}>
+                        <Button title='CANCEL' onPress={() => Actions.pop()} />
+                    </View>
                     {!this.props.loading ?
-                        (<Button title='SAVE' onPress={() => this.updateStory()} />) :
-                        (<TouchableOpacity disabled={true}>
-                            <Text>Updating story...</Text>
-                        </TouchableOpacity>)}
+                        (<View style={{marginLeft: 10, marginTop: 10}}>
+                            <Button title='SAVE' onPress={() => this.updateStory()} />
+                        </View>) :
+                        (<View style={{marginLeft: 10, marginTop: 10}}>
+                            <TouchableOpacity disabled={true}>
+                                <Text>Updating story...</Text>
+                            </TouchableOpacity>
+                        </View>)}
                 </View>
                 { this.props.error ? (<Text style={{color: 'red'}}>{this.props.error}</Text>) : null }
             </ScrollView>
@@ -140,6 +151,14 @@ const mapStateToProps = (state, ownProps) => {
         token: state.auth.token
     };
 };
+
+const styles = StyleSheet.create({
+    labelStyle: {
+        fontWeight: 'bold',
+        fontSize: 18,
+        marginTop: 2
+    }
+});
 
 const mapDispatchToProps = (dispatch) => {
     return {
