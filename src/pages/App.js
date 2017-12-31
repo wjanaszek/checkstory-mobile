@@ -10,6 +10,7 @@ import StoryAdd from './story/StoryAdd';
 import StoryEdit from './story/StoryEdit';
 import MoreVertButton from './custom-buttons/MoreVertButton';
 import PopupModal from './modal/PopupModal';
+import ImagePreviewModal from './modal/ImagePreviewModal';
 
 const App = () => (
     <Router>
@@ -56,6 +57,11 @@ const App = () => (
                 hideNavBar
                 key='popup'
                 component={PopupModal}
+            />
+            <Scene
+                hideNavBar
+                key='imagePreview'
+                component={ImagePreviewModal}
             />
         </Scene>
     </Router>

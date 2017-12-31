@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, CheckBox, Image, Text, View } from 'react-native';
+import { Button, CheckBox, Image, Text, TouchableOpacity, View } from 'react-native';
 import { updatePhoto } from '../../redux/actions/photos';
 import { Actions } from 'react-native-router-flux';
 import Photo from '../../model/Photo';
@@ -62,9 +62,12 @@ class PhotoListItem extends Component {
         return(
             <View style={{borderBottomWidth: 1, borderColor: 'black', marginTop: 5}}>
                 <View>
-                    <Image
-                        style={{width: 300, height: 130, resizeMode: Image.resizeMode.contain, borderRadius: 5, marginBottom: 5}}
-                        source={{uri: `data:image/${this.props.imageType};base64,${this.props.content}`}} />
+                    <TouchableOpacity
+                        onPress={() => Actions.imagePreview({ imageType: this.props.imageType, content: this.props.content })}>
+                        <Image
+                            style={{width: 300, height: 130, resizeMode: Image.resizeMode.contain, borderRadius: 5, marginBottom: 5}}
+                            source={{uri: `data:image/${this.props.imageType};base64,${this.props.content}`}} />
+                    </TouchableOpacity>
                 </View>
                 <View style={{marginLeft: 5}}>
                     <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
