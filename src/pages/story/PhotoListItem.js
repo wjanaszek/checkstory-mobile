@@ -61,7 +61,7 @@ class PhotoListItem extends Component {
     render() {
         return(
             <View style={{borderBottomWidth: 1, borderColor: 'black', marginTop: 5}}>
-                <View>
+                <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
                     <TouchableOpacity
                         onPress={() => Actions.imagePreview({ imageType: this.props.imageType, content: this.props.content })}>
                         <Image

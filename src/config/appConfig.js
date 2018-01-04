@@ -1,4 +1,5 @@
-export const apiUrl = 'http://10.0.2.2:8080';
+// export const apiUrl = 'http://10.0.2.2:8080';
+export const apiUrl = 'http://192.168.0.11:8080';
 
 export const endpoints = {
     // Stories endpoints

@@ -21,8 +21,8 @@ class ImagePreviewModal extends Component {
         return (
             <Modal hideClose>
                 <View>
-                    <TouchableOpacity onPress={() => Actions.pop()} style={{borderColor: 'white', borderRadius: 15}}>
-                        <Text style={{color: 'white'}}>
+                    <TouchableOpacity onPress={() => Actions.pop()} style={{zIndex: 1000,width: 75, borderColor: 'white', borderWidth: 1, borderRadius: 10}}>
+                        <Text style={{fontSize: 16, color: 'white', marginLeft: 10}}>
                             BACK
                         </Text>
                     </TouchableOpacity>

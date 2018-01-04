@@ -7,6 +7,10 @@ import { Divider, List } from 'react-native-elements';
 import PhotoListItem from './PhotoListItem';
 import Photo from '../../model/Photo';
 import { deleteStory } from '../../redux/actions/stories';
+import ActionButton from 'react-native-action-button';
+import blue from 'material-ui/es/colors/blue';
+import green from 'material-ui/es/colors/green';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const ImagePicker = require('react-native-image-picker');
 
@@ -35,14 +39,14 @@ class StoryDetail extends Component {
 
     addPhoto() {
         ImagePicker.showImagePicker(options, (response) => {
-            console.log('Response = ', response);
+            // console.log('Response = ', response);
 
             if (response.didCancel || response.error) {
                 console.log('Error or cancel');
             }
             else {
                 let source = { uri: response.uri };
-                console.log(JSON.stringify(source));
+                // console.log(JSON.stringify(source));
 
                 // You can also display the image using data:
                 // let source = { uri: 'data:image/jpeg;base64,' + response.data };
@@ -57,7 +61,7 @@ class StoryDetail extends Component {
 
     render() {
         return (
-            <ScrollView style={{padding: 10, marginBottom: 15}}>
+            <ScrollView style={{flex: 1, padding: 10, marginBottom: 15}}>
                 <TouchableOpacity disabled={true}>
                     <Text style={styles.labelStyle}>Title</Text>
                     <Text>{this.state.title}</Text>
@@ -71,7 +75,6 @@ class StoryDetail extends Component {
                     <Text>{this.state.createDate}</Text>
                 </TouchableOpacity>
                 <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
-                    <Text style={{fontSize: 15, marginTop: 7, marginRight: 30}}>Actions: </Text>
                     <View style={{marginRight: 15, marginBottom: 10, width: 70}}>
                         <Button title='EDIT' onPress={() => Actions.storyEdit({ story: this.state })}/>
                     </View>
@@ -85,12 +88,14 @@ class StoryDetail extends Component {
                         })}/>
                     </View>
                 </View>
-                <Divider style={{backgroundColor: 'black', marginBottom: 10}}/>
-                {!this.props.loading ?
-                    (<Button title='ADD PHOTO' onPress={() => this.addPhoto()} style={{marginTop: 10}}/>) :
-                    (<TouchableOpacity disabled={true}>
-                        <Text>Adding photo...</Text>
-                    </TouchableOpacity>)}
+
+                {/*<Divider style={{backgroundColor: 'black', marginBottom: 10}}/>*/}
+                {/*{!this.props.loading ?*/}
+                    {/*(<Button title='ADD PHOTO' onPress={() => this.addPhoto()} style={{marginTop: 10}}/>) :*/}
+                    {/*(<TouchableOpacity disabled={true}>*/}
+                        {/*<Text>Adding photo...</Text>*/}
+                    {/*</TouchableOpacity>)}*/}
+
                 {this.props.loadingPhotos ?
                     (<Text>Loading photos...</Text>) :
                     (<List>
@@ -108,6 +113,11 @@ class StoryDetail extends Component {
                             )}
                         />
                     </List>)}
+                <ActionButton buttonColor='blue'>
+                    <ActionButton.Item buttonColor='green' title='Add photo' onPress={() => this.addPhoto()}>
+                        <Icon name='md-create' style={{fontSize: 20, height: 22, color: 'white'}} />
+                    </ActionButton.Item>
+                </ActionButton>
             </ScrollView>
         )
     }
