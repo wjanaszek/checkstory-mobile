@@ -22,6 +22,7 @@ export default function reducer(state = initialState, action) {
             return { ...state, loading: false, error: action.error };
         }
         case LOGOUT: {
+            Actions.reset('home');
             return { ...state, isLoggedIn: false, username: '', token: '' };
         }
         case SIGN_UP_SUCCESS: {

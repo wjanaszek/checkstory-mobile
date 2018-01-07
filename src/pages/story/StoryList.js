@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Text, View, Button, FlatList } from 'react-native';
+import { Text, View, Button, FlatList, ScrollView } from 'react-native';
 import { getAllStories } from '../../redux/actions/stories';
 import { List, ListItem } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
@@ -13,7 +13,7 @@ class StoryList extends Component {
 
     render() {
         return (
-            <View>
+            <ScrollView>
                 {this.props.loading ?
                     (<Text>Loading...</Text>) :
                     (<List>
@@ -33,7 +33,15 @@ class StoryList extends Component {
                         />
                     </List>)}
                 <Button onPress={() => Actions.storyAdd()} title='Add story'/>
-            </View>
+                <View style={{marginTop: 10}}>
+                    <Button onPress={() => Actions.popup({
+                        title: 'Logout',
+                        message: 'Are you sure you want to logout?',
+                        yesOptionMsg: 'YES',
+                        noOptionMsg: 'NO'
+                    })} title='Logout'/>
+                </View>
+            </ScrollView>
         )
     }
 }
