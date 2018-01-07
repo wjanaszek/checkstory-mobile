@@ -12,59 +12,75 @@ import MoreVertButton from './custom-buttons/MoreVertButton';
 import PopupModal from './modal/PopupModal';
 import ImagePreviewModal from './modal/ImagePreviewModal';
 
+import { ThemeProvider } from 'react-native-material-ui';
+
+// you can set your style right here, it'll be propagated to application
+const uiTheme = {
+    palette: {
+        primaryColor: 'blue',
+    },
+    toolbar: {
+        container: {
+            height: 50,
+        },
+    },
+};
+
 const App = () => (
-    <Router>
-        <Scene key='root'>
-            <Scene
-                hideNavBar
-                key='home'
-                component={Home}
-                title='Home'
-                initial
-            />
-            <Scene
-                key='login'
-                component={Login}
-                title='Log in'
-            />
-            <Scene
-                key='register'
-                component={Signup}
-                title='Sign up'
-            />
-            <Scene
-                key='storyList'
-                component={StoryList}
-                title='Story list'
-                renderRightButton={MoreVertButton}
-            />
-            <Scene
-                key='storyDetail'
-                component={StoryDetail}
-                title='Story detail'
-            />
-            <Scene
-                key='storyAdd'
-                component={StoryAdd}
-                title='Add story'
-            />
-            <Scene
-                key='storyEdit'
-                component={StoryEdit}
-                title='Edit story'
-            />
-            <Scene
-                hideNavBar
-                key='popup'
-                component={PopupModal}
-            />
-            <Scene
-                hideNavBar
-                key='imagePreview'
-                component={ImagePreviewModal}
-            />
-        </Scene>
-    </Router>
+    <ThemeProvider uiTheme={uiTheme}>
+        <Router>
+            <Scene key='root'>
+                <Scene
+                    hideNavBar
+                    key='home'
+                    component={Home}
+                    title='Home'
+                    initial
+                />
+                <Scene
+                    key='login'
+                    component={Login}
+                    title='Log in'
+                />
+                <Scene
+                    key='register'
+                    component={Signup}
+                    title='Sign up'
+                />
+                <Scene
+                    key='storyList'
+                    component={StoryList}
+                    title='Story list'
+                    renderRightButton={MoreVertButton}
+                />
+                <Scene
+                    key='storyDetail'
+                    component={StoryDetail}
+                    title='Story detail'
+                />
+                <Scene
+                    key='storyAdd'
+                    component={StoryAdd}
+                    title='Add story'
+                />
+                <Scene
+                    key='storyEdit'
+                    component={StoryEdit}
+                    title='Edit story'
+                />
+                <Scene
+                    hideNavBar
+                    key='popup'
+                    component={PopupModal}
+                />
+                <Scene
+                    hideNavBar
+                    key='imagePreview'
+                    component={ImagePreviewModal}
+                />
+            </Scene>
+        </Router>
+    </ThemeProvider>
 );
 
 const mapStateToProps = (state, ownProps) => {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ScrollView, Text, TextInput, View, Button, TouchableOpacity } from 'react-native';
+import { ScrollView, Text, TextInput, View, Button, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { login } from '../../redux/actions/auth';
 import { Actions } from 'react-native-router-flux';
 
@@ -74,6 +74,7 @@ class Login extends Component {
                 {!this.props.loading ?
                     (<Button onPress={(e) => this.userLogin(e)} title='LOGIN'/>) :
                     (<TouchableOpacity disabled={true}>
+                        <ActivityIndicator size='large' color='blue'/>
                         <Text>Logging in...</Text>
                     </TouchableOpacity>)}
                 { this.props.error ? (<Text style={{color: 'red'}}>{this.props.error}</Text>) : null }

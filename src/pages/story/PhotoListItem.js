@@ -58,6 +58,11 @@ class PhotoListItem extends Component {
         });
     }
 
+    onCheckboxValueChange(id) {
+        this.setState({ checked: !this.state.checked });
+        this.props.onCheckboxValueChange(id);
+    }
+
     render() {
         return(
             <View style={{borderBottomWidth: 1, borderColor: 'black', marginTop: 5}}>
@@ -88,7 +93,7 @@ class PhotoListItem extends Component {
                         <View style={{marginLeft: 10}}>
                             <CheckBox
                                 value={this.state.checked}
-                                onValueChange={() => this.setState({ checked: !this.state.checked})}/>
+                                onValueChange={() => this.onCheckboxValueChange(this.props.photoId)}/>
                         </View>
                         <View style={{marginLeft: 3}}>
                             <Text>Compare</Text>

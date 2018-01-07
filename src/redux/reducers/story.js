@@ -4,6 +4,7 @@ import {
 } from '../actions/stories';
 import { Story } from '../../model/Story';
 import {
+    COMPARE_PHOTOS_FAIL, COMPARE_PHOTOS_SUCCESS,
     CREATE_PHOTO_FAIL,
     CREATE_PHOTO_IN_PROGRESS, CREATE_PHOTO_SUCCESS, DELETE_PHOTO_FAIL, DELETE_PHOTO_IN_PROGRESS, DELETE_PHOTO_SUCCESS,
     LOAD_PHOTO_FAIL, LOAD_PHOTO_IN_PROGRESS, LOAD_PHOTO_SUCCESS, LOAD_PHOTOS_FAIL, LOAD_PHOTOS_IN_PROGRESS,
@@ -14,6 +15,7 @@ import { Actions } from 'react-native-router-flux';
 const initialState = {
     story: null,
     photos: [],
+    comparedPhotos: null,
     selectedPhoto: null,
     loading: false
 };
@@ -32,6 +34,7 @@ export default function reducer(state = initialState, action) {
         case LOAD_STORY_FAIL:
         case LOAD_PHOTOS_FAIL:
         case LOAD_PHOTO_FAIL:
+        case COMPARE_PHOTOS_FAIL:
         case CREATE_PHOTO_FAIL:
         case UPDATE_PHOTO_FAIL:
         case DELETE_PHOTO_FAIL:
@@ -48,30 +51,32 @@ export default function reducer(state = initialState, action) {
         case LOAD_PHOTO_SUCCESS: {
             return { ...state, selectedPhoto: action.photo, loading: false };
         }
+        case COMPARE_PHOTOS_SUCCESS: {
+            if (Actions.currentScene === 'popup') {
+                Actions.pop();
+            }
+            Actions.imagePreview({ imageType: action.comparedPhotos.imageType, content: action.comparedPhotos.content });
+            return { ...state, comparedPhotos: action.comparedPhotos };
+        }
         case CREATE_PHOTO_SUCCESS: {
             const photos = [...state.photos];
             photos.push(action.photo);
             return { ...state, photos: photos, selectedPhoto: null, loading: false };
         }
         case UPDATE_PHOTO_SUCCESS: {
-            const photos = [...state.photos];
-            for (let i = 0; i < photos.length; i++) {
-                if (photos[i].id === action.photoId) {
-                    photos[i] = action.photo;
-                    break;
+            return { ...state, photos: state.photos.map(photo => {
+                if (photo.id === action.photoId) {
+                    return action.photo;
+                } else {
+                    return photo;
                 }
-            }
-            return { ...state, photos: photos, selectedPhoto: null, loading: false };
+            }), selectedPhoto: null, loading: false };
         }
         case DELETE_PHOTO_SUCCESS: {
-            const photos = [...state.photos];
-            const index = photos.findIndex((photo) => photo.id === action.photoId);
-            photos.splice(index, 1);
             Actions.pop();
-            return { ...state, photos: photos, selectedPhoto: null, loading: false };
+            return { ...state, photos: state.photos.filter(photo => photo.id !== action.photoId), selectedPhoto: null, loading: false };
         }
         case UPDATE_STORY_SUCCESS: {
-            // Actions.reset('storyList');
             Actions.pop();
             return { ...state, story: action.story, loading: false };
         }

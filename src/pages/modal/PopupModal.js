@@ -3,7 +3,7 @@ import {
     StyleSheet,
     Text,
     View,
-    Button,
+    Button, ActivityIndicator,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
@@ -35,30 +35,35 @@ class PopupModal extends Component {
             <Modal hideClose>
                 <View style={styles.popup}>
                     <Text style={{fontWeight: 'bold', fontSize: 20}}>{this.props.title}</Text>
-                    <Text>{this.props.message}</Text>
-                    <View style={{flexDirection: 'row'}}>
+                    {this.props.title === 'Comparing photos' ? (
+                        <View>
+                            <ActivityIndicator size='large' color='blue'/>
+                            <Text>This may take a while, please wait</Text>
+                        </View>) :
+                        (<Text>{this.props.message}</Text>)}
+                    <View style={{flexDirection: 'column'}}>
                         { this.props.title === 'Delete story' ? (
-                            <View style={styles.marginButtons}>
-                                <Button title={this.props.yesOptionMsg} onPress={() => this.deleteStory()} />
+                            <View style={styles.buttonYesOptionDiv}>
+                                <Button title={this.props.yesOptionMsg} style={styles.buttonYesOption} onPress={() => this.deleteStory()} />
                             </View>) : null }
                         { this.props.title === 'Delete photo' ? (
-                            <View style={styles.marginButtons}>
-                                <Button title={this.props.yesOptionMsg} onPress={() => this.deletePhoto()} />
+                            <View style={styles.buttonYesOptionDiv}>
+                                <Button title={this.props.yesOptionMsg} style={styles.buttonYesOption} onPress={() => this.deletePhoto()} />
                             </View>) : null }
                         { this.props.title === 'Error' ? (
-                            <View style={styles.marginButtons}>
-                                <Button title={this.props.yesOptionMsg} onPress={() => Actions.pop()} />
+                            <View style={styles.buttonYesOptionDiv}>
+                                <Button title={this.props.yesOptionMsg} style={styles.buttonYesOption} onPress={() => Actions.pop()} />
                             </View>) : null }
                         { this.props.title === 'Signup success' ? (
-                            <View style={styles.marginButtons}>
-                                <Button title={this.props.yesOptionMsg} onPress={() => Actions.reset('home')}/>
+                            <View style={styles.buttonYesOptionDiv}>
+                                <Button title={this.props.yesOptionMsg} style={styles.buttonYesOption} onPress={() => Actions.reset('home')}/>
                             </View>) : null }
                         { this.props.title === 'Logout' ? (
-                            <View style={styles.marginButtons}>
-                                <Button title={this.props.yesOptionMsg} onPress={() => this.logout()} />
+                            <View style={styles.buttonYesOptionDiv}>
+                                <Button title={this.props.yesOptionMsg} style={styles.buttonYesOption} onPress={() => this.logout()} />
                             </View>) : null }
                         { this.props.title !== 'Error' && this.props.title !== 'Signup success' ? (
-                            <View style={styles.marginButtons}>
+                            <View style={styles.buttonNoOptionDiv}>
                                 <Button title={this.props.noOptionMsg} onPress={() => Actions.pop()} />
                             </View>) : null }
                     </View>
@@ -74,10 +79,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginHorizontal: 20
     },
-    marginButtons: {
+    buttonYesOption: {
+        backgroundColor: 'white',
+        color: 'black',
+    },
+    buttonYesOptionDiv: {
         marginRight: 10,
         marginLeft: 10,
-        marginTop: 5
+        marginTop: 200,
+        width: 250
+    },
+
+    buttonNoOptionDiv: {
+        marginTop: 10,
+        marginRight: 10,
+        marginLeft: 10,
+        width: 250
     }
 });
 
