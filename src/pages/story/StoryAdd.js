@@ -44,6 +44,7 @@ class StoryAdd extends Component {
                     autoCapitalize='none'
                     autoCorrect={false}
                     autoFocus={true}
+                    returnKeyType='next'
                     keyboardType='email-address'
                     value={this.state.title}
                     onChangeText={(text) => this.setState({ title: text })}
@@ -63,17 +64,22 @@ class StoryAdd extends Component {
                     autoFocus={false}
                     keyboardType='email-address'
                     multiline={true}
+                    returnKeyType='next'
                     numberOfLines={4}
                     value={this.state.notes}
+                    // onSubmitEditing={() => this.refs.longitude.focus()}
                     onChangeText={(text) => this.setState({ notes: text })}
                 />
                 <TextInput
                     placeholder='Longitude'
+                    refs='longitude'
                     autoCapitalize='none'
                     autoCorrect={true}
                     autoFocus={false}
+                    returnKeyType='next'
                     keyboardType='email-address'
                     value={this.state.longitude}
+                    // onSubmitEditing={() => this.refs.latitude.focus()}
                     onChangeText={(text) => this.setState({ longitude: text })}
                     onEndEditing={() => {
                         if (!this.state.longitude || !this.state.longitude.isNumber) {
@@ -86,6 +92,7 @@ class StoryAdd extends Component {
                 { this.state.longitudeError ? (<Text style={{color: 'red'}}>This field is required and has to be a number</Text>) : null }
                 <TextInput
                     placeholder='Latitude'
+                    refs='latitude'
                     autoCapitalize='none'
                     autoCorrect={true}
                     autoFocus={false}

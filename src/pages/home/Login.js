@@ -26,12 +26,11 @@ class Login extends Component {
         }
     }
 
-    userLogin(e) {
+    userLogin() {
         if (!this.formValid()) {
             return;
         }
         this.props.onLogin(this.state.username, this.state.password);
-        e.preventDefault();
     }
 
     render() {
@@ -44,6 +43,8 @@ class Login extends Component {
                     autoFocus={true}
                     keyboardType='email-address'
                     value={this.state.username}
+                    returnKeyType='next'
+                    onSubmitEditing={() => this.refs.pswd.focus()}
                     onChangeText={(text) => this.setState({ username: text })}
                     onEndEditing={() => {
                         if (!this.state.username) {
@@ -55,11 +56,15 @@ class Login extends Component {
                 />
                 { this.state.usernameError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
                 <TextInput
+                    ref='pswd'
+                    onPress={() => this.refs.pswd.focus()}
                     placeholder='Password'
                     autoCapitalize='none'
+                    returnKeyType='go'
                     autoCorrect={false}
                     secureTextEntry={true}
                     value={this.state.password}
+                    onSubmitEditing={() => this.userLogin(null)}
                     onChangeText={(text) => this.setState({ password: text })}
                     onEndEditing={() => {
                         if (!this.state.password) {
@@ -72,7 +77,7 @@ class Login extends Component {
                 { this.state.passwordError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
                 <View style={{margin: 7}}/>
                 {!this.props.loading ?
-                    (<Button onPress={(e) => this.userLogin(e)} title='LOGIN'/>) :
+                    (<Button onPress={() => this.userLogin()} title='LOGIN'/>) :
                     (<TouchableOpacity disabled={true}>
                         <ActivityIndicator size='large' color='blue'/>
                         <Text>Logging in...</Text>

@@ -8,10 +8,10 @@ class StoryActionButton extends Component {
     render() {
         return (
             <ActionButton buttonColor='rgba(231,76,60,1)'>
-                <ActionButton.Item buttonColor='#9b59b6' title='Add photo' onPress={() => this.props.addPhoto()}>
+                <ActionButton.Item buttonColor='#8342f4' title='Add photo' onPress={() => this.props.addPhoto()}>
                     <Icon name='md-photos' style={styles.actionButtonIcon} />
                 </ActionButton.Item>
-                <ActionButton.Item buttonColor='rgba(255, 0, 0, 1)' title='Delete story' onPress={() => Actions.popup({
+                <ActionButton.Item buttonColor='#f49d41' title='Delete story' onPress={() => Actions.popup({
                     title: 'Delete story',
                     message: 'Are you sure you want delete this story?',
                     noOptionMsg: 'NO',
@@ -20,10 +20,10 @@ class StoryActionButton extends Component {
                 })}>
                     <Icon name='md-remove' style={styles.actionButtonIcon} />
                 </ActionButton.Item>
-                <ActionButton.Item buttonColor='rgba(200, 100, 0, 1)' title='Edit story' onPress={() => Actions.storyEdit({ story: this.props.story })}>
+                <ActionButton.Item buttonColor='#41c4f4' title='Edit story' onPress={() => Actions.storyEdit({ story: this.props.story })}>
                     <Icon name='md-create' style={styles.actionButtonIcon} />
                 </ActionButton.Item>
-                <ActionButton.Item buttonColor='rgba(0, 255, 0, 1)' title='Compare selected photos' onPress={() => this.props.comparePhotos()}>
+                <ActionButton.Item buttonColor='#4159f4' title='Compare selected photos' onPress={() => this.props.comparePhotos()}>
                     <Icon name='md-add' style={styles.actionButtonIcon} />
                 </ActionButton.Item>
             </ActionButton>
