@@ -33,7 +33,7 @@ class Signup extends Component {
     }
 
     signUp() {
-        if (!this.formValid()) {
+        if (!this.formValid() || this.state.password !== this.state.repeatedPassword) {
             return;
         }
         this.props.onSignUp(this.state.username, this.state.email, this.state.password);
@@ -49,6 +49,8 @@ class Signup extends Component {
                     autoFocus={true}
                     keyboardType='email-address'
                     value={this.state.username}
+                    returnKeyType='next'
+                    onSubmitEditing={() => this.refs.em.focus()}
                     onChangeText={(text) => this.setState({ username: text })}
                     onEndEditing={() => {
                         if (!this.state.username) {
@@ -77,11 +79,14 @@ class Signup extends Component {
                 { this.state.usernameApiError ? (<Text style={{color: 'red'}}>This username is already in use</Text>) : null }
                 <TextInput
                     placeholder='Email'
+                    ref='em'
                     autoCapitalize='none'
                     autoCorrect={true}
                     autoFocus={false}
                     keyboardType='email-address'
                     value={this.state.email}
+                    returnKeyType='next'
+                    onSubmitEditing={() => this.refs.pswd.focus()}
                     onChangeText={(text) => this.setState({ email: text })}
                     onEndEditing={() => {
                         if (!this.state.email) {
@@ -110,10 +115,13 @@ class Signup extends Component {
                 { this.state.emailApiError ? (<Text style={{color: 'red'}}>This email is already in use</Text>) : null }
                 <TextInput
                     placeholder='Password'
+                    ref='pswd'
                     autoCapitalize='none'
                     autoCorrect={false}
                     secureTextEntry={true}
+                    returnKeyType='next'
                     value={this.state.password}
+                    onSubmitEditing={() => this.refs.rpswd.focus()}
                     onChangeText={(text) => this.setState({ password: text })}
                     onEndEditing={() => {
                         if (!this.state.password) {
@@ -126,10 +134,13 @@ class Signup extends Component {
                 { this.state.passwordError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
                 <TextInput
                     placeholder='Repeat password'
+                    ref='rpswd'
                     autoCapitalize='none'
                     autoCorrect={false}
                     secureTextEntry={true}
+                    returnKeyType='go'
                     value={this.state.repeatedPassword}
+                    onSubmitEditing={() => this.signUp()}
                     onChangeText={(text) => this.setState({ repeatedPassword: text })}
                     onEndEditing={() => {
                         if (!(this.state.repeatedPassword || this.state.password) || this.state.password !== this.state.repeatedPassword) {

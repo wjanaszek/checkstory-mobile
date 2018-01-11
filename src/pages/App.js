@@ -8,10 +8,9 @@ import Login from './home/Login';
 import Home from './home/Home';
 import StoryAdd from './story/StoryAdd';
 import StoryEdit from './story/StoryEdit';
-import MoreVertButton from './custom-buttons/MoreVertButton';
+import { Actions } from 'react-native-router-flux';
 import PopupModal from './modal/PopupModal';
 import ImagePreviewModal from './modal/ImagePreviewModal';
-
 import { ThemeProvider } from 'react-native-material-ui';
 
 // you can set your style right here, it'll be propagated to application
@@ -51,7 +50,13 @@ const App = () => (
                     key='storyList'
                     component={StoryList}
                     title='Story list'
-                    renderRightButton={MoreVertButton}
+                    onRight={() => Actions.popup({
+                        title: 'Logout',
+                        message: 'Are you sure you want to logout?',
+                        yesOptionMsg: 'LOGOUT',
+                        noOptionMsg: 'CANCEL'
+                    })}
+                    rightTitle='LOGOUT'
                 />
                 <Scene
                     key='storyDetail'

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Text, View, Button, FlatList, ScrollView } from 'react-native';
+import { Text, View, Button, FlatList, ScrollView, StyleSheet } from 'react-native';
 import { getAllStories } from '../../redux/actions/stories';
 import { List, ListItem } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import { getAllPhotos } from '../../redux/actions/photos';
+import ActionButton from 'react-native-action-button';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 class StoryList extends Component {
     loadStories() {
@@ -13,7 +15,7 @@ class StoryList extends Component {
 
     render() {
         return (
-            <ScrollView>
+            <ScrollView style={{flex: 1, padding: 10}}>
                 {this.props.loading ?
                     (<Text>Loading...</Text>) :
                     (<List>
@@ -32,19 +34,34 @@ class StoryList extends Component {
                             )}
                         />
                     </List>)}
-                <Button onPress={() => Actions.storyAdd()} title='Add story'/>
-                <View style={{marginTop: 10}}>
-                    <Button onPress={() => Actions.popup({
-                        title: 'Logout',
-                        message: 'Are you sure you want to logout?',
-                        yesOptionMsg: 'YES',
-                        noOptionMsg: 'NO'
-                    })} title='Logout'/>
+                <View style={{height: 500}}>
+                    <ActionButton buttonColor='rgba(231,76,60,1)'>
+                        <ActionButton.Item buttonColor='#8342f4' title='Add story' onPress={() => Actions.storyAdd()}>
+                            <Icon name='md-create' style={styles.actionButtonIcon}/>
+                        </ActionButton.Item>
+                        // @TODO remove this
+                        {/*<ActionButton.Item buttonColor='#f49d41' title='Logout' onPress={() => Actions.popup({*/}
+                                {/*title: 'Logout',*/}
+                                {/*message: 'Are you sure you want to logout?',*/}
+                                {/*yesOptionMsg: 'LOGOUT',*/}
+                                {/*noOptionMsg: 'Cancel'*/}
+                            {/*})}>*/}
+                            {/*<Icon name='md-backspace' style={styles.actionButtonIcon}/>*/}
+                        {/*</ActionButton.Item>*/}
+                    </ActionButton>
                 </View>
             </ScrollView>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    actionButtonIcon: {
+        fontSize: 20,
+        height: 22,
+        color: 'white'
+    }
+});
 
 const mapStateToProps = (state, ownProps) => {
     return {

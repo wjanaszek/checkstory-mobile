@@ -47,9 +47,10 @@ class StoryAdd extends Component {
                     returnKeyType='next'
                     keyboardType='email-address'
                     value={this.state.title}
+                    onSubmitEditing={() => this.refs.notes.focus()}
                     onChangeText={(text) => this.setState({ title: text })}
                     onEndEditing={() => {
-                        if (!this.state.title || !this.state.title.isNumber) {
+                        if (!this.state.title) {
                             this.setState({ titleError: true });
                         } else {
                             this.setState({ titleError: false });
@@ -59,6 +60,7 @@ class StoryAdd extends Component {
                 { this.state.titleError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
                 <TextInput
                     placeholder='Notes'
+                    ref='notes'
                     autoCapitalize='none'
                     autoCorrect={true}
                     autoFocus={false}
@@ -72,17 +74,17 @@ class StoryAdd extends Component {
                 />
                 <TextInput
                     placeholder='Longitude'
-                    refs='longitude'
+                    ref='longitude'
                     autoCapitalize='none'
                     autoCorrect={true}
                     autoFocus={false}
                     returnKeyType='next'
                     keyboardType='email-address'
                     value={this.state.longitude}
-                    // onSubmitEditing={() => this.refs.latitude.focus()}
+                    onSubmitEditing={() => this.refs.latitude.focus()}
                     onChangeText={(text) => this.setState({ longitude: text })}
                     onEndEditing={() => {
-                        if (!this.state.longitude || !this.state.longitude.isNumber) {
+                        if (!this.state.longitude) {
                             this.setState({ longitudeError: true });
                         } else {
                             this.setState({ longitudeError: false });
@@ -92,7 +94,7 @@ class StoryAdd extends Component {
                 { this.state.longitudeError ? (<Text style={{color: 'red'}}>This field is required and has to be a number</Text>) : null }
                 <TextInput
                     placeholder='Latitude'
-                    refs='latitude'
+                    ref='latitude'
                     autoCapitalize='none'
                     autoCorrect={true}
                     autoFocus={false}
@@ -100,7 +102,7 @@ class StoryAdd extends Component {
                     value={this.state.latitude}
                     onChangeText={(text) => this.setState({ latitude: text })}
                     onEndEditing={() => {
-                        if (!this.state.latitude || !this.state.latitude.isNumber) {
+                        if (!this.state.latitude) {
                             this.setState({ latitudeError: true });
                         } else {
                             this.setState({ latitudeError: false });
