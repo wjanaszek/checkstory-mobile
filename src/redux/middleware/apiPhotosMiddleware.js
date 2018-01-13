@@ -39,7 +39,6 @@ export const apiPhotosMiddleware = store => next => action => {
                 })
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));
-                    errorPopup();
                     next({
                         type: COMPARE_PHOTOS_FAIL,
                         error

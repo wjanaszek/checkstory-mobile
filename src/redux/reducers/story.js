@@ -11,6 +11,7 @@ import {
     LOAD_PHOTOS_SUCCESS, UPDATE_PHOTO_FAIL, UPDATE_PHOTO_IN_PROGRESS, UPDATE_PHOTO_SUCCESS
 } from '../actions/photos';
 import { Actions } from 'react-native-router-flux';
+import { errorPopup } from '../middleware/apiAuthMiddleware';
 
 const initialState = {
     story: null,
@@ -34,13 +35,18 @@ export default function reducer(state = initialState, action) {
         case LOAD_STORY_FAIL:
         case LOAD_PHOTOS_FAIL:
         case LOAD_PHOTO_FAIL:
-        case COMPARE_PHOTOS_FAIL:
         case CREATE_PHOTO_FAIL:
         case UPDATE_PHOTO_FAIL:
         case DELETE_PHOTO_FAIL:
         case UPDATE_STORY_FAIL: {
             Actions.pop();
             return { ...state, loading: false };
+        }
+        case COMPARE_PHOTOS_FAIL: {
+            if (Actions.currentScene === 'popup') {
+                Actions.pop();
+            }
+            errorPopup();
         }
         case LOAD_STORY_SUCCESS: {
             return { ...state, story: action.story, loading: false, };

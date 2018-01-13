@@ -49,15 +49,15 @@ class StoryList extends Component {
                             )}
                         />
                     </List>)}
-                <Text>before</Text>
-                <View style={{
-                    height: 400,
-                    width: 400,
-                    justifyContent: 'flex-end',
-                    alignItems: 'center',}}>
-                    <MapView style={{...StyleSheet.absoluteFillObject}} region={this.state.region} onRegionChange={(region) => this.onRegionChange(region)}/>
-                </View>
-                <Text>after</Text>
+                {/*<Text>before</Text>*/}
+                {/*<View style={{*/}
+                    {/*height: 400,*/}
+                    {/*width: 400,*/}
+                    {/*justifyContent: 'flex-end',*/}
+                    {/*alignItems: 'center',}}>*/}
+                    {/*<MapView style={{...StyleSheet.absoluteFillObject}} region={this.state.region} onRegionChange={this.onRegionChange}/>*/}
+                {/*</View>*/}
+                {/*<Text>after</Text>*/}
                 <View style={{height: 500}}>
                     <ActionButton buttonColor='rgba(231,76,60,1)'>
                         <ActionButton.Item buttonColor='#8342f4' title='Add story' onPress={() => Actions.storyAdd()}>
