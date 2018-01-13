@@ -79,28 +79,28 @@ class StoryDetail extends Component {
     compareTwoPhotos() {
         // console.log('photosToCompare: ' + JSON.stringify(this.state.photosToCompare));
         if (this.state.photosToCompare.length > 2) {
-            // wybrano za duzo zdjec
+            // user choosed too many photos to compare
             Actions.popup({
                 title: 'Error',
                 message: 'You can compare only two photos',
                 yesOptionMsg: 'OK',
             });
         } else if (this.state.photosToCompare.length === 0) {
-            // wybrano 0 zdjec
+            // user choosed 0 photos to compare
             Actions.popup({
                 title: 'Error',
                 message: 'You haven\'t choosen any photo. Choose two photos to compare',
                 yesOptionMsg: 'OK',
             });
         } else if (this.state.photosToCompare.length === 1) {
-            // wybrano 1 zdjecie
+            // user choosed only 1 photo to compare
             Actions.popup({
                 title: 'Error',
                 message: 'You have choosen only one photo. Choose second one to compare',
                 yesOptionMsg: 'OK',
             })
         } else {
-            // wybrano prawidolowa liczbe zdjec - zrob reqest'a do api, i wyswietl porownanie w popupie
+            // user choosed 2 photos to compare
             this.props.onPhotoCompare(this.props.token, this.state.photosToCompare[0], this.state.photosToCompare[1]);
             Actions.popup({
                 title: 'Comparing photos',
@@ -125,7 +125,7 @@ class StoryDetail extends Component {
                     <Text>{this.state.createDate}</Text>
                 </TouchableOpacity>
                 {this.props.loadingPhotos ?
-                (<ActivityIndicator size='large' color='blue'/>) :
+                (<ActivityIndicator size='large' color='rgba(33, 150, 243, 1)'/>) :
                 (<List>
                     <FlatList
                         data={this.props.photos}

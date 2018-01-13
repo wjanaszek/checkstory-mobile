@@ -37,7 +37,7 @@ class PopupModal extends Component {
                     <Text style={{fontWeight: 'bold', fontSize: 20}}>{this.props.title}</Text>
                     {this.props.title === 'Comparing photos' ? (
                         <View>
-                            <ActivityIndicator size='large' color='blue'/>
+                            <ActivityIndicator size='large' color='rgba(33, 150, 243, 1)'/>
                             <Text>This may take a while, please wait</Text>
                         </View>) :
                         (<Text>{this.props.message}</Text>)}

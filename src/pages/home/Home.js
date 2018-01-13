@@ -22,11 +22,13 @@ class Home extends Component {
                             style={{width: '100%'}}
                             icon={{name: 'explore'}}
                             title='Log in'
+                            backgroundColor='rgba(33, 150, 243, 1)'
                             onPress={() => Actions.login()}/>
                     <Button
                             style={{width: '100%'}}
                             icon={{name: 'create'}}
                             title='Sign up'
+                            backgroundColor='rgba(33, 150, 243, 1)'
                             onPress={() => Actions.register()}/>
                 </View>
             </View>
