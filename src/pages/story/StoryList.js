@@ -1,16 +1,31 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Text, View, Button, FlatList, ScrollView, StyleSheet } from 'react-native';
+import { Text, View, FlatList, ScrollView, StyleSheet } from 'react-native';
 import { getAllStories } from '../../redux/actions/stories';
 import { List, ListItem } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import { getAllPhotos } from '../../redux/actions/photos';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { initialRegion } from '../App';
+
+var MapView = require('react-native-maps');
 
 class StoryList extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            region: initialRegion
+        }
+    }
+
+    // @TODO to remove?
     loadStories() {
         this.props.onStoriesLoad(this.props.token);
+    }
+
+    onRegionChange(region) {
+        this.setState({ region: region });
     }
 
     render() {
@@ -34,20 +49,20 @@ class StoryList extends Component {
                             )}
                         />
                     </List>)}
+                <Text>before</Text>
+                <View style={{
+                    height: 400,
+                    width: 400,
+                    justifyContent: 'flex-end',
+                    alignItems: 'center',}}>
+                    <MapView style={{...StyleSheet.absoluteFillObject}} region={this.state.region} onRegionChange={(region) => this.onRegionChange(region)}/>
+                </View>
+                <Text>after</Text>
                 <View style={{height: 500}}>
                     <ActionButton buttonColor='rgba(231,76,60,1)'>
                         <ActionButton.Item buttonColor='#8342f4' title='Add story' onPress={() => Actions.storyAdd()}>
                             <Icon name='md-create' style={styles.actionButtonIcon}/>
                         </ActionButton.Item>
-                        // @TODO remove this
-                        {/*<ActionButton.Item buttonColor='#f49d41' title='Logout' onPress={() => Actions.popup({*/}
-                                {/*title: 'Logout',*/}
-                                {/*message: 'Are you sure you want to logout?',*/}
-                                {/*yesOptionMsg: 'LOGOUT',*/}
-                                {/*noOptionMsg: 'Cancel'*/}
-                            {/*})}>*/}
-                            {/*<Icon name='md-backspace' style={styles.actionButtonIcon}/>*/}
-                        {/*</ActionButton.Item>*/}
                     </ActionButton>
                 </View>
             </ScrollView>

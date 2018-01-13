@@ -91,6 +91,6 @@ export function errorPopup() {
     Actions.popup({
         title: 'Error',
         message: 'Some error occured',
-        yesOptionMsg: 'YES'
+        yesOptionMsg: 'OK'
     });
 }

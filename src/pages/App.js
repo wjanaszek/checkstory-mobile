@@ -25,6 +25,13 @@ const uiTheme = {
     },
 };
 
+export const initialRegion = {
+    latitude: 52.22967,
+    longitude: 21.01222,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+};
+
 const App = () => (
     <ThemeProvider uiTheme={uiTheme}>
         <Router>
