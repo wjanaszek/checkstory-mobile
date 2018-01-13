@@ -11,6 +11,7 @@ import Photo from '../../model/Photo';
 import { deleteStory } from '../../redux/actions/stories';
 import StoryActionButton from './StoryActionButton';
 import { Actions } from 'react-native-router-flux';
+
 const ImagePicker = require('react-native-image-picker');
 
 const options = {
@@ -32,7 +33,8 @@ class StoryDetail extends Component {
             latitude: this.props.story.latitude,
             createDate: this.props.story.createDate,
             photo: null,
-            photosToCompare: []
+            photosToCompare: [],
+            opened: false
         };
         this.addPhoto = this.addPhoto.bind(this);
         this.checkboxValueChanged = this.checkboxValueChanged.bind(this);

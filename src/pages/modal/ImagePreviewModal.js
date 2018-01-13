@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Modal from './BaseModalBlack';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const { height: deviceHeight, width: deviceWidth } = Dimensions.get('window');
 
@@ -21,10 +22,17 @@ class ImagePreviewModal extends Component {
         return (
             <Modal hideClose>
                 <View>
-                    <TouchableOpacity onPress={() => Actions.pop()} style={{zIndex: 1000,width: 75, borderColor: 'white', borderWidth: 1, borderRadius: 10}}>
-                        <Text style={{fontSize: 16, color: 'white', marginLeft: 10}}>
-                            BACK
-                        </Text>
+                    <TouchableOpacity onPress={() => Actions.pop()} style={{zIndex: 1000, width: 75, height: 25, borderColor: 'white', borderWidth: 1, borderRadius: 10}}>
+                        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
+                            <View>
+                                <Icon name='md-arrow-round-back' style={styles.actionButtonIcon}/>
+                            </View>
+                            <View>
+                                <Text style={{fontSize: 16, color: 'white', marginLeft: 10}}>
+                                    BACK
+                                </Text>
+                            </View>
+                        </View>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.popup}>
@@ -43,6 +51,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginHorizontal: 20
+    },
+    actionButtonIcon: {
+        fontSize: 20,
+        height: 22,
+        color: 'white'
     }
 });
 
