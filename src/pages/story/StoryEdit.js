@@ -5,6 +5,10 @@ import { deleteStory, updateStory } from '../../redux/actions/stories';
 import { Actions } from 'react-native-router-flux';
 import DatePicker from 'react-native-datepicker';
 import { createPhoto } from '../../redux/actions/photos';
+import { initialRegion } from '../App';
+import Story from '../../model/Story';
+const MapView = require('react-native-maps');
+
 
 class StoryEdit extends Component {
     constructor(props) {
@@ -14,17 +18,23 @@ class StoryEdit extends Component {
             title: this.props.story.title,
             titleError: false,
             notes: this.props.story.notes,
-            longitude: this.props.story.longitude,
-            longitudeError: false,
-            latitude: this.props.story.latitude,
-            latitudeError: false,
             createDate: this.props.story.createDate,
-            createDateError: false
+            createDateError: false,
+            region: {
+                latitude: this.props.story.latitude,
+                longitude: this.props.story.longitude,
+                latitudeDelta: initialRegion.latitudeDelta,
+                longitudeDelta: initialRegion.longitudeDelta
+            },
+            marker: {
+                latitude: this.props.story.latitude,
+                longitude: this.props.story.longitude
+            }
         }
     }
 
     formValid() {
-        if (!this.state.title || !this.state.longitude || !this.state.latitude || !this.state.createDate) {
+        if (!this.state.title || !this.state.createDate) {
             return false;
         } else {
             return true;
@@ -35,15 +45,18 @@ class StoryEdit extends Component {
         if (!this.formValid()) {
             return;
         }
-        this.props.onStoryEdit(this.props.token, this.state, this.state.id);
+        const storyToUpdate = new Story(this.state.title, this.state.notes, this.state.marker.latitude, this.state.marker.longitude, this.state.createDate);
+        storyToUpdate.id = this.state.id;
+        this.props.onStoryEdit(this.props.token, storyToUpdate, this.state.id);
     }
 
     render() {
         return(
             <ScrollView style={{padding: 20}}>
-                <Text style={styles.labelStyle}>Title</Text>
+                <Text style={styles.labelStyle}>
+                    Title
+                </Text>
                 <TextInput
-                    placeholder='Title'
                     autoCapitalize='none'
                     autoCorrect={false}
                     autoFocus={true}
@@ -59,9 +72,10 @@ class StoryEdit extends Component {
                     }}
                 />
                 { this.state.titleError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
-                <Text style={styles.labelStyle}>Notes</Text>
+                <Text style={styles.labelStyle}>
+                    Notes
+                </Text>
                 <TextInput
-                    placeholder='Notes'
                     autoCapitalize='none'
                     autoCorrect={true}
                     autoFocus={false}
@@ -71,42 +85,23 @@ class StoryEdit extends Component {
                     value={this.state.notes}
                     onChangeText={(text) => this.setState({ notes: text })}
                 />
-                <Text style={styles.labelStyle}>Longitude</Text>
-                <TextInput
-                    placeholder='Longitude'
-                    autoCapitalize='none'
-                    autoCorrect={true}
-                    autoFocus={false}
-                    keyboardType='email-address'
-                    value={`${this.state.longitude}`}
-                    onChangeText={(text) => this.setState({ longitude: text })}
-                    onEndEditing={() => {
-                        if (!this.state.longitude || !this.state.longitude.isNumber) {
-                            this.setState({ longitudeError: true });
-                        } else {
-                            this.setState({ longitudeError: false });
-                        }
-                    }}
-                />
-                { this.state.longitudeError ? (<Text style={{color: 'red'}}>This field is required and has to be a number</Text>) : null }
-                <Text style={styles.labelStyle}>Latitude</Text>
-                <TextInput
-                    placeholder='Latitude'
-                    autoCapitalize='none'
-                    autoCorrect={true}
-                    autoFocus={false}
-                    keyboardType='email-address'
-                    value={`${this.state.latitude}`}
-                    onChangeText={(text) => this.setState({ latitude: text })}
-                    onEndEditing={() => {
-                        if (!this.state.latitude || !this.state.latitude.isNumber) {
-                            this.setState({ latitudeError: true });
-                        } else {
-                            this.setState({ latitudeError: false });
-                        }
-                    }}
-                />
-                { this.state.latitudeError ? (<Text style={{color: 'red'}}>This field is required and has to be a number</Text>) : null }
+                <Text style={styles.labelStyle}>
+                    Location
+                </Text>
+                <View style={{
+                    borderRadius: 5,
+                    height: 250,
+                    width: 400,
+                    justifyContent: 'flex-end',
+                    alignItems: 'center',}}>
+                    <MapView
+                        style={{...StyleSheet.absoluteFillObject}}
+                        region={this.state.region}>
+                        <MapView.Marker draggable
+                                        coordinate={this.state.marker}
+                                        onDragEnd={(e) => this.setState({ marker: e.nativeEvent.coordinate })}/>
+                    </MapView>
+                </View>
                 <Text style={styles.labelStyle}>Create date</Text>
                 <DatePicker
                     date={this.state.createDate}

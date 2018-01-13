@@ -11,7 +11,9 @@ import Photo from '../../model/Photo';
 import { deleteStory } from '../../redux/actions/stories';
 import StoryActionButton from './StoryActionButton';
 import { Actions } from 'react-native-router-flux';
-
+import { initialRegion } from '../App';
+import Story from '../../model/Story';
+const MapView = require('react-native-maps');
 const ImagePicker = require('react-native-image-picker');
 
 const options = {
@@ -23,19 +25,33 @@ const options = {
 };
 
 class StoryDetail extends Component {
+    story;
+
     constructor(props) {
         super(props);
         this.state = {
             id: this.props.story.id,
             title: this.props.story.title,
             notes: this.props.story.notes,
-            longitude: this.props.story.longitude,
-            latitude: this.props.story.latitude,
             createDate: this.props.story.createDate,
             photo: null,
             photosToCompare: [],
-            opened: false
+            opened: false,
+            region: {
+                latitude: this.props.story.latitude,
+                longitude: this.props.story.longitude,
+                latitudeDelta: initialRegion.latitudeDelta,
+                longitudeDelta: initialRegion.longitudeDelta
+            },
+            marker: {
+                latitude: this.props.story.latitude,
+                longitude: this.props.story.longitude
+            }
         };
+
+        this.story = new Story(this.state.title, this.state.notes, this.state.marker.latitude, this.state.marker.longitude, this.state.createDate);
+        this.story.id = this.state.id;
+
         this.addPhoto = this.addPhoto.bind(this);
         this.checkboxValueChanged = this.checkboxValueChanged.bind(this);
         this.compareTwoPhotos = this.compareTwoPhotos.bind(this);
@@ -117,10 +133,21 @@ class StoryDetail extends Component {
                     <Text>{this.state.title}</Text>
                     <Text style={styles.labelStyle}>Notes</Text>
                     <Text>{this.state.notes}</Text>
-                    <Text style={styles.labelStyle}>Longitude</Text>
-                    <Text>{`${this.state.longitude}`}</Text>
-                    <Text style={styles.labelStyle}>Latitude</Text>
-                    <Text>{`${this.state.latitude}`}</Text>
+                    <Text style={styles.labelStyle}>Location</Text>
+                    <View style={{
+                        borderRadius: 5,
+                        marginTop: 7,
+                        height: 250,
+                        width: 400,
+                        justifyContent: 'flex-end',
+                        alignItems: 'center',
+                    }}>
+                        <MapView
+                            style={{...StyleSheet.absoluteFillObject}}
+                            region={this.state.region}>
+                            <MapView.Marker coordinate={this.state.marker}/>
+                        </MapView>
+                    </View>
                     <Text style={styles.labelStyle}>Create date</Text>
                     <Text>{this.state.createDate}</Text>
                 </TouchableOpacity>
@@ -143,7 +170,7 @@ class StoryDetail extends Component {
                     />
                 </List>)}
                 {this.props.photos.length ? null : (<View style={{height: 300}}/>)}
-                <StoryActionButton addPhoto={this.addPhoto} story={this.state} comparePhotos={this.compareTwoPhotos}/>
+                <StoryActionButton addPhoto={this.addPhoto} story={this.story} comparePhotos={this.compareTwoPhotos}/>
             </ScrollView>
         )
     }

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Button, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Button, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import { createStory } from '../../redux/actions/stories';
 import Story from '../../model/Story';
 import DatePicker from 'react-native-datepicker';
+import { initialRegion } from '../App';
+const MapView = require('react-native-maps');
 
 class StoryAdd extends Component {
     constructor(props) {
@@ -12,35 +14,56 @@ class StoryAdd extends Component {
             title: '',
             titleError: false,
             notes: '',
-            longitude: '',
-            longitudeError: false,
-            latitude: '',
-            latitudeError: false,
             createDate: '',
-            createDateError: false
-        }
+            createDateError: false,
+            region: {
+                latitude: initialRegion.latitude,
+                longitude: initialRegion.longitude,
+                latitudeDelta: initialRegion.latitudeDelta,
+                longitudeDelta: initialRegion.longitudeDelta
+            },
+            marker: {
+                latitude: initialRegion.latitude,
+                longitude: initialRegion.longitude
+            }
+        };
+
+        this.onRegionChange = this.onRegionChange.bind(this);
     }
 
     addStory() {
         if (!this.formValid()) {
             return;
         }
-        this.props.onStoryAdd(this.props.token, this.state.title, this.state.notes, this.state.longitude, this.state.latitude, this.state.createDate);
+        this.props.onStoryAdd(
+            this.props.token,
+            this.state.title,
+            this.state.notes,
+            this.state.marker.longitude,
+            this.state.marker.latitude,
+            this.state.createDate
+        );
     }
 
     formValid() {
-        if (!this.state.title || !this.state.longitude || !this.state.latitude || !this.state.createDate) {
+        if (!this.state.title || !this.state.createDate) {
             return false;
         } else {
             return true;
         }
     }
 
+    // debug purpose only
+    onRegionChange(region) {
+    }
+
     render() {
         return(
             <ScrollView style={{padding: 20}}>
+                <Text style={styles.labelStyle}>
+                    Title
+                </Text>
                 <TextInput
-                    placeholder='Title'
                     autoCapitalize='none'
                     autoCorrect={false}
                     autoFocus={true}
@@ -58,8 +81,10 @@ class StoryAdd extends Component {
                     }}
                 />
                 { this.state.titleError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
+                <Text style={styles.labelStyle}>
+                    Notes
+                </Text>
                 <TextInput
-                    placeholder='Notes'
                     ref='notes'
                     autoCapitalize='none'
                     autoCorrect={true}
@@ -69,47 +94,33 @@ class StoryAdd extends Component {
                     returnKeyType='next'
                     numberOfLines={4}
                     value={this.state.notes}
-                    // onSubmitEditing={() => this.refs.longitude.focus()}
                     onChangeText={(text) => this.setState({ notes: text })}
                 />
-                <TextInput
-                    placeholder='Longitude'
-                    ref='longitude'
-                    autoCapitalize='none'
-                    autoCorrect={true}
-                    autoFocus={false}
-                    returnKeyType='next'
-                    keyboardType='email-address'
-                    value={this.state.longitude}
-                    onSubmitEditing={() => this.refs.latitude.focus()}
-                    onChangeText={(text) => this.setState({ longitude: text })}
-                    onEndEditing={() => {
-                        if (!this.state.longitude) {
-                            this.setState({ longitudeError: true });
-                        } else {
-                            this.setState({ longitudeError: false });
-                        }
-                    }}
-                />
-                { this.state.longitudeError ? (<Text style={{color: 'red'}}>This field is required and has to be a number</Text>) : null }
-                <TextInput
-                    placeholder='Latitude'
-                    ref='latitude'
-                    autoCapitalize='none'
-                    autoCorrect={true}
-                    autoFocus={false}
-                    keyboardType='email-address'
-                    value={this.state.latitude}
-                    onChangeText={(text) => this.setState({ latitude: text })}
-                    onEndEditing={() => {
-                        if (!this.state.latitude) {
-                            this.setState({ latitudeError: true });
-                        } else {
-                            this.setState({ latitudeError: false });
-                        }
-                    }}
-                />
-                { this.state.latitudeError ? (<Text style={{color: 'red'}}>This field is required and has to be a number</Text>) : null }
+                <Text style={styles.labelStyle}>
+                    Location
+                </Text>
+                <View style={{
+                    borderRadius: 5,
+                    height: 250,
+                    width: 400,
+                    justifyContent: 'flex-end',
+                    alignItems: 'center',}}>
+                    <MapView
+                        style={{...StyleSheet.absoluteFillObject}}
+                        region={this.state.region}
+                        onRegionChange={this.onRegionChange}>
+                        <MapView.Marker draggable
+                                        coordinate={this.state.marker}
+                                        onDragEnd={(e) => this.setState({ marker: e.nativeEvent.coordinate })}/>
+                    </MapView>
+                </View>
+                <Text style={{
+                    fontWeight: 'bold',
+                    fontSize: 18,
+                    marginTop: 7
+                }}>
+                    Create date
+                </Text>
                 <View style={{marginTop: 10, marginBottom: 10}}>
                     <DatePicker
                         date={this.state.createDate}
@@ -150,6 +161,15 @@ class StoryAdd extends Component {
         )
     }
 }
+
+const styles = StyleSheet.create({
+   labelStyle: {
+       fontWeight: 'bold',
+       fontSize: 18,
+       marginTop: 7,
+       marginBottom: 7
+   }
+});
 
 const mapStateToProps = (state, ownProps) => {
     return {

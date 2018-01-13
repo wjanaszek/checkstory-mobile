@@ -9,23 +9,12 @@ import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { initialRegion } from '../App';
 
-var MapView = require('react-native-maps');
-
 class StoryList extends Component {
     constructor(props) {
         super(props);
         this.state = {
             region: initialRegion
         }
-    }
-
-    // @TODO to remove?
-    loadStories() {
-        this.props.onStoriesLoad(this.props.token);
-    }
-
-    onRegionChange(region) {
-        this.setState({ region: region });
     }
 
     render() {
@@ -49,16 +38,7 @@ class StoryList extends Component {
                             )}
                         />
                     </List>)}
-                {/*<Text>before</Text>*/}
-                {/*<View style={{*/}
-                    {/*height: 400,*/}
-                    {/*width: 400,*/}
-                    {/*justifyContent: 'flex-end',*/}
-                    {/*alignItems: 'center',}}>*/}
-                    {/*<MapView style={{...StyleSheet.absoluteFillObject}} region={this.state.region} onRegionChange={this.onRegionChange}/>*/}
-                {/*</View>*/}
-                {/*<Text>after</Text>*/}
-                <View style={{height: 500}}>
+                <View style={{height: 250}}>
                     <ActionButton buttonColor='rgba(231,76,60,1)'>
                         <ActionButton.Item buttonColor='#8342f4' title='Add story' onPress={() => Actions.storyAdd()}>
                             <Icon name='md-create' style={styles.actionButtonIcon}/>

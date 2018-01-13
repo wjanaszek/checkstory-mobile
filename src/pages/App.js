@@ -28,8 +28,8 @@ const uiTheme = {
 export const initialRegion = {
     latitude: 52.22967,
     longitude: 21.01222,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
+    latitudeDelta: 5,
+    longitudeDelta: 5,
 };
 
 const App = () => (
@@ -47,11 +47,13 @@ const App = () => (
                     key='login'
                     component={Login}
                     title='Log in'
+                    onBack={() => Actions.pop()}
                 />
                 <Scene
                     key='register'
                     component={Signup}
                     title='Sign up'
+                    onBack={() => Actions.pop()}
                 />
                 <Scene
                     key='storyList'
@@ -69,26 +71,31 @@ const App = () => (
                     key='storyDetail'
                     component={StoryDetail}
                     title='Story detail'
+                    onBack={() => Actions.pop()}
                 />
                 <Scene
                     key='storyAdd'
                     component={StoryAdd}
                     title='Add story'
+                    onBack={() => Actions.pop()}
                 />
                 <Scene
                     key='storyEdit'
                     component={StoryEdit}
                     title='Edit story'
+                    onBack={() => Actions.pop()}
                 />
                 <Scene
                     hideNavBar
                     key='popup'
                     component={PopupModal}
+                    onBack={() => Actions.pop()}
                 />
                 <Scene
                     hideNavBar
                     key='imagePreview'
                     component={ImagePreviewModal}
+                    onBack={() => Actions.pop()}
                 />
             </Scene>
         </Router>
