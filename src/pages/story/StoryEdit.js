@@ -99,7 +99,15 @@ class StoryEdit extends Component {
                         region={this.state.region}>
                         <MapView.Marker draggable
                                         coordinate={this.state.marker}
-                                        onDragEnd={(e) => this.setState({ marker: e.nativeEvent.coordinate })}/>
+                                        onDragEnd={(e) => {
+                                            this.setState({ marker: e.nativeEvent.coordinate });
+                                            const newCoord = new Object();
+                                            newCoord.latitude = e.nativeEvent.coordinate.latitude;
+                                            newCoord.longitude = e.nativeEvent.coordinate.longitude;
+                                            newCoord.latitudeDelta = this.state.region.latitudeDelta;
+                                            newCoord.longitudeDelta = this.state.region.longitudeDelta;
+                                            this.setState({ region: newCoord });
+                                        }}/>
                     </MapView>
                 </View>
                 <Text style={styles.labelStyle}>Create date</Text>
@@ -132,11 +140,11 @@ class StoryEdit extends Component {
                 />
                 { this.state.createDateError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
                 <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
-                    <View style={{marginRight: 20, marginTop: 10}}>
+                    <View style={{marginRight: 20, marginTop: 10, marginBottom: 15}}>
                         <Button title='CANCEL' onPress={() => Actions.pop()} />
                     </View>
                     {!this.props.loading ?
-                        (<View style={{marginLeft: 10, marginTop: 10}}>
+                        (<View style={{marginLeft: 10, marginTop: 10, marginBottom: 15}}>
                             <Button title='SAVE' onPress={() => this.updateStory()} />
                         </View>) :
                         (<View style={{marginLeft: 10, marginTop: 10}}>

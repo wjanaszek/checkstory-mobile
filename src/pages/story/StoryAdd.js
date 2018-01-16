@@ -59,7 +59,7 @@ class StoryAdd extends Component {
 
     render() {
         return(
-            <ScrollView style={{padding: 20}}>
+            <ScrollView style={{padding: 5}}>
                 <Text style={styles.labelStyle}>
                     Title
                 </Text>
@@ -111,7 +111,15 @@ class StoryAdd extends Component {
                         onRegionChange={this.onRegionChange}>
                         <MapView.Marker draggable
                                         coordinate={this.state.marker}
-                                        onDragEnd={(e) => this.setState({ marker: e.nativeEvent.coordinate })}/>
+                                        onDragEnd={(e) => {
+                                            this.setState({ marker: e.nativeEvent.coordinate });
+                                            const newCoord = new Object();
+                                            newCoord.latitude = e.nativeEvent.coordinate.latitude;
+                                            newCoord.longitude = e.nativeEvent.coordinate.longitude;
+                                            newCoord.latitudeDelta = this.state.region.latitudeDelta;
+                                            newCoord.longitudeDelta = this.state.region.longitudeDelta;
+                                            this.setState({ region: newCoord });
+                                        }}/>
                     </MapView>
                 </View>
                 <Text style={{
@@ -152,7 +160,9 @@ class StoryAdd extends Component {
                 </View>
                 { this.state.createDateError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
                 { !this.props.loading ?
-                    (<Button onPress={() => this.addStory()} title='ADD STORY'/>) :
+                    (<View style={{marginBottom: 20}}>
+                        <Button onPress={() => this.addStory()} title='ADD STORY'/>
+                    </View>) :
                     (<TouchableOpacity disabled={true}>
                         <Text>Adding story...</Text>
                     </TouchableOpacity>)}
