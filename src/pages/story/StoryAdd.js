@@ -39,8 +39,8 @@ class StoryAdd extends Component {
             this.props.token,
             this.state.title,
             this.state.notes,
-            this.state.marker.longitude,
             this.state.marker.latitude,
+            this.state.marker.longitude,
             this.state.createDate
         );
     }
