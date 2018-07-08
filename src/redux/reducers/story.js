@@ -84,7 +84,13 @@ export default function reducer(state = initialState, action) {
         }
         case UPDATE_STORY_SUCCESS: {
             Actions.pop();
-            return { ...state, story: action.story, loading: false };
+            const story = {...state.story};
+            story.title = action.story.title;
+            story.notes = action.story.notes;
+            story.latitude = action.story.latitude;
+            story.longitude = action.story.longitude;
+            story.createDate = action.story.createDate;
+            return { ...state, story, loading: false };
         }
         default:
             return state;
