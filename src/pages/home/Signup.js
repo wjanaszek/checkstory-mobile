@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, ScrollView, Text, TextInput, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { signUp } from '../../redux/actions/auth';
-import { apiUrl, endpoints } from '../../config/appConfig';
+import { endpoints } from '../../config/appConfig';
 
 // Md5 for first step password hashing before sending it to API
 // @TODO remove this?
@@ -58,20 +58,16 @@ class Signup extends Component {
                             this.setState({usernameError: true});
                         } else {
                             this.setState({usernameError: false});
-                            fetch(`${endpoints.checkUsername}`, {
+                            fetch(`${endpoints.checkUsername}?username=${this.state.username}`, {
                                 method: 'GET',
                                 headers: {
                                     'Accept': 'application/json',
                                     'Content-Type': 'application/json'
-                                }, body: this.state.username
+                                }
                             })
                                 .then(response => response.json())
-                                .then(available => {
-                                    if (!available) {
-                                        this.setState({usernameApiError: true});
-                                    } else {
-                                        this.setState({usernameApiError: false});
-                                    }
+                                .then(response => {
+                                    response['result'] === 'false' ? this.setState({usernameApiError: true}) : this.setState({usernameApiError: false});
                                 });
                         }
                     }}
@@ -95,20 +91,16 @@ class Signup extends Component {
                             this.setState({emailError: true});
                         } else {
                             this.setState({emailError: false});
-                            fetch(`${endpoints.checkEmail}`, {
+                            fetch(`${endpoints.checkEmail}?email=${this.state.email}`, {
                                 method: 'GET',
                                 headers: {
                                     'Accept': 'application/json',
                                     'Content-Type': 'application/json'
-                                }, body: this.state.email
+                                }
                             })
                                 .then(response => response.json())
-                                .then(available => {
-                                    if (!available) {
-                                        this.setState({emailApiError: true});
-                                    } else {
-                                        this.setState({emailApiError: false});
-                                    }
+                                .then(response => {
+                                    response['result'] === 'false' ? this.setState({emailApiError: true}) : this.setState({emailApiError: false});
                                 });
                         }
                     }

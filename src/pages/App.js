@@ -25,6 +25,8 @@ const uiTheme = {
     },
 };
 
+// @TODO add timer every 4 minutes to refresh token
+
 export const initialRegion = {
     latitude: 52.22967,
     longitude: 21.01222,
