@@ -150,25 +150,25 @@ class StoryDetail extends Component {
                         <Text style={styles.labelStyle}>Create date</Text>
                         <Text>{this.state.createDate}</Text>
                     </TouchableOpacity>
+                    <List>
+                        <FlatList
+                            data={this.props.photos}
+                            keyExtractor={item => item.id}
+                            renderItem={({item}) => (
+                                <PhotoListItem
+                                    key={item.id}
+                                    imageType={item.imageType}
+                                    content={item.content}
+                                    createDate={item.createDate}
+                                    photoId={item.id}
+                                    storyId={this.state.id}
+                                    onCheckboxValueChange={this.checkboxValueChanged}
+                                />
+                            )}
+                        />
+                    </List>
                     {this.props.loadingPhotos ?
-                        (<ActivityIndicator size='large' color='rgba(33, 150, 243, 1)'/>) :
-                        (<List>
-                            <FlatList
-                                data={this.props.photos}
-                                keyExtractor={item => item.id}
-                                renderItem={({item}) => (
-                                    <PhotoListItem
-                                        key={item.id}
-                                        imageType={item.imageType}
-                                        content={item.content}
-                                        createDate={item.createDate}
-                                        photoId={item.id}
-                                        storyId={this.state.id}
-                                        onCheckboxValueChange={this.checkboxValueChanged}
-                                    />
-                                )}
-                            />
-                        </List>)}
+                        (<ActivityIndicator size='large' color='rgba(33, 150, 243, 1)'/>) : (null)}
                 </ScrollView>
                 <StoryActionButton addPhoto={this.addPhoto} story={this.story} comparePhotos={this.compareTwoPhotos}/>
             </View>
