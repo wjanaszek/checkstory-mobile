@@ -188,28 +188,17 @@ export const apiPhotosMiddleware = store => next => action => {
             })
                 .then(response => response.json())
                 .then(data => {
-                    fetch(`${apiUrl}/api/stories/${action.storyId}/photos/${action.photoId}`, {
-                        method: 'GET',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json',
-                            'Authorization': 'Bearer ' + action.token
-                        }
+                    next({
+                        type: UPDATE_PHOTO_SUCCESS,
+                        photoId: action.photoId,
+                        photo: data
+                    });
+                })
+                .catch(error => {
+                    errorPopup();
+                    next({
+                        type: UPDATE_PHOTO_FAIL, error
                     })
-                        .then(response => response.json())
-                        .then(data => {
-                            next({
-                                type: UPDATE_PHOTO_SUCCESS,
-                                photoId: action.photoId,
-                                photo: data
-                            });
-                        })
-                        .catch(error => {
-                            errorPopup();
-                            next({
-                                type: UPDATE_PHOTO_FAIL, error
-                            })
-                        })
                 })
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));
