@@ -27,7 +27,7 @@ export const signUp = (username, email, password) => {
     return {
         type: SIGN_UP,
         user: {
-            login: username,
+            username: username,
             email: email,
             password: password
         }
