@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-    TouchableOpacity, ScrollView, Text, StyleSheet, FlatList,
-    ActivityIndicator, View
-} from 'react-native';
+import { ActivityIndicator, FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { comparePhotos, createPhoto, deletePhoto, updatePhoto } from '../../redux/actions/photos';
 import { List } from 'react-native-elements';
 import PhotoListItem from './PhotoListItem';
@@ -13,6 +10,7 @@ import StoryActionButton from './StoryActionButton';
 import { Actions } from 'react-native-router-flux';
 import { initialRegion } from '../App';
 import Story from '../../model/Story';
+
 const MapView = require('react-native-maps');
 const ImagePicker = require('react-native-image-picker');
 
@@ -65,7 +63,7 @@ class StoryDetail extends Component {
                 console.log('Error or cancel');
             }
             else {
-                let source = { uri: response.uri };
+                let source = {uri: response.uri};
                 // console.log(JSON.stringify(source));
 
                 // You can also display the image using data:
@@ -83,12 +81,12 @@ class StoryDetail extends Component {
         if (this.state && this.state.photosToCompare && this.state.photosToCompare.length) {
             const index = this.state.photosToCompare.findIndex(photoId => photoId === id);
             if (index === -1) {
-                this.setState({ photosToCompare: this.state.photosToCompare.concat([id]) });
+                this.setState({photosToCompare: this.state.photosToCompare.concat([id])});
             } else {
-                this.setState({ photosToCompare: this.state.photosToCompare.filter(photoId => photoId !== id) });
+                this.setState({photosToCompare: this.state.photosToCompare.filter(photoId => photoId !== id)});
             }
         } else {
-            this.setState({ photosToCompare: this.state.photosToCompare.concat([id]) });
+            this.setState({photosToCompare: this.state.photosToCompare.concat([id])});
         }
     }
 
@@ -127,52 +125,53 @@ class StoryDetail extends Component {
 
     render() {
         return (
-            <ScrollView style={{flex: 1, padding: 10}}>
-                <TouchableOpacity disabled={true}>
-                    <Text style={styles.labelStyle}>Title</Text>
-                    <Text>{this.state.title}</Text>
-                    <Text style={styles.labelStyle}>Notes</Text>
-                    <Text>{this.state.notes}</Text>
-                    <Text style={styles.labelStyle}>Location</Text>
-                    <View style={{
-                        borderRadius: 5,
-                        marginTop: 7,
-                        height: 250,
-                        width: 400,
-                        justifyContent: 'flex-end',
-                        alignItems: 'center',
-                    }}>
-                        <MapView
-                            style={{...StyleSheet.absoluteFillObject}}
-                            region={this.state.region}>
-                            <MapView.Marker coordinate={this.state.marker}/>
-                        </MapView>
-                    </View>
-                    <Text style={styles.labelStyle}>Create date</Text>
-                    <Text>{this.state.createDate}</Text>
-                </TouchableOpacity>
-                {this.props.loadingPhotos ?
-                (<ActivityIndicator size='large' color='rgba(33, 150, 243, 1)'/>) :
-                (<List>
-                    <FlatList
-                        data={this.props.photos}
-                        keyExtractor={item => item.id}
-                        renderItem={({ item }) => (
-                            <PhotoListItem
-                                key={item.id}
-                                imageType={item.imageType}
-                                content={item.content}
-                                createDate={item.createDate}
-                                photoId={item.id}
-                                storyId={this.state.id}
-                                onCheckboxValueChange={this.checkboxValueChanged}
+            <View style={{flex: 1}}>
+                <ScrollView style={{padding: 10}}>
+                    <TouchableOpacity disabled={true}>
+                        <Text style={styles.labelStyle}>Title</Text>
+                        <Text>{this.state.title}</Text>
+                        <Text style={styles.labelStyle}>Notes</Text>
+                        <Text>{this.state.notes}</Text>
+                        <Text style={styles.labelStyle}>Location</Text>
+                        <View style={{
+                            borderRadius: 5,
+                            marginTop: 7,
+                            height: 250,
+                            width: 400,
+                            justifyContent: 'flex-end',
+                            alignItems: 'center',
+                        }}>
+                            <MapView
+                                style={{...StyleSheet.absoluteFillObject}}
+                                region={this.state.region}>
+                                <MapView.Marker coordinate={this.state.marker}/>
+                            </MapView>
+                        </View>
+                        <Text style={styles.labelStyle}>Create date</Text>
+                        <Text>{this.state.createDate}</Text>
+                    </TouchableOpacity>
+                    {this.props.loadingPhotos ?
+                        (<ActivityIndicator size='large' color='rgba(33, 150, 243, 1)'/>) :
+                        (<List>
+                            <FlatList
+                                data={this.props.photos}
+                                keyExtractor={item => item.id}
+                                renderItem={({item}) => (
+                                    <PhotoListItem
+                                        key={item.id}
+                                        imageType={item.imageType}
+                                        content={item.content}
+                                        createDate={item.createDate}
+                                        photoId={item.id}
+                                        storyId={this.state.id}
+                                        onCheckboxValueChange={this.checkboxValueChanged}
+                                    />
+                                )}
                             />
-                        )}
-                    />
-                </List>)}
-                {this.props.photos.length ? null : (<View style={{height: 300}}/>)}
+                        </List>)}
+                </ScrollView>
                 <StoryActionButton addPhoto={this.addPhoto} story={this.story} comparePhotos={this.compareTwoPhotos}/>
-            </ScrollView>
+            </View>
         )
     }
 }
@@ -211,4 +210,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-export default connect (mapStateToProps, mapDispatchToProps) (StoryDetail);
+export default connect(mapStateToProps, mapDispatchToProps)(StoryDetail);
