@@ -13,9 +13,9 @@ class StoryActionButton extends Component {
                 </ActionButton.Item>
                 <ActionButton.Item buttonColor='#f49d41' title='Delete story' onPress={() => Actions.popup({
                     title: 'Delete story',
-                    message: 'Are you sure you want delete this story?',
+                    message: 'Are you sure you want to delete this story?',
                     noOptionMsg: 'NO',
-                    yesOptionMsg: 'YES',
+                    yesOptionMsg: 'DELETE',
                     storyId: this.props.story.id,
                 })}>
                     <Icon name='md-remove' style={styles.actionButtonIcon} />

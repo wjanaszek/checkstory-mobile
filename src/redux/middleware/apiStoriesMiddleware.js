@@ -144,7 +144,6 @@ export const apiStoriesMiddleware = store => next => action => {
                     'Authorization': 'Bearer ' + action.token
                 }
             })
-                .then(response => response.json())
                 .then(data => {
                     next({
                         type: DELETE_STORY_SUCCESS,
