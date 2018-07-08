@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Text, View, FlatList, ScrollView, StyleSheet } from 'react-native';
+import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { getAllStories } from '../../redux/actions/stories';
 import { List, ListItem } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import { getAllPhotos } from '../../redux/actions/photos';
 import ActionButton from 'react-native-action-button';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { initialRegion } from '../App';
 
 class StoryList extends Component {
@@ -19,33 +18,29 @@ class StoryList extends Component {
 
     render() {
         return (
-            <ScrollView style={{flex: 1, padding: 10}}>
-                {this.props.loading ?
-                    (<Text>Loading...</Text>) :
-                    (<List>
-                        <FlatList
-                            data={this.props.stories}
-                            keyExtractor={item => item.id}
-                            renderItem={({ item }) => (
-                                <ListItem
-                                    title={`${item.title}`}
-                                    subtitle={item.createDate}
-                                    onPress={() => {
-                                        Actions.storyDetail({story: item});
-                                        this.props.onStoryPreview(this.props.token, item.id);
-                                    }}
-                                />
-                            )}
-                        />
-                    </List>)}
-                <View style={{height: 250}}>
-                    <ActionButton buttonColor='rgba(231,76,60,1)'>
-                        <ActionButton.Item buttonColor='#8342f4' title='Add story' onPress={() => Actions.storyAdd()}>
-                            <Icon name='md-create' style={styles.actionButtonIcon}/>
-                        </ActionButton.Item>
-                    </ActionButton>
-                </View>
-            </ScrollView>
+            <View style={{flex: 1}}>
+                <ScrollView style={{padding: 10}}>
+                    {this.props.loading ?
+                        (<Text>Loading...</Text>) :
+                        (<List>
+                            <FlatList
+                                data={this.props.stories}
+                                keyExtractor={item => item.id}
+                                renderItem={({item}) => (
+                                    <ListItem
+                                        title={`${item.title}`}
+                                        subtitle={item.createDate}
+                                        onPress={() => {
+                                            Actions.storyDetail({story: item});
+                                            this.props.onStoryPreview(this.props.token, item.id);
+                                        }}
+                                    />
+                                )}
+                            />
+                        </List>)}
+                </ScrollView>
+                <ActionButton buttonColor='rgba(231,76,60,1)' title='Add story' onPress={() => Actions.storyAdd()}/>
+            </View>
         )
     }
 }
@@ -74,4 +69,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect (mapStateToProps, mapDispatchToProps) (StoryList);
+export default connect(mapStateToProps, mapDispatchToProps)(StoryList);

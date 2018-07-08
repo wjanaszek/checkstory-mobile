@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ScrollView, Text, TextInput, View, Button, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { ActivityIndicator, Button, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { login } from '../../redux/actions/auth';
 import { Actions } from 'react-native-router-flux';
 
@@ -37,7 +37,7 @@ class Login extends Component {
 
     render() {
         return (
-            <ScrollView style={{padding: 20}}>
+            <View style={{flex: 1, justifyContent: 'center', padding: 20}}>
                 <TextInput
                     placeholder='Username'
                     autoCapitalize='none'
@@ -47,16 +47,16 @@ class Login extends Component {
                     value={this.state.username}
                     returnKeyType='next'
                     onSubmitEditing={() => this.refs.pswd.focus()}
-                    onChangeText={(text) => this.setState({ username: text })}
+                    onChangeText={(text) => this.setState({username: text})}
                     onEndEditing={() => {
                         if (!this.state.username) {
-                            this.setState({ usernameError: true });
+                            this.setState({usernameError: true});
                         } else {
-                            this.setState({ usernameError: false });
+                            this.setState({usernameError: false});
                         }
                     }}
                 />
-                { this.state.usernameError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
+                {this.state.usernameError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null}
                 <TextInput
                     ref='pswd'
                     onPress={() => this.refs.pswd.focus()}
@@ -67,16 +67,16 @@ class Login extends Component {
                     secureTextEntry={true}
                     value={this.state.password}
                     onSubmitEditing={() => this.userLogin(null)}
-                    onChangeText={(text) => this.setState({ password: text })}
+                    onChangeText={(text) => this.setState({password: text})}
                     onEndEditing={() => {
                         if (!this.state.password) {
-                            this.setState({ passwordError: true });
+                            this.setState({passwordError: true});
                         } else {
-                            this.setState({ passwordError: false });
+                            this.setState({passwordError: false});
                         }
                     }}
                 />
-                { this.state.passwordError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
+                {this.state.passwordError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null}
                 <View style={{margin: 7}}/>
                 {!this.props.loading ?
                     (<Button onPress={() => this.userLogin()} title='LOGIN'/>) :
@@ -84,12 +84,12 @@ class Login extends Component {
                         <ActivityIndicator size='large' color='blue'/>
                         <Text>Logging in...</Text>
                     </TouchableOpacity>)}
-                { this.props.error ? (<Text style={{color: 'red'}}>{this.props.error}</Text>) : null }
+                {this.props.error ? (<Text style={{color: 'red'}}>{this.props.error}</Text>) : null}
                 <Text style={{fontSize: 16}}>
                     If you don't have an account, you can sign up
                     <Text style={{color: 'blue'}} onPress={() => Actions.register()}> here</Text>
                 </Text>
-            </ScrollView>
+            </View>
         );
     }
 }
@@ -98,7 +98,7 @@ const mapStateToProps = (state, ownProps) => {
     return {
         isLoggedIn: state.auth.isLoggedIn,
         loading: state.auth.loading,
-        error: state.auth.error
+        error: state.auth.loginError
     };
 };
 
@@ -108,4 +108,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps) (Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

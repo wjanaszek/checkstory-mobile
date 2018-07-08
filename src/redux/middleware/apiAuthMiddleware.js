@@ -35,7 +35,7 @@ export const apiAuthMiddleware = store => next => action => {
                 .then(response => {
                     console.log(response);
                     const authorization = response.accessToken;
-                    if (authorization !== null) {
+                    if (authorization !== null && authorization !== undefined) {
                         console.log('authorization ' + authorization);
                         next({
                             type: LOGIN_SUCCESS,
@@ -74,9 +74,15 @@ export const apiAuthMiddleware = store => next => action => {
             })
                 .then(response => response.json())
                 .then(data => {
-                    next({
-                        type: SIGN_UP_SUCCESS
-                    })
+                    if (!data.code) {
+                        next({
+                            type: SIGN_UP_SUCCESS
+                        });
+                    } else {
+                        next({
+                            type: SIGN_UP_FAIL, error: data.message
+                        });
+                    }
                 })
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));

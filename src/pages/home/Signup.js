@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, ScrollView, Text, TextInput, TouchableOpacity } from 'react-native';
+import { Button, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import { signUp } from '../../redux/actions/auth';
 import { endpoints } from '../../config/appConfig';
@@ -42,7 +42,7 @@ class Signup extends Component {
 
     render() {
         return (
-            <ScrollView style={{padding: 20}}>
+            <View style={{flex: 1, justifyContent: 'center', padding: 20}}>
                 <TextInput
                     placeholder='Username'
                     autoCapitalize='none'
@@ -154,7 +154,7 @@ class Signup extends Component {
                         <Text>Registering...</Text>
                     </TouchableOpacity>)}
                 {this.props.error ? (<Text style={{color: 'red'}}>{this.props.error}</Text>) : null}
-            </ScrollView>
+            </View>
         )
     }
 }
@@ -162,7 +162,7 @@ class Signup extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         loading: state.auth.loading,
-        error: state.auth.error
+        error: state.auth.signUpError
     }
 };
 
