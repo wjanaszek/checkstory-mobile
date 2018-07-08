@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { Button, ScrollView, Text, TextInput, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { signUp } from '../../redux/actions/auth';
-import { apiUrl } from '../../config/appConfig';
+import { apiUrl, endpoints } from '../../config/appConfig';
 
 // Md5 for first step password hashing before sending it to API
+// @TODO remove this?
 let md5 = require('md5');
 
 class Signup extends Component {
@@ -40,7 +41,7 @@ class Signup extends Component {
     }
 
     render() {
-        return(
+        return (
             <ScrollView style={{padding: 20}}>
                 <TextInput
                     placeholder='Username'
@@ -51,14 +52,14 @@ class Signup extends Component {
                     value={this.state.username}
                     returnKeyType='next'
                     onSubmitEditing={() => this.refs.em.focus()}
-                    onChangeText={(text) => this.setState({ username: text })}
+                    onChangeText={(text) => this.setState({username: text})}
                     onEndEditing={() => {
                         if (!this.state.username) {
-                            this.setState({ usernameError: true });
+                            this.setState({usernameError: true});
                         } else {
-                            this.setState({ usernameError: false });
-                            fetch(`${apiUrl}/api/users/checkLogin`, {
-                                method: 'POST',
+                            this.setState({usernameError: false});
+                            fetch(`${endpoints.checkUsername}`, {
+                                method: 'GET',
                                 headers: {
                                     'Accept': 'application/json',
                                     'Content-Type': 'application/json'
@@ -67,16 +68,17 @@ class Signup extends Component {
                                 .then(response => response.json())
                                 .then(available => {
                                     if (!available) {
-                                        this.setState({ usernameApiError: true });
+                                        this.setState({usernameApiError: true});
                                     } else {
-                                        this.setState({ usernameApiError: false });
+                                        this.setState({usernameApiError: false});
                                     }
                                 });
                         }
                     }}
                 />
-                { this.state.usernameError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
-                { this.state.usernameApiError ? (<Text style={{color: 'red'}}>This username is already in use</Text>) : null }
+                {this.state.usernameError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null}
+                {this.state.usernameApiError ? (
+                    <Text style={{color: 'red'}}>This username is already in use</Text>) : null}
                 <TextInput
                     placeholder='Email'
                     ref='em'
@@ -87,14 +89,14 @@ class Signup extends Component {
                     value={this.state.email}
                     returnKeyType='next'
                     onSubmitEditing={() => this.refs.pswd.focus()}
-                    onChangeText={(text) => this.setState({ email: text })}
+                    onChangeText={(text) => this.setState({email: text})}
                     onEndEditing={() => {
                         if (!this.state.email) {
-                            this.setState({ emailError: true });
+                            this.setState({emailError: true});
                         } else {
-                            this.setState({ emailError: false });
-                            fetch(`${apiUrl}/api/users/checkEmail`, {
-                                method: 'POST',
+                            this.setState({emailError: false});
+                            fetch(`${endpoints.checkEmail}`, {
+                                method: 'GET',
                                 headers: {
                                     'Accept': 'application/json',
                                     'Content-Type': 'application/json'
@@ -103,16 +105,17 @@ class Signup extends Component {
                                 .then(response => response.json())
                                 .then(available => {
                                     if (!available) {
-                                        this.setState({ emailApiError: true });
+                                        this.setState({emailApiError: true});
                                     } else {
-                                        this.setState({ emailApiError: false });
+                                        this.setState({emailApiError: false});
                                     }
                                 });
-                        }}
+                        }
+                    }
                     }
                 />
-                { this.state.emailError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
-                { this.state.emailApiError ? (<Text style={{color: 'red'}}>This email is already in use</Text>) : null }
+                {this.state.emailError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null}
+                {this.state.emailApiError ? (<Text style={{color: 'red'}}>This email is already in use</Text>) : null}
                 <TextInput
                     placeholder='Password'
                     ref='pswd'
@@ -122,16 +125,16 @@ class Signup extends Component {
                     returnKeyType='next'
                     value={this.state.password}
                     onSubmitEditing={() => this.refs.rpswd.focus()}
-                    onChangeText={(text) => this.setState({ password: text })}
+                    onChangeText={(text) => this.setState({password: text})}
                     onEndEditing={() => {
                         if (!this.state.password) {
-                            this.setState({ passwordError: true });
+                            this.setState({passwordError: true});
                         } else {
-                            this.setState({ passwordError: false });
+                            this.setState({passwordError: false});
                         }
                     }}
                 />
-                { this.state.passwordError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null }
+                {this.state.passwordError ? (<Text style={{color: 'red'}}>This field is required</Text>) : null}
                 <TextInput
                     placeholder='Repeat password'
                     ref='rpswd'
@@ -141,22 +144,24 @@ class Signup extends Component {
                     returnKeyType='go'
                     value={this.state.repeatedPassword}
                     onSubmitEditing={() => this.signUp()}
-                    onChangeText={(text) => this.setState({ repeatedPassword: text })}
+                    onChangeText={(text) => this.setState({repeatedPassword: text})}
                     onEndEditing={() => {
                         if (!(this.state.repeatedPassword || this.state.password) || this.state.password !== this.state.repeatedPassword) {
-                            this.setState({ repeatedPasswordError: true });
+                            this.setState({repeatedPasswordError: true});
                         } else {
-                            this.setState({ repeatedPasswordError: false });
+                            this.setState({repeatedPasswordError: false});
                         }
                     }}
                 />
-                { this.state.repeatedPasswordError ? (<Text style={{color: 'red'}}>This field is required and has to match with password field</Text>) : null }
-                { !this.props.loading ?
-                    (<Button onPress={() => this.signUp()} title='REGISTER'/>) :
+                {this.state.repeatedPasswordError ? (
+                    <Text style={{color: 'red'}}>This field is required and has to match with password
+                        field</Text>) : null}
+                {!this.props.loading ?
+                    (<Button onPress={() => this.signUp()} title='SIGN UP'/>) :
                     (<TouchableOpacity disabled={true}>
                         <Text>Registering...</Text>
                     </TouchableOpacity>)}
-                { this.props.error ? (<Text style={{color: 'red'}}>{this.props.error}</Text>) : null }
+                {this.props.error ? (<Text style={{color: 'red'}}>{this.props.error}</Text>) : null}
             </ScrollView>
         )
     }
@@ -171,8 +176,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onSignUp: (username, email, password) => dispatch(signUp(username, email, md5(password)))
+        onSignUp: (username, email, password) => dispatch(signUp(username, email, password))
     };
 };
 
-export default connect (mapStateToProps, mapDispatchToProps) (Signup);
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);

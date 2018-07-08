@@ -87,6 +87,7 @@ export const apiStoriesMiddleware = store => next => action => {
             })
                 .then(response => response.json())
                 .then(data => {
+                    console.log(data);
                     const story = data;
                     next({
                         type: CREATE_STORY_SUCCESS,
@@ -114,6 +115,7 @@ export const apiStoriesMiddleware = store => next => action => {
             })
                 .then(response => response.json())
                 .then(data => {
+                    console.log(data);
                     const story = data;
                     next({
                         type: UPDATE_STORY_SUCCESS,

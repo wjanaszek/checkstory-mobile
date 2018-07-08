@@ -159,6 +159,7 @@ class StoryDetail extends Component {
                         keyExtractor={item => item.id}
                         renderItem={({ item }) => (
                             <PhotoListItem
+                                key={item.id}
                                 imageType={item.imageType}
                                 content={item.content}
                                 createDate={item.createDate}

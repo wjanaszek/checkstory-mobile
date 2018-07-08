@@ -4,6 +4,7 @@ export default class Photo {
     content;       // base64 encoded image data
     createDate;
     originalPhoto;
+    storyId;
 
     constructor(imageType, data) {
         this.imageType = imageType;

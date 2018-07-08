@@ -1,7 +1,12 @@
-// export const apiUrl = 'http://10.0.2.2:8080';
-export const apiUrl = 'http://192.168.0.11:8080';
+export const apiUrl = 'http://10.0.2.2:8080';
+// export const apiUrl = 'http://192.168.0.11:8080';
 
 export const endpoints = {
+    // Auth endpoints
+    login: apiUrl + '/api/auth/login',
+    signUp: apiUrl + '/api/auth/sign-up',
+    checkEmail: apiUrl + '/api/auth/check/email',
+    checkUsername: apiUrl + '/api/auth/check/username',
     // Stories endpoints
     allStories: 'api/stories',     // GET
     getOneStory: 'api/stories/:id',    // GET

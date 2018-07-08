@@ -70,7 +70,7 @@ export const getAllPhotos = (token, storyId) => {
     }
 };
 
-export const getById = (token, storyId, photoId) => {
+export const loadPhoto = (token, storyId, photoId) => {
     return {
         type: LOAD_PHOTO,
         token: token,

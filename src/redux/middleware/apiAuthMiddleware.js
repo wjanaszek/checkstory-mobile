@@ -1,13 +1,16 @@
-import { apiUrl } from '../../config/appConfig';
+import { endpoints } from '../../config/appConfig';
 import {
-    LOGIN, LOGIN_FAIL, LOGIN_IN_PROGRESS, LOGIN_SUCCESS, SIGN_UP, SIGN_UP_FAIL,
-    SIGN_UP_IN_PROGRESS, SIGN_UP_SUCCESS
+    LOGIN,
+    LOGIN_FAIL,
+    LOGIN_IN_PROGRESS,
+    LOGIN_SUCCESS,
+    SIGN_UP,
+    SIGN_UP_FAIL,
+    SIGN_UP_IN_PROGRESS,
+    SIGN_UP_SUCCESS
 } from '../actions/auth';
-import {
-    LOAD_STORIES
-} from '../actions/stories';
+import { LOAD_STORIES } from '../actions/stories';
 import { Actions } from 'react-native-router-flux';
-
 
 export const apiAuthMiddleware = store => next => action => {
     // Pass all actions through by default
@@ -15,31 +18,33 @@ export const apiAuthMiddleware = store => next => action => {
     switch (action.type) {
         case LOGIN:
             // Dispatch LOGIN_IN_PROGRESS to update loading state
-            store.dispatch({ type: LOGIN_IN_PROGRESS });
+            store.dispatch({type: LOGIN_IN_PROGRESS});
             // Make API call and dispatch approciate actions when done
-            fetch(`${apiUrl}/login`, {
+            fetch(`${endpoints.login}`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    login: action.username,
+                    username: action.username,
                     password: action.password
                 })
             })
+                .then(response => response.json())
                 .then(response => {
-                    const authorization = response.headers.get('Authorization');
+                    console.log(response);
+                    const authorization = response.accessToken;
                     if (authorization !== null) {
-                        console.log('authorization ' + authorization.slice(7));
+                        console.log('authorization ' + authorization);
                         next({
-                                type: LOGIN_SUCCESS,
-                                username: action.username,
-                                token: authorization.slice(7)
-                            });
+                            type: LOGIN_SUCCESS,
+                            username: action.username,
+                            token: authorization
+                        });
                         store.dispatch({
                             type: LOAD_STORIES,
-                            token: authorization.slice(7)
+                            token: authorization
                         });
                     } else {
                         next({
@@ -58,8 +63,8 @@ export const apiAuthMiddleware = store => next => action => {
                 });
             break;
         case SIGN_UP:
-            store.dispatch({ type: SIGN_UP_IN_PROGRESS });
-            fetch(`${apiUrl}/api/users`, {
+            store.dispatch({type: SIGN_UP_IN_PROGRESS});
+            fetch(`${endpoints.signUp}`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

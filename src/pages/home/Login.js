@@ -5,6 +5,7 @@ import { login } from '../../redux/actions/auth';
 import { Actions } from 'react-native-router-flux';
 
 // Md5 for first step password hashing before sending it to API
+// @TODO remove this?
 let md5 = require('md5');
 
 class Login extends Component {
@@ -30,6 +31,7 @@ class Login extends Component {
         if (!this.formValid()) {
             return;
         }
+        console.log(this.state.username, this.state.password);
         this.props.onLogin(this.state.username, this.state.password);
     }
 
@@ -102,7 +104,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onLogin: (username, password) => dispatch(login(username, md5(password)))
+        onLogin: (username, password) => dispatch(login(username, password))
     };
 };
 
