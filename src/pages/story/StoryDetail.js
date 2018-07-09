@@ -84,8 +84,8 @@ class StoryDetail extends Component {
     }
 
     checkboxValueChanged(id) {
-        if (this.state && this.state.photosToCompare && this.state.photosToCompare.length) {
-            this.state.photosToCompare.find(photoId => photoId === id) ?
+        if (this.props.photosToCompare && this.props.photosToCompare.length) {
+            this.props.photosToCompare.find(photoId => photoId === id) ?
                 this.props.onRemovePhotoToCompare(id) : this.props.onAddPhotoToCompare(id);
         } else {
             this.props.onAddPhotoToCompare(id);
@@ -94,21 +94,21 @@ class StoryDetail extends Component {
 
     compareTwoPhotos() {
         // console.log('photosToCompare: ' + JSON.stringify(this.state.photosToCompare));
-        if (this.state.photosToCompare.length > 2) {
+        if (this.props.photosToCompare.length > 2) {
             // user choosed too many photos to compare
             Actions.popup({
                 title: 'Error',
                 message: 'You can compare only two photos',
                 yesOptionMsg: 'OK',
             });
-        } else if (this.state.photosToCompare.length === 0) {
+        } else if (this.props.photosToCompare.length === 0) {
             // user choosed 0 photos to compare
             Actions.popup({
                 title: 'Error',
                 message: 'You haven\'t choosen any photo. Choose two photos to compare',
                 yesOptionMsg: 'OK',
             });
-        } else if (this.state.photosToCompare.length === 1) {
+        } else if (this.props.photosToCompare.length === 1) {
             // user choosed only 1 photo to compare
             Actions.popup({
                 title: 'Error',
@@ -117,7 +117,7 @@ class StoryDetail extends Component {
             })
         } else {
             // user choosed 2 photos to compare
-            this.props.onPhotoCompare(this.props.token, this.state.photosToCompare[0], this.state.photosToCompare[1]);
+            this.props.onPhotoCompare(this.props.token, this.props.photosToCompare[0], this.props.photosToCompare[1]);
             Actions.popup({
                 title: 'Comparing photos',
                 noOptionMsg: 'OK'

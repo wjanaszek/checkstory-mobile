@@ -30,8 +30,9 @@ export const apiPhotosMiddleware = store => next => action => {
     next(action);
     switch (action.type) {
         case COMPARE_PHOTOS:
-            console.log('sending request to compare');
-            fetch(`${apiUrl}/api/photos/compare/${action.firstPhotoId}/with/${action.secondPhotoId}`, {
+            // console.log('sending request to compare');
+            // @TODO get sensitivity param from user
+            fetch(`${apiUrl}/api/photos/compare/${action.firstPhotoId}/with/${action.secondPhotoId}?sensitivity=250`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
@@ -41,6 +42,7 @@ export const apiPhotosMiddleware = store => next => action => {
             })
                 .then(response => response.json())
                 .then(data => {
+                    // console.log('data: ' + JSON.stringify(data));
                     next({
                         type: COMPARE_PHOTOS_SUCCESS,
                         comparedPhotos: data
