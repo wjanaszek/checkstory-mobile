@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ActivityIndicator, FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { comparePhotos, createPhoto, deletePhoto, updatePhoto } from '../../redux/actions/photos';
+import {
+    addPhotoToCompare,
+    comparePhotos,
+    createPhoto,
+    deletePhoto,
+    removePhotoToCompare,
+    updatePhoto
+} from '../../redux/actions/photos';
 import { List } from 'react-native-elements';
 import PhotoListItem from './PhotoListItem';
 import Photo from '../../model/Photo';
@@ -33,7 +40,6 @@ class StoryDetail extends Component {
             notes: this.props.story.notes,
             createDate: this.props.story.createDate,
             photo: null,
-            photosToCompare: [],
             opened: false,
             region: {
                 latitude: this.props.story.latitude,
@@ -79,14 +85,10 @@ class StoryDetail extends Component {
 
     checkboxValueChanged(id) {
         if (this.state && this.state.photosToCompare && this.state.photosToCompare.length) {
-            const index = this.state.photosToCompare.findIndex(photoId => photoId === id);
-            if (index === -1) {
-                this.setState({photosToCompare: this.state.photosToCompare.concat([id])});
-            } else {
-                this.setState({photosToCompare: this.state.photosToCompare.filter(photoId => photoId !== id)});
-            }
+            this.state.photosToCompare.find(photoId => photoId === id) ?
+                this.props.onRemovePhotoToCompare(id) : this.props.onAddPhotoToCompare(id);
         } else {
-            this.setState({photosToCompare: this.state.photosToCompare.concat([id])});
+            this.props.onAddPhotoToCompare(id);
         }
     }
 
@@ -196,12 +198,15 @@ const mapStateToProps = (state, ownProps) => {
         loading: state.stories.loading,
         loadingPhotos: state.story.loading,
         photos: state.story.photos,
+        photosToCompare: state.story.photosToCompare,
         token: state.auth.token
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        onAddPhotoToCompare: (photoId) => dispatch(addPhotoToCompare(photoId)),
+        onRemovePhotoToCompare: (photoId) => dispatch(removePhotoToCompare(photoId)),
         onPhotoCompare: (token, firstPhotoId, secondPhotoId) => dispatch(comparePhotos(token, firstPhotoId, secondPhotoId)),
         onPhotoAdd: (token, storyId, photo) => dispatch(createPhoto(token, storyId, photo)),
         onPhotoDelete: (token, storyId, photoId) => dispatch(deletePhoto(token, storyId, photoId)),

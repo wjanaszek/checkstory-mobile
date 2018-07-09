@@ -31,19 +31,13 @@ export const apiPhotosMiddleware = store => next => action => {
     switch (action.type) {
         case COMPARE_PHOTOS:
             console.log('sending request to compare');
-            fetch(`${apiUrl}/api/images-compare`, {
-                method: 'POST',
+            fetch(`${apiUrl}/api/photos/compare/${action.firstPhotoId}/with/${action.secondPhotoId}`, {
+                method: 'GET',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + action.token
-                },
-                body: JSON.stringify({
-                    originalImageId: action.firstPhotoId,
-                    modifiedImageId: action.secondPhotoId,
-                    resize: false,
-                    boundingRectangles: false
-                })
+                }
             })
                 .then(response => response.json())
                 .then(data => {

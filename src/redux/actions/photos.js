@@ -5,6 +5,10 @@ export const CREATE_PHOTO_IN_PROGRESS = 'CREATE_PHOTO_IN_PROGRESS';
 export const CREATE_PHOTO_SUCCESS = 'CREATE_PHOTO_SUCCESS';
 export const CREATE_PHOTO_FAIL = 'CREATE_PHOTO_FAIL';
 
+// add/remove photo to compare
+export const ADD_PHOTO_TO_COMPARE = 'ADD_PHOTO_TO_COMPARE';
+export const REMOVE_PHOTO_TO_COMPARE = 'REMOVE_PHOTO_TO_COMPARE';
+
 // compare two photos
 export const COMPARE_PHOTOS = 'COMPARE_PHOTOS';
 export const COMPARE_PHOTOS_SUCCESS = 'COMPARE_PHOTOS_SUCCESS';
@@ -34,6 +38,19 @@ export const UPDATE_PHOTO_IN_PROGRESS = 'UPDATE_PHOTO_IN_PROGRESS';
 export const UPDATE_PHOTO_SUCCESS = 'UPDATE_PHOTO_SUCCESS';
 export const UPDATE_PHOTO_FAIL = 'UPDATE_PHOTO_FAIL';
 
+export const addPhotoToCompare = (photoId) => {
+    return {
+        type: ADD_PHOTO_TO_COMPARE,
+        photoId
+    }
+};
+
+export const removePhotoToCompare = (photoId) => {
+    return {
+        type: REMOVE_PHOTO_TO_COMPARE,
+        photoId
+    }
+};
 
 export const comparePhotos = (token, firstPhotoId, secondPhotoId) => {
     return {
